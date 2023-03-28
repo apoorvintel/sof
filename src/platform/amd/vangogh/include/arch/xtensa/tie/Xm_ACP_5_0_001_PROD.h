@@ -79,6 +79,7 @@
 #define xtfloatx2 CSTUB_(xtfloatx2)
 #define xthalfx4 CSTUB_(xthalfx4)
 
+#if defined(__cplusplus)
 /* Ctype declarations */
 typedef int immediate;
 #define DECLARE_CTYPE(s) \
@@ -833,16 +834,8 @@ inline ae_int64_ (const int &src);
 inline ae_int64_& operator= (const int &src);
 inline ae_int64_ (const unsigned long long &src);
 inline ae_int64_& operator= (const unsigned long long &src);
-#if defined(__GNUC__)
-inline ae_int64_ (const unsigned long int &src);
-inline ae_int64_& operator= (const unsigned long int &src);
-#endif //defined(__GNUC__)
 inline ae_int64_ (const long long &src);
 inline ae_int64_& operator= (const long long &src);
-#if defined(__GNUC__)
-inline ae_int64_ (const long int &src);
-inline ae_int64_& operator= (const long int &src);
-#endif //defined(__GNUC__)
 inline CSTUB_EXPLICIT ae_int64_ (const ae_int16 &src);
 inline ae_int64_& operator= (const ae_int16 &src);
 inline CSTUB_EXPLICIT ae_int64_ (const ae_int32 &src);
@@ -869,10 +862,6 @@ inline ae_f64_ (const int &src);
 inline ae_f64_& operator= (const int &src);
 inline ae_f64_ (const long long &src);
 inline ae_f64_& operator= (const long long &src);
-#if defined(__GNUC__)
-inline ae_f64_ (const long int &src);
-inline ae_f64_& operator= (const long int &src);
-#endif //defined(__GNUC__)
 inline CSTUB_EXPLICIT ae_f64_ (const ae_int64 &src);
 inline ae_f64_& operator= (const ae_int64 &src);
 inline CSTUB_EXPLICIT ae_f64_ (const ae_q56s &src);
@@ -1149,10 +1138,10 @@ CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_TS_FTS_BU_BP)(void);
 CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_TS_FTS_BU_BP)(const unsigned int v /*in*/);
 CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_CW_SD_NO)(void);
 CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_CW_SD_NO)(const unsigned int v /*in*/);
-CSTUB_EXTERN void * CSTUB_(_TIE_xt_hifi2_RUR_AE_CBEGIN0)(void);
-CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_CBEGIN0)(const void *v /*in*/);
-CSTUB_EXTERN void * CSTUB_(_TIE_xt_hifi2_RUR_AE_CEND0)(void);
-CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_CEND0)(const void *v /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_CBEGIN0)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_CBEGIN0)(const unsigned int v /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_CEND0)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_CEND0)(const unsigned int v /*in*/);
 CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RAE_OVERFLOW)(void);
 CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WAE_OVERFLOW)(const unsigned int a /*in*/);
 CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_OVERFLOW)(void);
@@ -6428,15 +6417,6 @@ inline ae_int64& ae_int64::operator= (const unsigned long long &src) {
   *this = CSTUB_(_TIE_xt_hifi2_uint64_mtor_ae_int64)(&src, 0);
   return *this;
 }
-#if defined(__GNUC__)
-inline ae_int64::ae_int64_(const unsigned long int &src) {
-  *this = CSTUB_(_TIE_xt_hifi2_uint64_mtor_ae_int64)((unsigned long long *)&src, 0);
-}
-inline ae_int64& ae_int64::operator= (const unsigned long int &src) {
-  *this = CSTUB_(_TIE_xt_hifi2_uint64_mtor_ae_int64)((unsigned long long *)&src, 0);
-  return *this;
-}
-#endif //defined(__GNUC__)
 inline ae_int64::ae_int64_(const long long &src) {
   *this = CSTUB_(_TIE_xt_hifi2_int64_mtor_ae_int64)(&src, 0);
 }
@@ -6444,15 +6424,6 @@ inline ae_int64& ae_int64::operator= (const long long &src) {
   *this = CSTUB_(_TIE_xt_hifi2_int64_mtor_ae_int64)(&src, 0);
   return *this;
 }
-#if defined(__GNUC__)
-inline ae_int64::ae_int64_(const long int &src) {
-  *this = CSTUB_(_TIE_xt_hifi2_int64_mtor_ae_int64)((long long *)&src, 0);
-}
-inline ae_int64& ae_int64::operator= (const long int &src) {
-  *this = CSTUB_(_TIE_xt_hifi2_int64_mtor_ae_int64)((long long *)&src, 0);
-  return *this;
-}
-#endif //defined(__GNUC__)
 inline ae_int64::ae_int64_(const ae_int16 &src) {
   *this = CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_ae_int64)(src);
 }
@@ -6493,14 +6464,6 @@ inline ae_int64::operator unsigned long long () const {
   CSTUB_(_TIE_xt_hifi2_ae_int64_rtom_uint64) (*this, &res, 0);
   return res;
 }
-#if defined(__GNUC__)
-template<>
-inline ae_int64::operator unsigned long int () const {
-  CSTUB_MSC_ALIGN(8) unsigned long long res CSTUB_GCC_ALIGN(8);
-  CSTUB_(_TIE_xt_hifi2_ae_int64_rtom_uint64) (*this, &res, 0);
-  return res;
-}
-#endif //defined(__GNUC__)
 #ifndef _MSC_VER
 template<>
 #endif
@@ -6509,14 +6472,6 @@ inline ae_int64::operator long long () const {
   CSTUB_(_TIE_xt_hifi2_ae_int64_rtom_int64) (*this, &res, 0);
   return res;
 }
-#if defined(__GNUC__)
-template<>
-inline ae_int64::operator long int () const {
-  CSTUB_MSC_ALIGN(8) long long res CSTUB_GCC_ALIGN(8);
-  CSTUB_(_TIE_xt_hifi2_ae_int64_rtom_int64) (*this, &res, 0);
-  return res;
-}
-#endif //defined(__GNUC__)
 inline ae_int64::operator ae_f64 () const {
   return CSTUB_(_TIE_xt_hifi2_ae_int64_rtor_ae_f64) (*this);
 }
@@ -6557,16 +6512,6 @@ inline ae_f64& ae_f64::operator= (const long long &src_in) {
   *this = CSTUB_(_TIE_xt_hifi2_int64_rtor_ae_f64)(src);
   return *this;
 }
-#if defined(__GNUC__)
-inline ae_f64::ae_f64_(const long int &src) {
-  *this = CSTUB_(_TIE_xt_hifi2_int64_rtor_ae_f64)((long long)src);
-}
-inline ae_f64& ae_f64::operator= (const long int &src_in) {
-  long long src = (long long) src_in;
-  *this = CSTUB_(_TIE_xt_hifi2_int64_rtor_ae_f64)(src);
-  return *this;
-}
-#endif //defined(__GNUC__)
 inline ae_f64::ae_f64_(const ae_int64 &src) {
   *this = CSTUB_(_TIE_xt_hifi2_ae_int64_rtor_ae_f64)(src);
 }
@@ -6589,12 +6534,6 @@ template<>
 inline ae_f64::operator long long () const {
   return CSTUB_(_TIE_xt_hifi2_ae_f64_rtor_int64) (*this);
 }
-#if defined(__GNUC__)
-template<>
-inline ae_f64::operator long int () const {
-  return CSTUB_(_TIE_xt_hifi2_ae_f64_rtor_int64) (*this);
-}
-#endif //defined(__GNUC__)
 inline ae_f64::operator ae_int64 () const {
   return CSTUB_(_TIE_xt_hifi2_ae_f64_rtor_ae_int64) (*this);
 }
@@ -39473,6 +39412,10364 @@ inline xtbool2 operator>= (const xtfloatx2& d0, const xtfloatx2& d1) {
 #define XT_REMU(a, b) CSTUB_(REMU)(a, b)
 
 #define XT_REMS(a, b) CSTUB_(REMS)(a, b)
+
+#else /* !__cplusplus */
+/* Ctype declarations */
+typedef int immediate;
+typedef unsigned char xtbool;
+typedef unsigned char xtbool2;
+typedef unsigned char xtbool4;
+typedef unsigned char xtbool8;
+typedef unsigned short xtbool16;
+
+/* Ctype definitions */
+typedef CSTUB_MSC_ALIGN(8) struct ae_p24x2s_struct {
+unsigned int _[2];
+} CSTUB_GCC_ALIGN(8) ae_p24x2s;
+
+typedef CSTUB_MSC_ALIGN(8) struct ae_p24x2f_struct {
+unsigned int _[2];
+} CSTUB_GCC_ALIGN(8) ae_p24x2f;
+
+typedef CSTUB_MSC_ALIGN(4) struct ae_p16x2s_struct {
+unsigned int _[1];
+} CSTUB_GCC_ALIGN(4) ae_p16x2s;
+
+typedef CSTUB_MSC_ALIGN(4) struct ae_p24s_struct {
+unsigned int _[1];
+} CSTUB_GCC_ALIGN(4) ae_p24s;
+
+typedef CSTUB_MSC_ALIGN(4) struct ae_p24f_struct {
+unsigned int _[1];
+} CSTUB_GCC_ALIGN(4) ae_p24f;
+
+typedef CSTUB_MSC_ALIGN(2) struct ae_p16s_struct {
+unsigned short  _[1];
+} CSTUB_GCC_ALIGN(2) ae_p16s;
+
+typedef CSTUB_MSC_ALIGN(8) struct ae_int16x4_struct {
+unsigned int _[2];
+} CSTUB_GCC_ALIGN(8) ae_int16x4;
+
+typedef CSTUB_MSC_ALIGN(2) struct ae_int16_struct {
+unsigned short  _[1];
+} CSTUB_GCC_ALIGN(2) ae_int16;
+
+typedef CSTUB_MSC_ALIGN(8) struct ae_f16x4_struct {
+unsigned int _[2];
+} CSTUB_GCC_ALIGN(8) ae_f16x4;
+
+typedef CSTUB_MSC_ALIGN(2) struct ae_f16_struct {
+unsigned short  _[1];
+} CSTUB_GCC_ALIGN(2) ae_f16;
+
+typedef CSTUB_MSC_ALIGN(8) struct ae_int32x2_struct {
+unsigned int _[2];
+} CSTUB_GCC_ALIGN(8) ae_int32x2;
+
+typedef CSTUB_MSC_ALIGN(4) struct ae_int32_struct {
+unsigned int _[1];
+} CSTUB_GCC_ALIGN(4) ae_int32;
+
+typedef CSTUB_MSC_ALIGN(8) struct ae_f32x2_struct {
+unsigned int _[2];
+} CSTUB_GCC_ALIGN(8) ae_f32x2;
+
+typedef CSTUB_MSC_ALIGN(4) struct ae_f32_struct {
+unsigned int _[1];
+} CSTUB_GCC_ALIGN(4) ae_f32;
+
+typedef CSTUB_MSC_ALIGN(8) struct ae_int24x2_struct {
+unsigned int _[2];
+} CSTUB_GCC_ALIGN(8) ae_int24x2;
+
+typedef CSTUB_MSC_ALIGN(4) struct ae_int24_struct {
+unsigned int _[1];
+} CSTUB_GCC_ALIGN(4) ae_int24;
+
+typedef CSTUB_MSC_ALIGN(8) struct ae_f24x2_struct {
+unsigned int _[2];
+} CSTUB_GCC_ALIGN(8) ae_f24x2;
+
+typedef CSTUB_MSC_ALIGN(4) struct ae_f24_struct {
+unsigned int _[1];
+} CSTUB_GCC_ALIGN(4) ae_f24;
+
+typedef CSTUB_MSC_ALIGN(8) struct ae_int64_struct {
+unsigned int _[2];
+} CSTUB_GCC_ALIGN(8) ae_int64;
+
+typedef CSTUB_MSC_ALIGN(8) struct ae_f64_struct {
+unsigned int _[2];
+} CSTUB_GCC_ALIGN(8) ae_f64;
+
+typedef CSTUB_MSC_ALIGN(8) struct ae_q56s_struct {
+unsigned int _[2];
+} CSTUB_GCC_ALIGN(8) ae_q56s;
+
+typedef CSTUB_MSC_ALIGN(4) struct ae_q32s_struct {
+unsigned int _[1];
+} CSTUB_GCC_ALIGN(4) ae_q32s;
+
+typedef CSTUB_MSC_ALIGN(8) struct ae_valign_struct {
+unsigned int _[2];
+} CSTUB_GCC_ALIGN(8) ae_valign;
+
+typedef CSTUB_MSC_ALIGN(8) struct ae_int32x4_struct {
+unsigned int _[4];
+} CSTUB_GCC_ALIGN(8) ae_int32x4;
+
+typedef CSTUB_MSC_ALIGN(8) struct ae_f32x4_struct {
+unsigned int _[4];
+} CSTUB_GCC_ALIGN(8) ae_f32x4;
+
+typedef CSTUB_MSC_ALIGN(4) struct ae_int32u_struct {
+unsigned int _[1];
+} CSTUB_GCC_ALIGN(4) ae_int32u;
+
+typedef CSTUB_MSC_ALIGN(2) struct ae_int16u_struct {
+unsigned short  _[1];
+} CSTUB_GCC_ALIGN(2) ae_int16u;
+
+typedef CSTUB_MSC_ALIGN(8) struct ae_int64x2_struct {
+unsigned int _[4];
+} CSTUB_GCC_ALIGN(8) ae_int64x2;
+
+typedef CSTUB_MSC_ALIGN(8) struct ae_int64x4_struct {
+unsigned int _[8];
+} CSTUB_GCC_ALIGN(8) ae_int64x4;
+
+typedef CSTUB_MSC_ALIGN(4) struct xtfloat_struct {
+unsigned int _[1];
+} CSTUB_GCC_ALIGN(4) xtfloat;
+
+typedef CSTUB_MSC_ALIGN(8) struct xtfloatx2_struct {
+unsigned int _[2];
+} CSTUB_GCC_ALIGN(8) xtfloatx2;
+
+typedef CSTUB_MSC_ALIGN(8) struct xthalfx4_struct {
+unsigned int _[2];
+} CSTUB_GCC_ALIGN(8) xthalfx4;
+
+/* Proto declarations */
+CSTUB_EXTERN int CSTUB_(_TIE_xt_density_L32I_N)(const int * p /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_density_S32I_N)(const int t /*in*/, const int * p /*in*/, immediate i /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_density_ADD_N)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_density_ADDI_N)(const int s /*in*/, immediate i /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_density_MOV_N)(const int s /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_density_MOVI_N)(immediate i /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_core_uint32_loadi)(const unsigned int * p /*in*/, immediate o /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_core_uint32_storei)(const unsigned int c /*in*/, const unsigned int * p /*in*/, immediate o /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_core_uint32_move)(const unsigned int b /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_ADDI)(const int s /*in*/, immediate i /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_OR)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_L32I)(const int * p /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_core_S32I)(const int r /*in*/, const int * p /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_core_S32NB)(const int r /*in*/, const int * p /*in*/, immediate i /*in*/);
+CSTUB_EXTERN unsigned char CSTUB_(_TIE_xt_core_L8UI)(const unsigned char * p /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_core_S8I)(const signed char r /*in*/, const signed char * p /*in*/, immediate i /*in*/);
+CSTUB_EXTERN unsigned short CSTUB_(_TIE_xt_core_L16UI)(const unsigned short * p /*in*/, immediate i /*in*/);
+CSTUB_EXTERN short CSTUB_(_TIE_xt_core_L16SI)(const short * p /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_core_S16I)(const short r /*in*/, const short * p /*in*/, immediate i /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_ADDMI)(const int s /*in*/, immediate i /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_ADD)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_ADDX2)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_ADDX4)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_ADDX8)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_SUB)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_SUBX2)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_SUBX4)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_SUBX8)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_SALT)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_core_SALTU)(const unsigned int s /*in*/, const unsigned int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_AND)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_XOR)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_core_EXTUI)(const unsigned int t /*in*/, immediate i /*in*/, immediate o /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_MOVI)(immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_core_MOVEQZ)(int* r /*inout*/, const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_core_MOVNEZ)(int* r /*inout*/, const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_core_MOVLTZ)(int* r /*inout*/, const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_core_MOVGEZ)(int* r /*inout*/, const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_NEG)(const int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_ABS)(const int t /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_core_SSR)(const int s /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_core_SSL)(const int s /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_core_SSA8L)(const int s /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_core_SSA8B)(const int s /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_core_SSAI)(immediate i /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_SLL)(const int s /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_SRC)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_core_SRL)(const unsigned int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_SRA)(const int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_SLLI)(const int s /*in*/, immediate i /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_SRAI)(const int t /*in*/, immediate i /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_core_SRLI)(const unsigned int t /*in*/, immediate i /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_SSAI_SRC)(const int src1 /*in*/, const int src2 /*in*/, immediate amount /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_SSR_SRC)(const int src1 /*in*/, const int src2 /*in*/, const int amount /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_SSR_SRA)(const int src /*in*/, const int amount /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_core_SSR_SRL)(const unsigned int src /*in*/, const int amount /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_SSL_SLL)(const int src /*in*/, const int amount /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_mul_MUL16S)(const short s /*in*/, const short t /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_mul_MUL16U)(const unsigned short s /*in*/, const unsigned short t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_mul_MULL)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_mul_MULUH)(const unsigned int s /*in*/, const unsigned int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_mul_MULSH)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_misc_CLAMPS)(const int s /*in*/, immediate i /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_misc_MIN)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_misc_MAX)(const int s /*in*/, const int t /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_misc_MINU)(const unsigned int s /*in*/, const unsigned int t /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_misc_MAXU)(const unsigned int s /*in*/, const unsigned int t /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_misc_NSA)(const int s /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_misc_NSAU)(const unsigned int s /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_misc_SEXT)(const int s /*in*/, immediate i /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_OVF_SAR)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_OVF_SAR)(const unsigned int v /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_BITHEAD)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_BITHEAD)(const unsigned int v /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_TS_FTS_BU_BP)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_TS_FTS_BU_BP)(const unsigned int v /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_CW_SD_NO)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_CW_SD_NO)(const unsigned int v /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_CBEGIN0)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_CBEGIN0)(const unsigned int v /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_CEND0)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_CEND0)(const unsigned int v /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RAE_OVERFLOW)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WAE_OVERFLOW)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_OVERFLOW)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_OVERFLOW)(const unsigned int a /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_RAE_SAR)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WAE_SAR)(const int a /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_RUR_AE_SAR)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_SAR)(const int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RAE_BITPTR)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WAE_BITPTR)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_BITPTR)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_BITPTR)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RAE_BITSUSED)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WAE_BITSUSED)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_BITSUSED)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_BITSUSED)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RAE_TABLESIZE)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WAE_TABLESIZE)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_TABLESIZE)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_TABLESIZE)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RAE_FIRST_TS)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WAE_FIRST_TS)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_FIRST_TS)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_FIRST_TS)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RAE_NEXTOFFSET)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WAE_NEXTOFFSET)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_NEXTOFFSET)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_NEXTOFFSET)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RAE_SEARCHDONE)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WAE_SEARCHDONE)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_SEARCHDONE)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_SEARCHDONE)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RAE_CWRAP)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WAE_CWRAP)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_RUR_AE_CWRAP)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_WUR_AE_CWRAP)(const unsigned int a /*in*/);
+CSTUB_EXTERN void * CSTUB_(_TIE_xt_hifi2_AE_GETCBEGIN0)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SETCBEGIN0)(const void * a /*in*/);
+CSTUB_EXTERN void * CSTUB_(_TIE_xt_hifi2_AE_GETCEND0)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SETCEND0)(const void * a /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_L8X4F_I)(const signed char * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L8X4F_IP)(ae_f16x4* d /*out*/, const signed char ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_L8X4F_X)(const signed char * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L8X4F_XP)(ae_f16x4* d /*out*/, const signed char ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_L8X8_I)(const unsigned char * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L8X8_IP)(ae_int64* d /*out*/, const unsigned char ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L16M_XC)(ae_int32x2* d /*out*/, const ae_p16s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP16F_C)(ae_p24x2s* d /*out*/, const ae_p16s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_L16M_I)(const ae_p16s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_LP16F_I)(const ae_p16s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_p16s CSTUB_(_TIE_xt_hifi2_AE_LP16S_I)(const ae_p16s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_p16s CSTUB_(_TIE_xt_hifi2_ae_p16s_loadi)(const ae_p16s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L16M_IU)(ae_int32x2* d /*out*/, const ae_p16s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP16F_IU)(ae_p24x2s* d /*out*/, const ae_p16s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP16S_IU)(ae_p16s* d /*out*/, const ae_p16s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p16s_loadiu)(ae_p16s* d /*out*/, const ae_p16s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_L16M_X)(const ae_p16s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_LP16F_X)(const ae_p16s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_p16s CSTUB_(_TIE_xt_hifi2_AE_LP16S_X)(const ae_p16s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_p16s CSTUB_(_TIE_xt_hifi2_ae_p16s_loadx)(const ae_p16s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L16M_XU)(ae_int32x2* d /*out*/, const ae_p16s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP16F_XU)(ae_p24x2s* d /*out*/, const ae_p16s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP16S_XU)(ae_p16s* d /*out*/, const ae_p16s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p16s_loadxu)(ae_p16s* d /*out*/, const ae_p16s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L16_XC)(ae_int16x4* d /*out*/, const ae_int16 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_L16_I)(const ae_int16 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_ae_int16_loadi)(const ae_int16 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_ae_f16_loadi)(const ae_f16 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L16_IP)(ae_int16x4* d /*out*/, const ae_int16 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16_loadip)(ae_int16* d /*out*/, const ae_int16 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f16_loadip)(ae_f16* d /*out*/, const ae_f16 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_L16_X)(const ae_int16 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_ae_int16_loadx)(const ae_int16 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_ae_f16_loadx)(const ae_f16 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L16_XP)(ae_int16x4* d /*out*/, const ae_int16 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16_loadxp)(ae_int16* d /*out*/, const ae_int16 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f16_loadxp)(ae_f16* d /*out*/, const ae_f16 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32F24_XC)(ae_f24x2* d /*out*/, const ae_f24 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP24F_C)(ae_p24x2s* d /*out*/, const ae_p24f ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_L32F24_I)(const ae_f24 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_LP24F_I)(const ae_p24f * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_LF24_I)(const ae_f24 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_ae_f24_loadi)(const ae_f24 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_ae_p24f_loadi)(const ae_p24f * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32F24_IP)(ae_f24x2* d /*out*/, const ae_f24 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP24F_IU)(ae_p24x2s* d /*out*/, const ae_p24f ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LF24_IP)(ae_f24* d /*out*/, const ae_f24 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f24_loadip)(ae_f24* d /*out*/, const ae_f24 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24f_loadip)(ae_p24f* d /*out*/, const ae_p24f ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_L32F24_X)(const ae_f24 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_LP24F_X)(const ae_p24f * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_LF24_X)(const ae_f24 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_ae_f24_loadx)(const ae_f24 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_ae_p24f_loadx)(const ae_p24f * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32F24_XP)(ae_f24x2* d /*out*/, const ae_f24 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP24F_XU)(ae_p24x2s* d /*out*/, const ae_p24f ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LF24_XP)(ae_f24* d /*out*/, const ae_f24 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f24_loadxp)(ae_f24* d /*out*/, const ae_f24 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24f_loadxp)(ae_p24f* d /*out*/, const ae_p24f ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32_XC)(ae_int32x2* d /*out*/, const ae_int32 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP24_C)(ae_p24x2s* d /*out*/, const ae_p24s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_L32_I)(const ae_int32 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_ae_int32_loadi)(const ae_int32 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_ae_f32_loadi)(const ae_f32 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_LP24_I)(const ae_p24s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_ae_int24_loadi)(const ae_int24 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_ae_p24s_loadi)(const ae_p24s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32_IP)(ae_int32x2* d /*out*/, const ae_int32 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32_loadip)(ae_int32* d /*out*/, const ae_int32 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f32_loadip)(ae_f32* d /*out*/, const ae_f32 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP24_IU)(ae_p24x2s* d /*out*/, const ae_p24s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int24_loadip)(ae_int24* d /*out*/, const ae_int24 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24s_loadip)(ae_p24s* d /*out*/, const ae_p24s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_L32_X)(const ae_int32 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_ae_int32_loadx)(const ae_int32 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_ae_f32_loadx)(const ae_f32 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_LP24_X)(const ae_p24s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_ae_int24_loadx)(const ae_int24 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_ae_p24s_loadx)(const ae_p24s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32_XP)(ae_int32x2* d /*out*/, const ae_int32 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32_loadxp)(ae_int32* d /*out*/, const ae_int32 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f32_loadxp)(ae_f32* d /*out*/, const ae_f32 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP24_XU)(ae_p24x2s* d /*out*/, const ae_p24s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int24_loadxp)(ae_int24* d /*out*/, const ae_int24 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24s_loadxp)(ae_p24s* d /*out*/, const ae_p24s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32M_XC)(ae_int64* d /*out*/, const ae_q32s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LQ32F_C)(ae_q56s* d /*out*/, const ae_q32s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_L32M_I)(const ae_q32s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_LQ32F_I)(const ae_q32s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_q32s CSTUB_(_TIE_xt_hifi2_ae_q32s_loadi)(const ae_q32s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32M_IU)(ae_int64* d /*out*/, const ae_q32s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LQ32F_IU)(ae_q56s* d /*out*/, const ae_q32s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_q32s_loadiu)(ae_q32s* d /*out*/, const ae_q32s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_L32M_X)(const ae_q32s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_LQ32F_X)(const ae_q32s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_q32s CSTUB_(_TIE_xt_hifi2_ae_q32s_loadx)(const ae_q32s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32M_XU)(ae_int64* d /*out*/, const ae_q32s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LQ32F_XU)(ae_q56s* d /*out*/, const ae_q32s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_q32s_loadxu)(ae_q32s* d /*out*/, const ae_q32s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L16X2M_XC)(ae_int32x2* d /*out*/, const ae_p16x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP16X2F_C)(ae_p24x2s* d /*out*/, const ae_p16x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_L16X2M_I)(const ae_p16x2s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_LP16X2F_I)(const ae_p16x2s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_p16x2s CSTUB_(_TIE_xt_hifi2_AE_LP16X2S_I)(const ae_p16x2s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_p16x2s CSTUB_(_TIE_xt_hifi2_ae_p16x2s_loadi)(const ae_p16x2s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L16X2M_IU)(ae_int32x2* d /*out*/, const ae_p16x2s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP16X2F_IU)(ae_p24x2s* d /*out*/, const ae_p16x2s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP16X2S_IU)(ae_p16x2s* d /*out*/, const ae_p16x2s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p16x2s_loadiu)(ae_p16x2s* d /*out*/, const ae_p16x2s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_L16X2M_X)(const ae_p16x2s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_LP16X2F_X)(const ae_p16x2s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_p16x2s CSTUB_(_TIE_xt_hifi2_AE_LP16X2S_X)(const ae_p16x2s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_p16x2s CSTUB_(_TIE_xt_hifi2_ae_p16x2s_loadx)(const ae_p16x2s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L16X2M_XU)(ae_int32x2* d /*out*/, const ae_p16x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP16X2F_XU)(ae_p24x2s* d /*out*/, const ae_p16x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP16X2S_XU)(ae_p16x2s* d /*out*/, const ae_p16x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p16x2s_loadxu)(ae_p16x2s* d /*out*/, const ae_p16x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32X2F24_XC)(ae_f24x2* d /*out*/, const ae_f24x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP24X2F_C)(ae_p24x2s* d /*out*/, const ae_p24x2f ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_L32X2F24_I)(const ae_f24x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_LP24X2F_I)(const ae_p24x2f * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_LF24X2_I)(const ae_f24x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_ae_f24x2_loadi)(const ae_f24x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_ae_p24x2f_loadi)(const ae_p24x2f * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32X2F24_IP)(ae_f24x2* d /*out*/, const ae_f24x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP24X2F_IU)(ae_p24x2s* d /*out*/, const ae_p24x2f ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LF24X2_IP)(ae_f24x2* d /*out*/, const ae_f24x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f24x2_loadip)(ae_f24x2* d /*out*/, const ae_f24x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2f_loadip)(ae_p24x2f* d /*out*/, const ae_p24x2f ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32X2F24_RIP)(ae_f24x2* d /*out*/, const ae_f24x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32X2F24_RIC)(ae_f24x2* d /*out*/, const ae_f24x2 ** a /*inout*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_L32X2F24_X)(const ae_f24x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_LP24X2F_X)(const ae_p24x2f * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_LF24X2_X)(const ae_f24x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_ae_f24x2_loadx)(const ae_f24x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_ae_p24x2f_loadx)(const ae_p24x2f * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32X2F24_XP)(ae_f24x2* d /*out*/, const ae_f24x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP24X2F_XU)(ae_p24x2s* d /*out*/, const ae_p24x2f ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LF24X2_XP)(ae_f24x2* d /*out*/, const ae_f24x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f24x2_loadxp)(ae_f24x2* d /*out*/, const ae_f24x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2f_loadxp)(ae_p24x2f* d /*out*/, const ae_p24x2f ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32X2_XC)(ae_int32x2* d /*out*/, const ae_int32x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP24X2_C)(ae_p24x2s* d /*out*/, const ae_p24x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_L32X2_I)(const ae_int32x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_ae_int32x2_loadi)(const ae_int32x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_LF32X2_I)(const ae_f32x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_ae_f32x2_loadi)(const ae_f32x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_LP24X2_I)(const ae_p24x2s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_L24X2_I)(const ae_int24x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_ae_int24x2_loadi)(const ae_int24x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_LP24X2S_I)(const ae_p24x2s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_ae_p24x2s_loadi)(const ae_p24x2s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32X2_IP)(ae_int32x2* d /*out*/, const ae_int32x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_loadip)(ae_int32x2* d /*out*/, const ae_int32x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LF32X2_IP)(ae_f32x2* d /*out*/, const ae_f32x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f32x2_loadip)(ae_f32x2* d /*out*/, const ae_f32x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP24X2_IU)(ae_p24x2s* d /*out*/, const ae_p24x2s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L24X2_IP)(ae_int24x2* d /*out*/, const ae_int24x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int24x2_loadip)(ae_int24x2* d /*out*/, const ae_int24x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP24X2S_IP)(ae_p24x2s* d /*out*/, const ae_p24x2s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2s_loadip)(ae_p24x2s* d /*out*/, const ae_p24x2s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32X2_RIC)(ae_int32x2* d /*out*/, const ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_L32X2_X)(const ae_int32x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_ae_int32x2_loadx)(const ae_int32x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_LF32X2_X)(const ae_f32x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_ae_f32x2_loadx)(const ae_f32x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_LP24X2_X)(const ae_p24x2s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_L24X2_X)(const ae_int24x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_ae_int24x2_loadx)(const ae_int24x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_LP24X2S_X)(const ae_p24x2s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_ae_p24x2s_loadx)(const ae_p24x2s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32X2_XP)(ae_int32x2* d /*out*/, const ae_int32x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_loadxp)(ae_int32x2* d /*out*/, const ae_int32x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LF32X2_XP)(ae_f32x2* d /*out*/, const ae_f32x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f32x2_loadxp)(ae_f32x2* d /*out*/, const ae_f32x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP24X2_XU)(ae_p24x2s* d /*out*/, const ae_p24x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L24X2_XP)(ae_int24x2* d /*out*/, const ae_int24x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int24x2_loadxp)(ae_int24x2* d /*out*/, const ae_int24x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LP24X2S_XP)(ae_p24x2s* d /*out*/, const ae_p24x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2s_loadxp)(ae_p24x2s* d /*out*/, const ae_p24x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L16X4_XC)(ae_int16x4* d /*out*/, const ae_int16x4 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_L16X4_I)(const ae_int16x4 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_ae_int16x4_loadi)(const ae_int16x4 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_LF16X4_I)(const ae_f16x4 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_ae_f16x4_loadi)(const ae_f16x4 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L16X4_IP)(ae_int16x4* d /*out*/, const ae_int16x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_loadip)(ae_int16x4* d /*out*/, const ae_int16x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LF16X4_IP)(ae_f16x4* d /*out*/, const ae_f16x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f16x4_loadip)(ae_f16x4* d /*out*/, const ae_f16x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_L16X4_X)(const ae_int16x4 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_ae_int16x4_loadx)(const ae_int16x4 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_LF16X4_X)(const ae_f16x4 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_ae_f16x4_loadx)(const ae_f16x4 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L16X4_XP)(ae_int16x4* d /*out*/, const ae_int16x4 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_loadxp)(ae_int16x4* d /*out*/, const ae_int16x4 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LF16X4_XP)(ae_f16x4* d /*out*/, const ae_f16x4 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f16x4_loadxp)(ae_f16x4* d /*out*/, const ae_f16x4 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L64_XC)(ae_int64* d /*out*/, const ae_int64 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LQ56_C)(ae_q56s* d /*out*/, const ae_q56s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_L64_I)(const ae_int64 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_ae_int64_loadi)(const ae_int64 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_ae_f64_loadi)(const ae_f64 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_LQ56_I)(const ae_q56s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_ae_q56s_loadi)(const ae_q56s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L64_IP)(ae_int64* d /*out*/, const ae_int64 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int64_loadip)(ae_int64* d /*out*/, const ae_int64 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f64_loadip)(ae_f64* d /*out*/, const ae_f64 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LQ56_IU)(ae_q56s* d /*out*/, const ae_q56s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_q56s_loadip)(ae_q56s* d /*out*/, const ae_q56s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_L64_X)(const ae_int64 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_ae_int64_loadx)(const ae_int64 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_ae_f64_loadx)(const ae_f64 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_LQ56_X)(const ae_q56s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_ae_q56s_loadx)(const ae_q56s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L64_XP)(ae_int64* d /*out*/, const ae_int64 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int64_loadxp)(ae_int64* d /*out*/, const ae_int64 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f64_loadxp)(ae_f64* d /*out*/, const ae_f64 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LQ56_XU)(ae_q56s* d /*out*/, const ae_q56s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_q56s_loadxp)(ae_q56s* d /*out*/, const ae_q56s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X2M_XC)(const ae_int32x2 d /*in*/, ae_p16x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP16X2F_C)(const ae_p24x2s d /*in*/, ae_p16x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X2M_I)(const ae_int32x2 d /*in*/, const ae_p16x2s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP16X2F_I)(const ae_p24x2s d /*in*/, const ae_p16x2s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP16X2S_I)(const ae_p16x2s d /*in*/, const ae_p16x2s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p16x2s_storei)(const ae_p16x2s d /*in*/, const ae_p16x2s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X2M_IU)(const ae_int32x2 d /*in*/, ae_p16x2s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP16X2F_IU)(const ae_p24x2s d /*in*/, ae_p16x2s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP16X2S_IU)(const ae_p16x2s d /*in*/, ae_p16x2s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p16x2s_storeiu)(const ae_p16x2s d /*in*/, ae_p16x2s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X2M_X)(const ae_int32x2 d /*in*/, const ae_p16x2s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP16X2F_X)(const ae_p24x2s d /*in*/, const ae_p16x2s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP16X2S_X)(const ae_p16x2s d /*in*/, const ae_p16x2s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p16x2s_storex)(const ae_p16x2s d /*in*/, const ae_p16x2s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X2M_XU)(const ae_int32x2 d /*in*/, ae_p16x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP16X2F_XU)(const ae_p24x2s d /*in*/, ae_p16x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP16X2S_XU)(const ae_p16x2s d /*in*/, ae_p16x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p16x2s_storexu)(const ae_p16x2s d /*in*/, ae_p16x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32X2F24_XC)(const ae_f24x2 d /*in*/, ae_f24x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24X2F_C)(const ae_p24x2s d /*in*/, ae_p24x2f ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32X2F24_I)(const ae_f24x2 d /*in*/, const ae_f24x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24X2F_I)(const ae_p24x2s d /*in*/, const ae_p24x2f * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SF24X2_I)(const ae_f24x2 d /*in*/, const ae_f24x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f24x2_storei)(const ae_f24x2 d /*in*/, const ae_f24x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2f_storei)(const ae_p24x2f d /*in*/, const ae_p24x2f * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32X2F24_IP)(const ae_f24x2 d /*in*/, ae_f24x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24X2F_IU)(const ae_p24x2s d /*in*/, ae_p24x2f ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SF24X2_IP)(const ae_f24x2 d /*in*/, ae_f24x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f24x2_storeip)(const ae_f24x2 d /*in*/, ae_f24x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2f_storeip)(const ae_p24x2f d /*in*/, ae_p24x2f ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32X2F24_RIP)(const ae_f24x2 d /*in*/, ae_f24x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32X2F24_RIC)(const ae_f24x2 d /*in*/, ae_f24x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32X2F24_X)(const ae_f24x2 d /*in*/, const ae_f24x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24X2F_X)(const ae_p24x2s d /*in*/, const ae_p24x2f * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SF24X2_X)(const ae_f24x2 d /*in*/, const ae_f24x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f24x2_storex)(const ae_f24x2 d /*in*/, const ae_f24x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2f_storex)(const ae_p24x2f d /*in*/, const ae_p24x2f * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32X2F24_XP)(const ae_f24x2 d /*in*/, ae_f24x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24X2F_XU)(const ae_p24x2s d /*in*/, ae_p24x2f ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SF24X2_XP)(const ae_f24x2 d /*in*/, ae_f24x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f24x2_storexp)(const ae_f24x2 d /*in*/, ae_f24x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2f_storexp)(const ae_p24x2f d /*in*/, ae_p24x2f ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32X2_XC)(const ae_int32x2 d /*in*/, ae_int32x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24X2S_C)(const ae_p24x2s d /*in*/, ae_p24x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32X2_I)(const ae_int32x2 d /*in*/, const ae_int32x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_storei)(const ae_int32x2 d /*in*/, const ae_int32x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SF32X2_I)(const ae_f32x2 d /*in*/, const ae_f32x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f32x2_storei)(const ae_f32x2 d /*in*/, const ae_f32x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24X2S_I)(const ae_p24x2s d /*in*/, const ae_p24x2s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2s_storei)(const ae_p24x2s d /*in*/, const ae_p24x2s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S24X2_I)(const ae_int24x2 d /*in*/, const ae_int24x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int24x2_storei)(const ae_int24x2 d /*in*/, const ae_int24x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32X2_IP)(const ae_int32x2 d /*in*/, ae_int32x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_storeip)(const ae_int32x2 d /*in*/, ae_int32x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SF32X2_IP)(const ae_f32x2 d /*in*/, ae_f32x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f32x2_storeip)(const ae_f32x2 d /*in*/, ae_f32x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24X2S_IU)(const ae_p24x2s d /*in*/, ae_p24x2s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2s_storeip)(const ae_p24x2s d /*in*/, ae_p24x2s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S24X2_IP)(const ae_int24x2 d /*in*/, ae_int24x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int24x2_storeip)(const ae_int24x2 d /*in*/, ae_int24x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32X2_RIC)(const ae_int32x2 d /*in*/, ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32X2_X)(const ae_int32x2 d /*in*/, const ae_int32x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_storex)(const ae_int32x2 d /*in*/, const ae_int32x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SF32X2_X)(const ae_f32x2 d /*in*/, const ae_f32x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f32x2_storex)(const ae_f32x2 d /*in*/, const ae_f32x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24X2S_X)(const ae_p24x2s d /*in*/, const ae_p24x2s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2s_storex)(const ae_p24x2s d /*in*/, const ae_p24x2s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S24X2_X)(const ae_int24x2 d /*in*/, const ae_int24x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int24x2_storex)(const ae_int24x2 d /*in*/, const ae_int24x2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32X2_XP)(const ae_int32x2 d /*in*/, ae_int32x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_storexp)(const ae_int32x2 d /*in*/, ae_int32x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SF32X2_XP)(const ae_f32x2 d /*in*/, ae_f32x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f32x2_storexp)(const ae_f32x2 d /*in*/, ae_f32x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24X2S_XU)(const ae_p24x2s d /*in*/, ae_p24x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2s_storexp)(const ae_p24x2s d /*in*/, ae_p24x2s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S24X2_XP)(const ae_int24x2 d /*in*/, ae_int24x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int24x2_storexp)(const ae_int24x2 d /*in*/, ae_int24x2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X4_XC)(const ae_int16x4 d /*in*/, ae_int16x4 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X4_I)(const ae_int16x4 d /*in*/, const ae_int16x4 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_storei)(const ae_int16x4 d /*in*/, const ae_int16x4 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SF16X4_I)(const ae_f16x4 d /*in*/, const ae_f16x4 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f16x4_storei)(const ae_f16x4 d /*in*/, const ae_f16x4 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X4_IP)(const ae_int16x4 d /*in*/, ae_int16x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_storeip)(const ae_int16x4 d /*in*/, ae_int16x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SF16X4_IP)(const ae_f16x4 d /*in*/, ae_f16x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f16x4_storeip)(const ae_f16x4 d /*in*/, ae_f16x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X4_X)(const ae_int16x4 d /*in*/, const ae_int16x4 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_storex)(const ae_int16x4 d /*in*/, const ae_int16x4 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SF16X4_X)(const ae_f16x4 d /*in*/, const ae_f16x4 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f16x4_storex)(const ae_f16x4 d /*in*/, const ae_f16x4 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X4_XP)(const ae_int16x4 d /*in*/, ae_int16x4 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_storexp)(const ae_int16x4 d /*in*/, ae_int16x4 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SF16X4_XP)(const ae_f16x4 d /*in*/, ae_f16x4 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f16x4_storexp)(const ae_f16x4 d /*in*/, ae_f16x4 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X4RNG_I)(const ae_int16x4 d /*in*/, const ae_int16x4 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X4RNG_IP)(const ae_int16x4 d /*in*/, ae_int16x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X4RNG_X)(const ae_int16x4 d /*in*/, const ae_int16x4 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X4RNG_XP)(const ae_int16x4 d /*in*/, ae_int16x4 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16M_L_XC)(const ae_int32x2 d /*in*/, ae_p16s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP16F_L_C)(const ae_p24x2s d /*in*/, ae_p16s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16M_L_I)(const ae_int32x2 d /*in*/, const ae_p16s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP16F_L_I)(const ae_p24x2s d /*in*/, const ae_p16s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p16s_storei)(const ae_p16s d /*in*/, const ae_p16s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16M_L_IU)(const ae_int32x2 d /*in*/, ae_p16s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP16F_L_IU)(const ae_p24x2s d /*in*/, ae_p16s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p16s_storeiu)(const ae_p16s d /*in*/, ae_p16s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16M_L_X)(const ae_int32x2 d /*in*/, const ae_p16s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP16F_L_X)(const ae_p24x2s d /*in*/, const ae_p16s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p16s_storex)(const ae_p16s d /*in*/, const ae_p16s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16M_L_XU)(const ae_int32x2 d /*in*/, ae_p16s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP16F_L_XU)(const ae_p24x2s d /*in*/, ae_p16s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p16s_storexu)(const ae_p16s d /*in*/, ae_p16s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32F24_L_XC)(const ae_f24x2 d /*in*/, ae_f24 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24F_L_C)(const ae_p24x2s d /*in*/, ae_p24f ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32F24_L_I)(const ae_f24x2 d /*in*/, const ae_f24 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24F_L_I)(const ae_p24x2s d /*in*/, const ae_p24f * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f24_storei)(const ae_f24 d /*in*/, const ae_f24 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24f_storei)(const ae_p24f d /*in*/, const ae_p24f * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32F24_L_IP)(const ae_f24x2 d /*in*/, ae_f24 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24F_L_IU)(const ae_p24x2s d /*in*/, ae_p24f ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f24_storeip)(const ae_f24 d /*in*/, ae_f24 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24f_storeip)(const ae_p24f d /*in*/, ae_p24f ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32F24_L_X)(const ae_f24x2 d /*in*/, const ae_f24 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24F_L_X)(const ae_p24x2s d /*in*/, const ae_p24f * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f24_storex)(const ae_f24 d /*in*/, const ae_f24 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24f_storex)(const ae_p24f d /*in*/, const ae_p24f * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32F24_L_XP)(const ae_f24x2 d /*in*/, ae_f24 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24F_L_XU)(const ae_p24x2s d /*in*/, ae_p24f ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f24_storexp)(const ae_f24 d /*in*/, ae_f24 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24f_storexp)(const ae_p24f d /*in*/, ae_p24f ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32_L_XC)(const ae_int32x2 d /*in*/, ae_int32 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24S_L_C)(const ae_p24x2s d /*in*/, ae_p24s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32_L_I)(const ae_int32x2 d /*in*/, const ae_int32 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32_storei)(const ae_int32 d /*in*/, const ae_int32 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f32_storei)(const ae_f32 d /*in*/, const ae_f32 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24S_L_I)(const ae_p24x2s d /*in*/, const ae_p24s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int24_storei)(const ae_int24 d /*in*/, const ae_int24 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24s_storei)(const ae_p24s d /*in*/, const ae_p24s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32_L_IP)(const ae_int32x2 d /*in*/, ae_int32 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32_storeip)(const ae_int32 d /*in*/, ae_int32 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f32_storeip)(const ae_f32 d /*in*/, ae_f32 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24S_L_IU)(const ae_p24x2s d /*in*/, ae_p24s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int24_storeip)(const ae_int24 d /*in*/, ae_int24 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24s_storeip)(const ae_p24s d /*in*/, ae_p24s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32_L_X)(const ae_int32x2 d /*in*/, const ae_int32 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32_storex)(const ae_int32 d /*in*/, const ae_int32 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f32_storex)(const ae_f32 d /*in*/, const ae_f32 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24S_L_X)(const ae_p24x2s d /*in*/, const ae_p24s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int24_storex)(const ae_int24 d /*in*/, const ae_int24 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24s_storex)(const ae_p24s d /*in*/, const ae_p24s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32_L_XP)(const ae_int32x2 d /*in*/, ae_int32 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32_storexp)(const ae_int32 d /*in*/, ae_int32 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f32_storexp)(const ae_f32 d /*in*/, ae_f32 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SP24S_L_XU)(const ae_p24x2s d /*in*/, ae_p24s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int24_storexp)(const ae_int24 d /*in*/, ae_int24 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24s_storexp)(const ae_p24s d /*in*/, ae_p24s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16_0_XC)(const ae_int16x4 d /*in*/, ae_int16 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16_0_I)(const ae_int16x4 d /*in*/, const ae_int16 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16_storei)(const ae_int16 d /*in*/, const ae_int16 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f16_storei)(const ae_f16 d /*in*/, const ae_f16 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16_0_IP)(const ae_int16x4 d /*in*/, ae_int16 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16_storeip)(const ae_int16 d /*in*/, ae_int16 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f16_storeip)(const ae_f16 d /*in*/, ae_f16 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16_0_X)(const ae_int16x4 d /*in*/, const ae_int16 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16_storex)(const ae_int16 d /*in*/, const ae_int16 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f16_storex)(const ae_f16 d /*in*/, const ae_f16 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16_0_XP)(const ae_int16x4 d /*in*/, ae_int16 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16_storexp)(const ae_int16 d /*in*/, ae_int16 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f16_storexp)(const ae_f16 d /*in*/, ae_f16 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S64_XC)(const ae_int64 d /*in*/, ae_int64 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SQ56S_C)(const ae_q56s d /*in*/, ae_q56s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S64_I)(const ae_int64 d /*in*/, const ae_int64 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int64_storei)(const ae_int64 d /*in*/, const ae_int64 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f64_storei)(const ae_f64 d /*in*/, const ae_f64 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SQ56S_I)(const ae_q56s d /*in*/, const ae_q56s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_q56s_storei)(const ae_q56s d /*in*/, const ae_q56s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S64_IP)(const ae_int64 d /*in*/, ae_int64 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int64_storeip)(const ae_int64 d /*in*/, ae_int64 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f64_storeip)(const ae_f64 d /*in*/, ae_f64 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SQ56S_IU)(const ae_q56s d /*in*/, ae_q56s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_q56s_storeip)(const ae_q56s d /*in*/, ae_q56s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S64_X)(const ae_int64 d /*in*/, const ae_int64 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int64_storex)(const ae_int64 d /*in*/, const ae_int64 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f64_storex)(const ae_f64 d /*in*/, const ae_f64 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SQ56S_X)(const ae_q56s d /*in*/, const ae_q56s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_q56s_storex)(const ae_q56s d /*in*/, const ae_q56s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S64_XP)(const ae_int64 d /*in*/, ae_int64 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int64_storexp)(const ae_int64 d /*in*/, ae_int64 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f64_storexp)(const ae_f64 d /*in*/, ae_f64 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SQ56S_XU)(const ae_q56s d /*in*/, ae_q56s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_q56s_storexp)(const ae_q56s d /*in*/, ae_q56s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32M_XC)(const ae_int64 d /*in*/, ae_q32s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SQ32F_C)(const ae_q56s d /*in*/, ae_q32s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32M_I)(const ae_int64 d /*in*/, const ae_q32s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SQ32F_I)(const ae_q56s d /*in*/, const ae_q32s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_q32s_storei)(const ae_q32s d /*in*/, const ae_q32s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32M_IU)(const ae_int64 d /*in*/, ae_q32s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SQ32F_IU)(const ae_q56s d /*in*/, ae_q32s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_q32s_storeiu)(const ae_q32s d /*in*/, ae_q32s ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32M_X)(const ae_int64 d /*in*/, const ae_q32s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SQ32F_X)(const ae_q56s d /*in*/, const ae_q32s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_q32s_storex)(const ae_q32s d /*in*/, const ae_q32s * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32M_XU)(const ae_int64 d /*in*/, ae_q32s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SQ32F_XU)(const ae_q56s d /*in*/, ae_q32s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_q32s_storexu)(const ae_q32s d /*in*/, ae_q32s ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_ae_int32x2_loadri)(const ae_int32x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_ae_f32x2_loadri)(const ae_f32x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_ae_int24x2_loadri)(const ae_int24x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_ae_p24x2s_loadri)(const ae_p24x2s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_loadrip)(ae_int32x2* d /*out*/, const ae_int32x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f32x2_loadrip)(ae_f32x2* d /*out*/, const ae_f32x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int24x2_loadrip)(ae_int24x2* d /*out*/, const ae_int24x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_loadrip)(ae_int16x4* d /*out*/, const ae_int16x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f16x4_loadrip)(ae_f16x4* d /*out*/, const ae_f16x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_storeri)(const ae_int32x2 d /*in*/, const ae_int32x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f32x2_storeri)(const ae_f32x2 d /*in*/, const ae_f32x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int24x2_storeri)(const ae_int24x2 d /*in*/, const ae_int24x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2s_storeri)(const ae_p24x2s d /*in*/, const ae_p24x2s * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_storerip)(const ae_int32x2 d /*in*/, ae_int32x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f32x2_storerip)(const ae_f32x2 d /*in*/, ae_f32x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int24x2_storerip)(const ae_int24x2 d /*in*/, ae_int24x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_storerip)(const ae_int16x4 d /*in*/, ae_int16x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f16x4_storerip)(const ae_f16x4 d /*in*/, ae_f16x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA24_IC)(const ae_int24x2 d /*in*/, ae_valign* su /*inout*/, void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA24_IP)(const ae_int24x2 d /*in*/, ae_valign* su /*inout*/, void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA24_RIP)(const ae_int24x2 d /*in*/, ae_valign* su /*inout*/, void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA24_RIC)(const ae_int24x2 d /*in*/, ae_valign* su /*inout*/, void ** a /*inout*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_ae_p16s_mtor_ae_p24x2s)(const ae_p16s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_ae_p16s_mtor_ae_p24x2f)(const ae_p16s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_ae_p16s_mtor_ae_p24s)(const ae_p16s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_ae_p16s_mtor_ae_p24f)(const ae_p16s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_ae_p24s_mtor_ae_p24x2s)(const ae_p24s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_ae_p24s_mtor_ae_p24x2f)(const ae_p24s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_ae_p24s_mtor_ae_p24f)(const ae_p24s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_ae_p24f_mtor_ae_p24x2s)(const ae_p24f * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_ae_p24f_mtor_ae_p24x2f)(const ae_p24f * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_ae_p24x2f_mtor_ae_p24x2s)(const ae_p24x2f * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_ae_p16x2s_mtor_ae_p24x2s)(const ae_p16x2s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_ae_p16x2s_mtor_ae_p24x2f)(const ae_p16x2s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtom_ae_p16x2s)(const ae_p24x2s d /*in*/, const ae_p16x2s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtom_ae_p16x2s)(const ae_p24x2f d /*in*/, const ae_p16x2s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtom_ae_p24x2f)(const ae_p24x2s d /*in*/, const ae_p24x2f * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtom_ae_p24x2s)(const ae_p24x2f d /*in*/, const ae_p24x2s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtom_ae_p16s)(const ae_p24x2s d /*in*/, const ae_p16s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtom_ae_p16s)(const ae_p24x2f d /*in*/, const ae_p16s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24s_rtom_ae_p16s)(const ae_p24s d /*in*/, const ae_p16s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24f_rtom_ae_p16s)(const ae_p24f d /*in*/, const ae_p16s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtom_ae_p24s)(const ae_p24x2s d /*in*/, const ae_p24s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtom_ae_p24s)(const ae_p24x2f d /*in*/, const ae_p24s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24f_rtom_ae_p24s)(const ae_p24f d /*in*/, const ae_p24s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtom_ae_p24f)(const ae_p24x2s d /*in*/, const ae_p24f * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtom_ae_p24f)(const ae_p24x2f d /*in*/, const ae_p24f * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_p24s_rtom_ae_p24f)(const ae_p24s d /*in*/, const ae_p24f * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_ae_q32s_mtor_ae_q56s)(const ae_q32s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_q56s_rtom_ae_q32s)(const ae_q56s d /*in*/, const ae_q32s * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_valign CSTUB_(_TIE_xt_hifi2_ae_valign_loadi)(const ae_valign * a /*in*/, immediate imm /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_valign_storei)(const ae_valign su /*in*/, const ae_valign * a /*in*/, immediate imm /*in*/);
+CSTUB_EXTERN ae_valign CSTUB_(_TIE_xt_hifi2_ae_valign_move)(const ae_valign v /*in*/);
+CSTUB_EXTERN ae_valign CSTUB_(_TIE_xt_hifi2_AE_LA64_PP)(const void * a /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA24POS_PC)(ae_valign* uu /*out*/, const void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA24X2POS_PC)(ae_valign* uu /*out*/, const void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA32X2POS_PC)(ae_valign* uu /*out*/, const ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA16X4POS_PC)(ae_valign* uu /*out*/, const ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA24NEG_PC)(ae_valign* uu /*out*/, const void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA24X2NEG_PC)(ae_valign* uu /*out*/, const void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA32X2NEG_PC)(ae_valign* uu /*out*/, const ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA16X4NEG_PC)(ae_valign* uu /*out*/, const ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA32X2F24POS_PC)(ae_valign* uu /*out*/, const ae_f24x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA32X2F24NEG_PC)(ae_valign* uu /*out*/, const ae_f24x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA64POS_FP)(ae_valign* su /*inout*/, const void * a /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA64POS_FC)(ae_valign* su /*inout*/, const void * a /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA64NEG_FP)(ae_valign* su /*inout*/, const void * a /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA64NEG_FC)(ae_valign* su /*inout*/, const void * a /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA32X2_IC)(ae_int32x2* d /*out*/, ae_valign* uu /*inout*/, const ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA32X2_IP)(ae_int32x2* d /*out*/, ae_valign* uu /*inout*/, const ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA32X2_RIP)(ae_int32x2* d /*out*/, ae_valign* uu /*inout*/, const ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA32X2_RIC)(ae_int32x2* d /*out*/, ae_valign* uu /*inout*/, const ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA16X4_IC)(ae_int16x4* d /*out*/, ae_valign* uu /*inout*/, const ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA16X4_IP)(ae_int16x4* d /*out*/, ae_valign* uu /*inout*/, const ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA16X4_RIP)(ae_int16x4* d /*out*/, ae_valign* uu /*inout*/, const ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA16X4_RIC)(ae_int16x4* d /*out*/, ae_valign* uu /*inout*/, const ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA32X2F24_IC)(ae_f24x2* d /*out*/, ae_valign* uu /*inout*/, const ae_f24x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA32X2F24_IP)(ae_f24x2* d /*out*/, ae_valign* uu /*inout*/, const ae_f24x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA32X2F24_RIP)(ae_f24x2* d /*out*/, ae_valign* uu /*inout*/, const ae_f24x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA32X2F24_RIC)(ae_f24x2* d /*out*/, ae_valign* uu /*inout*/, const ae_f24x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA24_IC)(ae_int24x2* d /*out*/, ae_valign* uu /*inout*/, const void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA24_IP)(ae_int24x2* d /*out*/, ae_valign* uu /*inout*/, const void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA24_RIP)(ae_int24x2* d /*out*/, ae_valign* uu /*inout*/, const void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA24_RIC)(ae_int24x2* d /*out*/, ae_valign* uu /*inout*/, const void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA24X2_IC)(ae_int24x2* d /*out*/, ae_valign* uu /*inout*/, const void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA24X2_IP)(ae_int24x2* d /*out*/, ae_valign* uu /*inout*/, const void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA24X2_RIP)(ae_int24x2* d /*out*/, ae_valign* uu /*inout*/, const void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LA24X2_RIC)(ae_int24x2* d /*out*/, ae_valign* uu /*inout*/, const void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA32X2_IC)(const ae_int32x2 d /*in*/, ae_valign* su /*inout*/, ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA32X2_IP)(const ae_int32x2 d /*in*/, ae_valign* su /*inout*/, ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA32X2_RIP)(const ae_int32x2 d /*in*/, ae_valign* su /*inout*/, ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA32X2_RIC)(const ae_int32x2 d /*in*/, ae_valign* su /*inout*/, ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA16X4_IC)(const ae_int16x4 d /*in*/, ae_valign* su /*inout*/, ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA16X4_IP)(const ae_int16x4 d /*in*/, ae_valign* su /*inout*/, ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA16X4_RIP)(const ae_int16x4 d /*in*/, ae_valign* su /*inout*/, ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA16X4_RIC)(const ae_int16x4 d /*in*/, ae_valign* su /*inout*/, ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA32X2F24_IC)(const ae_f24x2 d /*in*/, ae_valign* su /*inout*/, ae_f24x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA32X2F24_IP)(const ae_f24x2 d /*in*/, ae_valign* su /*inout*/, ae_f24x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA32X2F24_RIP)(const ae_f24x2 d /*in*/, ae_valign* su /*inout*/, ae_f24x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA32X2F24_RIC)(const ae_f24x2 d /*in*/, ae_valign* su /*inout*/, ae_f24x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA24_L_IC)(const ae_int24x2 d /*in*/, ae_valign* su /*inout*/, void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA24_L_IP)(const ae_int24x2 d /*in*/, ae_valign* su /*inout*/, void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA24_L_RIP)(const ae_int24x2 d /*in*/, ae_valign* su /*inout*/, void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA24_L_RIC)(const ae_int24x2 d /*in*/, ae_valign* su /*inout*/, void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA24X2_IC)(const ae_int24x2 d /*in*/, ae_valign* su /*inout*/, void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA24X2_IP)(const ae_int24x2 d /*in*/, ae_valign* su /*inout*/, void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA24X2_RIP)(const ae_int24x2 d /*in*/, ae_valign* su /*inout*/, void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SA24X2_RIC)(const ae_int24x2 d /*in*/, ae_valign* su /*inout*/, void ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L32X2_RIP)(ae_int32x2* d /*out*/, const ae_int32x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32X2_RIP)(const ae_int32x2 d /*in*/, ae_int32x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_L32X2_RI)(const ae_int32x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32X2_RI)(const ae_int32x2 d /*in*/, const ae_int32x2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L16X4_RIP)(ae_int16x4* d /*out*/, const ae_int16x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X4_RIP)(const ae_int16x4 d /*in*/, ae_int16x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_L16X4_RI)(const ae_int16x4 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X4_RI)(const ae_int16x4 d /*in*/, const ae_int16x4 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_L16X4_RIC)(ae_int16x4* d /*out*/, const ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X4_RIC)(const ae_int16x4 d /*in*/, ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32RA64S_I)(const ae_f64 d /*in*/, const ae_f32 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32RA64S_IP)(const ae_f64 d /*in*/, ae_f32 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32RA64S_X)(const ae_f64 d /*in*/, const ae_f32 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32RA64S_XP)(const ae_f64 d /*in*/, ae_f32 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32RA64S_XC)(const ae_f64 d /*in*/, ae_f32 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S24RA64S_I)(const ae_f64 d /*in*/, const ae_f24 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S24RA64S_IP)(const ae_f64 d /*in*/, ae_f24 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S24RA64S_X)(const ae_f64 d /*in*/, const ae_f24 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S24RA64S_XP)(const ae_f64 d /*in*/, ae_f24 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S24RA64S_XC)(const ae_f64 d /*in*/, ae_f24 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32X2RA64S_IP)(const ae_f64 d2 /*in*/, const ae_f64 d1 /*in*/, ae_f32x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S24X2RA64S_IP)(const ae_f64 d2 /*in*/, const ae_f64 d1 /*in*/, ae_f24x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16X4RA32S_IP)(const ae_f32x2 d2 /*in*/, const ae_f32x2 d1 /*in*/, ae_f16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32_H_I)(const ae_int32x2 d /*in*/, const ae_int32 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32_H_IP)(const ae_int32x2 d /*in*/, ae_int32 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32_H_X)(const ae_int32x2 d /*in*/, const ae_int32 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32_H_XP)(const ae_int32x2 d /*in*/, ae_int32 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S32X2_L_IP)(const ae_int32 d2 /*in*/, const ae_int32 d1 /*in*/, ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MUL32JS)(const ae_f32x2 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_ZERO)(void);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_ZERO64)(void);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_ZERO32)(void);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_ZERO24)(void);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_ZERO16)(void);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_ZEROP48)(void);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MOV)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MOV64)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MOV16)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_MOV24)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MOV32)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_MOVP48)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16I_N)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16I)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SEL32I)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16_5432)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SEL32_LH)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_SEL24_LH)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_SELP24_LH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16_7520)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16_7610)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SEL32_HL)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_SEL24_HL)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_SELP24_HL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16_4321)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16_6543)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16_7632)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SEL32_HH)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_SEL24_HH)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_SELP24_HH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16_5410)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SEL32_LL)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_SEL24_LL)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_SELP24_LL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16_6420)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_CVT16X4)(const ae_f32x2 dl /*in*/, const ae_f32x2 dh /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16_7362)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16_5146)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16_5140)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16_2301)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16_7160)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16_5342)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16_7351)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_TRUNC16X4F32)(const ae_f32x2 dl /*in*/, const ae_f32x2 dh /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SHORTSWAP)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_xtbool4_move)(const xtbool4 s /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_xtbool4_loadi)(const xtbool4 * s /*in*/, immediate o /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_xtbool4_storei)(const xtbool4 r /*in*/, const xtbool4 * s /*in*/, immediate o /*in*/);
+CSTUB_EXTERN unsigned char CSTUB_(_TIE_xt_hifi2_AE_MOVAB4)(const xtbool4 b4 /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_AE_MOVBA4)(const unsigned int a /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_xtbool4_rtor_int32)(const xtbool4 b /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_xtbool4_rtor_uint32)(const xtbool4 b /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_int32_rtor_xtbool4)(const int b /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_uint32_rtor_xtbool4)(const unsigned int b /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_xtbool2_move)(const xtbool2 s /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_xtbool2_loadi)(const xtbool2 * s /*in*/, immediate o /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_xtbool2_storei)(const xtbool2 r /*in*/, const xtbool2 * s /*in*/, immediate o /*in*/);
+CSTUB_EXTERN unsigned char CSTUB_(_TIE_xt_hifi2_AE_MOVAB2)(const xtbool2 b2 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_MOVBA2)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned char CSTUB_(_TIE_xt_hifi2_AE_MOVAB)(const xtbool b /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_MOVBA)(const unsigned int a /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_MOVBA1X2)(const unsigned int a1 /*in*/, const unsigned int a2 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_xtbool2_rtor_int32)(const xtbool2 b /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_int32_rtor_xtbool2)(const int b /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_xtbool2_rtor_uint32)(const xtbool2 b /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_uint32_rtor_xtbool2)(const unsigned int b /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_xtbool_loadi)(const xtbool * s /*in*/, immediate o /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_xtbool_storei)(const xtbool r /*in*/, const xtbool * s /*in*/, immediate o /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVT16X4)(ae_int16x4* d /*inout*/, const ae_int16x4 d0 /*in*/, const xtbool4 bhl /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4)(ae_int16x4* d /*inout*/, const ae_int16x4 d0 /*in*/, const xtbool4 bhl /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVT32X2)(ae_int32x2* d /*inout*/, const ae_int32x2 d0 /*in*/, const xtbool2 bhl /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVTP24X2)(ae_p24x2s* d /*inout*/, const ae_p24x2s d0 /*in*/, const xtbool2 bhl /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2)(ae_int32x2* d /*inout*/, const ae_int32x2 d0 /*in*/, const xtbool2 bhl /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVFP24X2)(ae_p24x2s* d /*inout*/, const ae_p24x2s d0 /*in*/, const xtbool2 bhl /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVT64)(ae_int64* d /*inout*/, const ae_int64 d0 /*in*/, const xtbool bi /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVTP48)(ae_p24x2s* d /*inout*/, const ae_p24x2s d0 /*in*/, const xtbool bi /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVF64)(ae_int64* d /*inout*/, const ae_int64 d0 /*in*/, const xtbool bi /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVFP48)(ae_p24x2s* d /*inout*/, const ae_p24x2s d0 /*in*/, const xtbool bi /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVDA32X2)(const unsigned int a0 /*in*/, const unsigned int a1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_MOVPA24X2)(const unsigned int ah /*in*/, const unsigned int al /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MOVDA32)(const unsigned int a /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVDA16X2)(const unsigned int ah /*in*/, const unsigned int al /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVDA16)(const unsigned int a /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVI)(immediate i /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_TRUNCP24A32X2)(const unsigned int ah /*in*/, const unsigned int al /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SAT16X4)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_CVT32X2F16_32)(const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_CVT32X2F16_10)(const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SEXT32X2D16_32)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SEXT32X2D16_10)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_CVTA32F24S_L)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_CVTA32P24_L)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_CVTA32F24S_H)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_CVTA32P24_H)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_CVTP24A16X2_LL)(const unsigned int ah /*in*/, const unsigned int al /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_CVTP24A16X2_LH)(const unsigned int ah /*in*/, const unsigned int al /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_CVTP24A16X2_HL)(const unsigned int ah /*in*/, const unsigned int al /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_CVTP24A16X2_HH)(const unsigned int ah /*in*/, const unsigned int al /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_TRUNCP24Q48X2)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_TRUNCA32X2F64S)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_TRUNCI32X2F64S)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_TRUNCA32F64S_L)(const ae_int32x2 d0 /*in*/, const ae_int64 d1 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_TRUNCI32F64S_L)(const ae_int32x2 d0 /*in*/, const ae_int64 d1 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_TRUNCP16)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_ROUND32X2F64SSYM)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_ROUND32F64SSYM)(const ae_f64 d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_ROUND32X2F64SASYM)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_ROUND32F64SASYM)(const ae_f64 d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_ROUND32X2F48SSYM)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_ROUND32F48SSYM)(const ae_f64 d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_ROUND32X2F48SASYM)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_ROUND32F48SASYM)(const ae_f64 d0 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_ROUND16X4F32SSYM)(const ae_f32x2 d1 /*in*/, const ae_f32x2 d0 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_ROUND16X4F32SASYM)(const ae_f32x2 d1 /*in*/, const ae_f32x2 d0 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_ROUND24X2F48SSYM)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_ROUND24F48SSYM)(const ae_f64 d0 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_ROUND24X2F48SASYM)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_ROUND24F48SASYM)(const ae_f64 d0 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP16Q48X2SYM)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP16Q48SYM)(const ae_f64 d0 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP16Q48X2ASYM)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP16Q48ASYM)(const ae_f64 d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP24Q48ASYM)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP24Q48SYM)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MINABS32S)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_MINABSSP24S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MAXABS32S)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_MAXABSSP24S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP16F24SYM)(const ae_f32x2 d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP16SYM)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP16F24ASYM)(const ae_f32x2 d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP16ASYM)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_ZEROQ56)(void);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MOVQ56)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVTQ56)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const xtbool bi /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVFQ56)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const xtbool bi /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_CVTQ56A32S)(const unsigned int a0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_CVT48A32)(const unsigned int a0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_CVT64A32)(const unsigned int a0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_CVTQ48A32S)(const unsigned int a /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_CVTQ56P32S_L)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_CVTQ48P24S_L)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_CVTQ56P32S_H)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_CVTQ48P24S_H)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_CVT64F32_H)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_CVT64F32_L)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_SAT48S)(const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SATQ48S)(const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_SATQ56S)(const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_SAT24S)(const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_TRUNCQ32)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MINABS64S)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MINABSSQ56S)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MAXABS64S)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MAXABSSQ56S)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_ROUNDSQ32F48SYM)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_ROUNDSQ32SYM)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_ROUNDSQ32F48ASYM)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_ROUNDSQ32ASYM)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_TRUNCA32Q48)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_TRUNCA32Q64)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_MOVAD32_L)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_MOVAP24S_L)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_MOVAD32_H)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_MOVAP24S_H)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_MOVAD16_3)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_MOVAD16_2)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_MOVAD16_1)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_MOVAD16_0)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_SRA64_32)(const ae_int32x2 s /*in*/, const unsigned int sa /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_PKSR24)(ae_f24x2* d /*inout*/, const ae_f64 ps /*in*/, immediate pos /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_PKSR32)(ae_f32x2* d /*inout*/, const ae_f64 ps /*in*/, immediate pos /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_PKSR16)(ae_f16x4* d /*inout*/, const ae_f64 ps /*in*/, immediate pos /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_TRUNCA16P24S_L)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_TRUNCA16P24S_H)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_ADDSUB32_HL_LH)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SUBADD32_HL_LH)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_ADD32)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_ADDP24)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SUB32)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_SUBP24)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_ADDSUB32)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SUBADD32)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_ADD16)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SUB16)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_ADD32_HL_LH)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_NEG32)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_NEGP24)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_ABS32)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_ABSP24)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_NEG32_L)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_ADD24S)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_ADDSP24S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_SUB24S)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_SUBSP24S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_ADD32S)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_SUB32S)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_ADDSUB32S)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SUBADD32S)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_ADD16S)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_SUB16S)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_ADDSUB32S_HL_LH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_SUBADD32S_HL_LH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_NEG24S)(const ae_f32x2 d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_NEGSP24S)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_ABS24S)(const ae_f32x2 d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_ABSSP24S)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_NEG32S)(const ae_f32x2 d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_ABS32S)(const ae_f32x2 d0 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_NEG16S)(const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_ABS16S)(const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_NEG32S_L)(const ae_f32x2 d0 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_CONJ16S)(const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MULC16JS_H)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MULC16JS_H_S2)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MULC16JS_L)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MULC16JS_L_S2)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAC16JS_H)(ae_int32x2* q0 /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAC16JS_H_S2)(ae_int32x2* q0 /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAC16JS_L)(ae_int32x2* q0 /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAC16JS_L_S2)(ae_int32x2* q0 /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_AE_LT16)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_AE_LE16)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_AE_EQ16)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_LT32)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_LTP24S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_LE32)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_LEP24S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_EQ32)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_EQP24)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MIN32)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_MINP24S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MINB32)(ae_int32x2* d /*out*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/, xtbool2* bhl /*out*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MINBP24S)(ae_p24x2s* d /*out*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/, xtbool2* bhl /*out*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MAX32)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_MAXP24S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MAXB32)(ae_int32x2* d /*out*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/, xtbool2* bhl /*out*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MAXBP24S)(ae_p24x2s* d /*out*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/, xtbool2* bhl /*out*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MINMAX32)(ae_int32x2* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MIN16)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MAX16)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_ADD64)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_SUB64)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_ADDQ56)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SUBQ56)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_NEGQ56)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_ABSQ56)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_NEG64)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_ABS64)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_ADDSQ56S)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SUBSQ56S)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_ADD64S)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_SUB64S)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_NEGSQ56S)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_ABSSQ56S)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_NEG64S)(const ae_f64 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_ABS64S)(const ae_f64 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_AND)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_AND64)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_AND32)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_AND24)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_AND16)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_ANDP48)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_ANDQ56)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_NAND)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_NAND64)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_NAND32)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_NAND24)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_NAND16)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_NANDP48)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_NANDQ56)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_OR)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_OR64)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_OR32)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_OR24)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_OR16)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_ORP48)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_ORQ56)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_XOR)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_XOR64)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_XOR32)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_XOR24)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_XOR16)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_XORP48)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_XORQ56)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_SLAI24)(const ae_int24x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_SLLIP24)(const ae_p24x2s d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_SLLI24)(const ae_int24x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_SRLI24)(const ae_int24x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_SRLIP24)(const ae_p24x2s d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_SRAI24)(const ae_int24x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_SRAIP24)(const ae_p24x2s d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_SLAS24)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_SLLSP24)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_SRLS24)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_SRLSP24)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_SRAS24)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_SRASP24)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SRAI16)(const ae_int16x4 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SRAI16R)(const ae_int16x4 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SLAI32)(const ae_int32x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SLLI32)(const ae_int32x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SRLI32)(const ae_int32x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SRAI32)(const ae_int32x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SRAI32R)(const ae_int32x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SLAS32)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SRLS32)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SRAS32)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SLAA32)(const ae_int32x2 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SRLA32)(const ae_int32x2 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SRAA32)(const ae_int32x2 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SRLA16)(const ae_int16x4 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_SLLI16S)(const ae_f16x4 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_SLAI16S)(const ae_f16x4 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_SLAA16S)(const ae_f16x4 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_SRAA16S)(const ae_f16x4 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_SRAA16RS)(const ae_f16x4 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_SLAI24S)(const ae_f24x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_SLLI24S)(const ae_f24x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_SLLISP24S)(const ae_p24x2s d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_SLAS24S)(const ae_f24x2 d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_SLLSSP24S)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_SLLI32S)(const ae_f32x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_SLAI32S)(const ae_f32x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_SLAS32S)(const ae_f32x2 d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_SLAA32S)(const ae_f32x2 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_SRAA32S)(const ae_f32x2 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_SRAA32RS)(const ae_f32x2 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SLASQ56)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SLLSQ56)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SRLSQ56)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SRASQ56)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SLAAQ56)(const ae_q56s d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SLAIQ56)(const ae_q56s d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SLLAQ56)(const ae_q56s d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SLLIQ56)(const ae_q56s d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SRLAQ56)(const ae_q56s d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SRLIQ56)(const ae_q56s d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SRAAQ56)(const ae_q56s d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_SLAI64)(const ae_int64 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_SLLI64)(const ae_int64 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_SRLI64)(const ae_int64 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_SRAI64)(const ae_int64 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SRAIQ56)(const ae_q56s d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_SLAS64)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_SRLS64)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_SRAS64)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_SLAA64)(const ae_int64 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_SRLA64)(const ae_int64 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_SRAA64)(const ae_int64 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SLAISQ56S)(const ae_q56s d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SLLISQ56S)(const ae_q56s d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SLASSQ56S)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SLLSSQ56S)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SLAASQ56S)(const ae_q56s d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_SLLASQ56S)(const ae_q56s d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_SLAI64S)(const ae_f64 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_SLLI64S)(const ae_f64 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_SLAS64S)(const ae_f64 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_SLAA64S)(const ae_f64 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_LT64)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_LTQ56S)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_LE64)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_LEQ56S)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_EQ64)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_EQQ56)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MAX64)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MAXQ56S)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MAXB64)(ae_int64* d /*out*/, const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/, xtbool* bo /*out*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MAXBQ56S)(ae_q56s* d /*out*/, const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/, xtbool* bo /*out*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MIN64)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MINQ56S)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MINB64)(ae_int64* d /*out*/, const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/, xtbool* bo /*out*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MINBQ56S)(ae_q56s* d /*out*/, const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/, xtbool* bo /*out*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_NSA64)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_NSAQ56S)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_NSAZ16_0)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_NSAZ32_L)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_NSA16_0)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_NSA32_L)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULS32F48P16S_LL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFS32P16S_LL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32S_LL)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFP24S_LL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF24S_LL)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32_LL)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULP24S_LL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL24_LL)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULS32F48P16S_LL_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFS32P16S_LL_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32R_LL)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULS32F48P16S_LH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFS32P16S_LH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULS32F48P16S_HL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFS32P16S_HL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32S_LH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFP24S_LH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF24S_LH)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32S_HL)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFP24S_HL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF24S_HL)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32_LH)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULP24S_LH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL24_LH)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32_HL)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULP24S_HL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL24_HL)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULS32F48P16S_LH_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFS32P16S_LH_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32R_LH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32R_HL)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULS32F48P16S_HH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFS32P16S_HH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32S_HH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFP24S_HH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF24S_HH)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32_HH)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULP24S_HH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL24_HH)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULS32F48P16S_HH_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFS32P16S_HH_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32R_HH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32R_LL_S2)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAS32F48P16S_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFS32P16S_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32S_LL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP24S_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF24S_LL)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32_LL)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAP24S_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA24_LL)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAS32F48P16S_LL_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFS32P16S_LL_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32R_LL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAS32F48P16S_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFS32P16S_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAS32F48P16S_HL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFS32P16S_HL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32S_LH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP24S_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF24S_LH)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32S_HL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP24S_HL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF24S_HL)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32_LH)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAP24S_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA24_LH)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32_HL)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAP24S_HL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA24_HL)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAS32F48P16S_LH_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFS32P16S_LH_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32R_LH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32R_HL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAS32F48P16S_HH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFS32P16S_HH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32S_HH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP24S_HH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF24S_HH)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32_HH)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAP24S_HH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA24_HH)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAS32F48P16S_HH_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFS32P16S_HH_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32R_HH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32R_LL_S2)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSS32F48P16S_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFS32P16S_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32S_LL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP24S_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF24S_LL)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32_LL)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSP24S_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS24_LL)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSS32F48P16S_LL_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFS32P16S_LL_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32R_LL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSS32F48P16S_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFS32P16S_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSS32F48P16S_HL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFS32P16S_HL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32S_LH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP24S_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF24S_LH)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32S_HL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP24S_HL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF24S_HL)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32_LH)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSP24S_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS24_LH)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32_HL)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSP24S_HL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS24_HL)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSS32F48P16S_LH_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFS32P16S_LH_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32R_LH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32R_HL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSS32F48P16S_HH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFS32P16S_HH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32S_HH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP24S_HH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF24S_HH)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32_HH)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSP24S_HH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS24_HH)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSS32F48P16S_HH_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFS32P16S_HH_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32R_HH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32R_LL_S2)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32S_LL_S2)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFP24S_LL_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF24S_LL_S2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32S_LL_S2)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP24S_LL_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF24S_LL_S2)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32_LL_S2)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULP24S_LL_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL24_LL_S2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32_LL_S2)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAP24S_LL_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA24_LL_S2)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32U_LL)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32U_LL)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32U_LL)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFS56P24S_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAS56P24S_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFS56P24S_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFS56P24S_HL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAS56P24S_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAS56P24S_HL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFS56P24S_HH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAS56P24S_HH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFS56P24S_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSS56P24S_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFS56P24S_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFS56P24S_HL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSS56P24S_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSS56P24S_HL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFS56P24S_HH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSS56P24S_HH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_33)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_22)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_32)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_21)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_31)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_30)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_10)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_20)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_11)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_00)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_00_S2)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_33)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_22)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_32)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_21)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_31)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_30)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_10)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_20)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_11)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_00)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_00_S2)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_33)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_22)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_32)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_21)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_31)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_30)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_10)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_20)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_11)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_00)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_00_S2)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA16S_33)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS16S_33)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA16S_22)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS16S_22)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA16S_32)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS16S_32)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA16S_21)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS16S_21)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA16S_31)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS16S_31)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA16S_30)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS16S_30)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA16S_10)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS16S_10)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA16S_20)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS16S_20)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA16S_11)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS16S_11)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA16S_00)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS16S_00)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA16S_00_S2)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS16S_00_S2)(ae_int32x2* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD16SS_33_22)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD16SS_33_22_S2)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD16SS_13_02)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD16SS_13_02_S2)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD16SS_11_00)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD16SS_11_00_S2)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD16SS_33_22)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD16SS_33_22_S2)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD16SS_13_02)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD16SS_13_02_S2)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD16SS_11_00)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD16SS_11_00_S2)(ae_f32x2* d /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD16SS_33_22)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD16SS_33_22_S2)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD16SS_13_02)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD16SS_13_02_S2)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD16SS_11_00)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD16SS_11_00_S2)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD16SS_33_22)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD16SS_33_22_S2)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD16SS_13_02)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD16SS_13_02_S2)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD16SS_11_00)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD16SS_11_00_S2)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULF48Q32SP16S_L)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP16S_L)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULF48Q32SP16S_L_S2)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP16S_L_S2)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULF48Q32SP16U_L)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP16U_L)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULF48Q32SP16U_L_S2)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP16U_L_S2)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULQ32SP16S_L)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULQ32SP16S_L_S2)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULQ32SP16U_L)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULQ32SP16U_L_S2)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF48Q32SP16S_L)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP16S_L)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF48Q32SP16S_L_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP16S_L_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF48Q32SP16U_L)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP16U_L)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF48Q32SP16U_L_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP16U_L_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAQ32SP16S_L)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAQ32SP16S_L_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAQ32SP16U_L)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAQ32SP16U_L_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF48Q32SP16S_L)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP16S_L)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF48Q32SP16S_L_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP16S_L_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF48Q32SP16U_L)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP16U_L)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF48Q32SP16U_L_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP16U_L_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSQ32SP16S_L)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSQ32SP16S_L_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSQ32SP16U_L)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSQ32SP16U_L_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP24X2RA)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP24X2R)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MULP24X2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP24X2RA_S2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP24X2R_S2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MULP24X2_S2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP24X2RA)(ae_f32x2* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP24X2R)(ae_f32x2* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAP24X2)(ae_int32x2* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP24X2RA_S2)(ae_f32x2* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP24X2R_S2)(ae_f32x2* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAP24X2_S2)(ae_int32x2* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP24X2RA)(ae_f32x2* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP24X2R)(ae_f32x2* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSP24X2)(ae_int32x2* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP24X2RA_S2)(ae_f32x2* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP24X2R_S2)(ae_f32x2* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSP24X2_S2)(ae_int32x2* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD24_HH_LL)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAFP24S_HH_LL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAD24_HH_LL)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAP24S_HH_LL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD24_HH_LL_S2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAFP24S_HH_LL_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAD24_HH_LL_S2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAP24S_HH_LL_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD24_HL_LH)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAFP24S_HL_LH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAD24_HL_LH)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAP24S_HL_LH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD24_HL_LH_S2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAFP24S_HL_LH_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAD24_HL_LH_S2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAP24S_HL_LH_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZASFD24_HH_LL)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASFP24S_HH_LL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZASD24_HH_LL)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASP24S_HH_LL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZASFD24_HH_LL_S2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASFP24S_HH_LL_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZASD24_HH_LL_S2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASP24S_HH_LL_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZASFD24_HL_LH)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASFP24S_HL_LH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAF48P24S_HL_LH)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAFP24S_HL_LH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZASD24_HL_LH)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASP24S_HL_LH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSA64P24S_HL_LH)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAP24S_HL_LH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZASFD24_HL_LH_S2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASFP24S_HL_LH_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAF48P24S_HL_LH_S2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAFP24S_HL_LH_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZASD24_HL_LH_S2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASP24S_HL_LH_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSA64P24S_HL_LH_S2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAP24S_HL_LH_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD24_HH_LL)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAFP24S_HH_LL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAD24_HH_LL)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAP24S_HH_LL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD24_HH_LL_S2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAFP24S_HH_LL_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAD24_HH_LL_S2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAP24S_HH_LL_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD24_HH_LL)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSFP24S_HH_LL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSD24_HH_LL)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSP24S_HH_LL)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD24_HH_LL_S2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSFP24S_HH_LL_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSD24_HH_LL_S2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSP24S_HH_LL_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD24_HL_LH)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSFP24S_HL_LH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSD24_HL_LH)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSP24S_HL_LH)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD24_HL_LH_S2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSFP24S_HL_LH_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSD24_HL_LH_S2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSP24S_HL_LH_S2)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD24_HH_LL)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFP24S_HH_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAD24_HH_LL)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAP24S_HH_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD24_HH_LL_S2)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFP24S_HH_LL_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAD24_HH_LL_S2)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAP24S_HH_LL_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD24_HL_LH)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFP24S_HL_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAD24_HL_LH)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAP24S_HL_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD24_HL_LH_S2)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFP24S_HL_LH_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAD24_HL_LH_S2)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAP24S_HL_LH_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFD24_HH_LL)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFP24S_HH_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASD24_HH_LL)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASP24S_HH_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFD24_HH_LL_S2)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFP24S_HH_LL_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASD24_HH_LL_S2)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASP24S_HH_LL_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFD24_HL_LH)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFP24S_HL_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAF48P24S_HL_LH)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAFP24S_HL_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASD24_HL_LH)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASP24S_HL_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSA64P24S_HL_LH)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAP24S_HL_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFD24_HL_LH_S2)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFP24S_HL_LH_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAF48P24S_HL_LH_S2)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAFP24S_HL_LH_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASD24_HL_LH_S2)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASP24S_HL_LH_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSA64P24S_HL_LH_S2)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAP24S_HL_LH_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAFD24_HH_LL)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAFP24S_HH_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAD24_HH_LL)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAP24S_HH_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAFD24_HH_LL_S2)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAFP24S_HH_LL_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAD24_HH_LL_S2)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAP24S_HH_LL_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD24_HH_LL)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFP24S_HH_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSD24_HH_LL)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSP24S_HH_LL)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD24_HH_LL_S2)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFP24S_HH_LL_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSD24_HH_LL_S2)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSP24S_HH_LL_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD24_HL_LH)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFP24S_HL_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSD24_HL_LH)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSP24S_HL_LH)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD24_HL_LH_S2)(ae_f64* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFP24S_HL_LH_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSD24_HL_LH_S2)(ae_int64* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSP24S_HL_LH_S2)(ae_q56s* d /*inout*/, const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32S_HH_LL)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32RA_HH_LL)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32R_HH_LL)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32_HH_LL)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32S_HL_LH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32RA_HL_LH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32R_HL_LH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32_HL_LH)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32S_HH_LL)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32RA_HH_LL)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32R_HH_LL)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZASD32_HH_LL)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32S_HL_LH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32S_HL_LH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32RA_HL_LH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32RA_HL_LH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32R_HL_LH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32R_HL_LH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZASD32_HL_LH)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAD32_HL_LH)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32S_HH_LL)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32RA_HH_LL)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32R_HH_LL)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAD32_HH_LL)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32S_HH_LL)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32RA_HH_LL)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32R_HH_LL)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSD32_HH_LL)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32S_HL_LH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32RA_HL_LH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32R_HL_LH)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSD32_HL_LH)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32S_HH_LL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32RA_HH_LL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32R_HH_LL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAD32_HH_LL)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32S_HL_LH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32RA_HL_LH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32R_HL_LH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAD32_HL_LH)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFD32S_HH_LL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFD32RA_HH_LL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFD32R_HH_LL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASD32_HH_LL)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFD32S_HL_LH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32S_HL_LH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFD32RA_HL_LH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32RA_HL_LH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFD32R_HL_LH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32R_HL_LH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASD32_HL_LH)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAD32_HL_LH)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32S_HH_LL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32RA_HH_LL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32R_HH_LL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAD32_HH_LL)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32S_HH_LL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32RA_HH_LL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32R_HH_LL)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSD32_HH_LL)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32S_HL_LH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32RA_HL_LH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32R_HL_LH)(ae_f64* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSD32_HL_LH)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSRFQ32SP24S_H)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSRFQ32SP24S_H_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSRFQ32SP24S_L)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSRFQ32SP24S_L_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULARFQ32SP24S_H)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULARFQ32SP24S_H_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULARFQ32SP24S_L)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULARFQ32SP24S_L_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULRFQ32SP24S_H)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULRFQ32SP24S_H_S2)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULRFQ32SP24S_L)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULRFQ32SP24S_L_S2)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP24S_H)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP24S_H_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP24S_L)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP24S_L_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP24S_H)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP24S_H_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP24S_L)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP24S_L_S2)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP24S_H)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP24S_H_S2)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP24S_L)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP24S_L_S2)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_L0)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_L0)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_L0_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_L0_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_L1)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_L1)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_L1_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_L1_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_L2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_L2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_L2_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_L2_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_L3)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_L3)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_L3_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_L3_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_H0)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_H0)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_H0_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_H0_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_H1)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_H1)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_H1_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_H1_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_H2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_H2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_H2_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_H2_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_H3)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_H3)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_H3_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_H3_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_L0)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_L0)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_L0_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_L0_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_L1)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_L1)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_L1_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_L1_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_L2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_L2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_L2_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_L2_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_L3)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_L3)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_L3_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_L3_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_H0)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_H0)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_H0_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_H0_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_H1)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_H1)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_H1_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_H1_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_H2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_H2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_H2_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_H2_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_H3)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_H3)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_H3_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_H3_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_L0)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_L0)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_L0_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_L0_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_L1)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_L1)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_L1_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_L1_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_L2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_L2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_L2_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_L2_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_L3)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_L3)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_L3_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_L3_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_H0)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_H0)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_H0_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_H0_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_H1)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_H1)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_H1_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_H1_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_H2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_H2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_H2_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_H2_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_H3)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_H3)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_H3_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_H3_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32X16_H3_L2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAD32X16_H3_L2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32X16_H3_L2_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAD32X16_H3_L2_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32X16_H1_L0)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAD32X16_H1_L0)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32X16_H1_L0_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAD32X16_H1_L0_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFD32X16_H3_L2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASD32X16_H3_L2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFD32X16_H3_L2_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASD32X16_H3_L2_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFD32X16_H1_L0)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASD32X16_H1_L0)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASFD32X16_H1_L0_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULASD32X16_H1_L0_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32X16_H3_L2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAD32X16_H3_L2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32X16_H3_L2_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAD32X16_H3_L2_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32X16_H1_L0)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAD32X16_H1_L0)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32X16_H1_L0_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSAD32X16_H1_L0_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32X16_H3_L2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSD32X16_H3_L2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32X16_H3_L2_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSD32X16_H3_L2_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32X16_H1_L0)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSD32X16_H1_L0)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32X16_H1_L0_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSSD32X16_H1_L0_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32X16_H3_L2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32X16_H3_L2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32X16_H3_L2_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32X16_H3_L2_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32X16_H1_L0)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32X16_H1_L0)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32X16_H1_L0_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32X16_H1_L0_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32X16_H3_L2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZASD32X16_H3_L2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32X16_H3_L2_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZASD32X16_H3_L2_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32X16_H1_L0)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZASD32X16_H1_L0)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32X16_H1_L0_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZASD32X16_H1_L0_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32X16_H3_L2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAD32X16_H3_L2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32X16_H3_L2_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAD32X16_H3_L2_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32X16_H1_L0)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAD32X16_H1_L0)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32X16_H1_L0_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSAD32X16_H1_L0_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32X16_H3_L2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSD32X16_H3_L2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32X16_H3_L2_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSD32X16_H3_L2_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32X16_H1_L0)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSD32X16_H1_L0)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32X16_H1_L0_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZSSD32X16_H1_L0_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32X16_H2_L3)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32X16_H0_L1)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32X16_H2_L3)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32X16_H0_L1)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32X16_H2_L3)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32X16_H0_L1)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAD32X16_H2_L3)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAD32X16_H0_L1)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32X16_H2_L3_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32X16_H0_L1_S2)(const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32X16_H2_L3_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32X16_H0_L1_S2)(ae_f64* d /*inout*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32X16_H2_L3_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32X16_H0_L1_S2)(const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAD32X16_H2_L3_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAD32X16_H0_L1_S2)(ae_int64* d /*inout*/, const ae_int32x2 d1 /*in*/, const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MULP32X16X2_H)(const ae_int32x2 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2RS_H)(const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2RAS_H)(const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2S_H)(const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2S_H_S2)(const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2RS_H_S2)(const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2RAS_H_S2)(const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MULP32X16X2_L)(const ae_int32x2 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2RS_L)(const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2RAS_L)(const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2S_L)(const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2S_L_S2)(const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2RS_L_S2)(const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2RAS_L_S2)(const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAP32X16X2_H)(ae_int32x2* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2RS_H)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2RAS_H)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2S_H)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2S_H_S2)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2RS_H_S2)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2RAS_H_S2)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAP32X16X2_L)(ae_int32x2* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2RS_L)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2RAS_L)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2S_L)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2S_L_S2)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2RS_L_S2)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2RAS_L_S2)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSP32X16X2_H)(ae_int32x2* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2RS_H)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2RAS_H)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2S_H)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2S_H_S2)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2RS_H_S2)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2RAS_H_S2)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSP32X16X2_L)(ae_int32x2* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2RS_L)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2RAS_L)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2S_L)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2S_L_S2)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2RS_L_S2)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2RAS_L_S2)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MULP32X2)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP32X2RS)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP32X2RAS)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFP32X2TS)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MULP32X2T)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAP32X2)(ae_int32x2* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X2RS)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X2RAS)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X2TS)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAP32X2T)(ae_int32x2* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSP32X2)(ae_int32x2* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X2RS)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X2RAS)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X2TS)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MULFP16X4S)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MULFP16X4RAS)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MULC24)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFC24RA)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULFCR32RAS)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFCI32RAS)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MULC32X16_L)(const ae_int32x2 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFC32X16RAS_L)(const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MULC32X16_H)(const ae_int32x2 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFC32X16RAS_H)(const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAC24)(ae_int32x2* d /*inout*/, const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFC24RA)(ae_f32x2* d /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFCR32RAS)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFCI32RAS)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAC32X16_L)(ae_int32x2* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFC32X16RAS_L)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAC32X16_H)(ae_int32x2* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFC32X16RAS_H)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFC32RAS)(ae_f32x2* d /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MULFC32RAS)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULF16X4SS)(ae_f32x2* d0 /*out*/, ae_f32x2* d1 /*out*/, const ae_f16x4 d2 /*in*/, const ae_f16x4 d3 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF16X4SS)(ae_f32x2* d0 /*inout*/, ae_f32x2* d1 /*inout*/, const ae_f16x4 d2 /*in*/, const ae_f16x4 d3 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF16X4SS)(ae_f32x2* d0 /*inout*/, ae_f32x2* d1 /*inout*/, const ae_f16x4 d2 /*in*/, const ae_f16x4 d3 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA16X4S)(ae_int32x2* d0 /*inout*/, ae_int32x2* d1 /*inout*/, const ae_int16x4 d2 /*in*/, const ae_int16x4 d3 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS16X4S)(ae_int32x2* d0 /*inout*/, ae_int32x2* d1 /*inout*/, const ae_int16x4 d2 /*in*/, const ae_int16x4 d3 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MUL16X4)(ae_int32x2* d0 /*out*/, ae_int32x2* d1 /*out*/, const ae_int16x4 d2 /*in*/, const ae_int16x4 d3 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA16X4)(ae_int32x2* d0 /*inout*/, ae_int32x2* d1 /*inout*/, const ae_int16x4 d2 /*in*/, const ae_int16x4 d3 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULS16X4)(ae_int32x2* d0 /*inout*/, ae_int32x2* d1 /*inout*/, const ae_int16x4 d2 /*in*/, const ae_int16x4 d3 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULFD24X2_FIR_H)(ae_f64* q0 /*out*/, ae_f64* q1 /*out*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/, const ae_f24x2 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULFD24X2_FIR_L)(ae_f64* q0 /*out*/, ae_f64* q1 /*out*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/, const ae_f24x2 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULFD32X16X2_FIR_HH)(ae_f64* q0 /*out*/, ae_f64* q1 /*out*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULFD32X16X2_FIR_HL)(ae_f64* q0 /*out*/, ae_f64* q1 /*out*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULFD32X16X2_FIR_LH)(ae_f64* q0 /*out*/, ae_f64* q1 /*out*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULFD32X16X2_FIR_LL)(ae_f64* q0 /*out*/, ae_f64* q1 /*out*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFD24X2_FIR_H)(ae_f64* q0 /*inout*/, ae_f64* q1 /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/, const ae_f24x2 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFD24X2_FIR_L)(ae_f64* q0 /*inout*/, ae_f64* q1 /*inout*/, const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/, const ae_f24x2 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFD32X16X2_FIR_HH)(ae_f64* q0 /*inout*/, ae_f64* q1 /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFD32X16X2_FIR_HL)(ae_f64* q0 /*inout*/, ae_f64* q1 /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFD32X16X2_FIR_LH)(ae_f64* q0 /*inout*/, ae_f64* q1 /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFD32X16X2_FIR_LL)(ae_f64* q0 /*inout*/, ae_f64* q1 /*inout*/, const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MULC16S_H)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MULC16S_H_S2)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MULC16S_L)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MULC16S_L_S2)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAC16S_H)(ae_int32x2* q0 /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAC16S_H_S2)(ae_int32x2* q0 /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAC16S_L)(ae_int32x2* q0 /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAC16S_L_S2)(ae_int32x2* q0 /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFC16RAS)(ae_f16x4* q0 /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MULFC16RAS)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAAAQ16)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAAAQ16)(ae_int64* q0 /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULZAAAAQ16_S2)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAAAQ16_S2)(ae_int64* q0 /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MUL16JS)(const ae_f16x4 v1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_ADDANDSUBRNG16RAS_S1)(ae_int16x4* va /*inout*/, ae_int16x4* vs /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_ADDANDSUBRNG16RAS_S2)(ae_int16x4* va /*inout*/, ae_int16x4* vs /*inout*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MAXABS16S)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULFQ16X2_FIR_3)(ae_f64* q0 /*out*/, ae_f64* q1 /*out*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULFQ16X2_FIR_2)(ae_f64* q0 /*out*/, ae_f64* q1 /*out*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULFQ16X2_FIR_1)(ae_f64* q0 /*out*/, ae_f64* q1 /*out*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULFQ16X2_FIR_0)(ae_f64* q0 /*out*/, ae_f64* q1 /*out*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFQ16X2_FIR_3)(ae_f64* q0 /*inout*/, ae_f64* q1 /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFQ16X2_FIR_2)(ae_f64* q0 /*inout*/, ae_f64* q1 /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFQ16X2_FIR_1)(ae_f64* q0 /*inout*/, ae_f64* q1 /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFQ16X2_FIR_0)(ae_f64* q0 /*inout*/, ae_f64* q1 /*inout*/, const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_DIV64D32_H)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_DIV64D32_L)(ae_int64* d /*inout*/, const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_AE_LB)(const unsigned int ba /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_AE_LBI)(immediate ba /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_AE_LBK)(const unsigned int a0 /*in*/, const unsigned int ba /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_AE_LBKI)(const unsigned int a0 /*in*/, immediate ba /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_LBS)(const unsigned int ba /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_LBSI)(immediate ba /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_DB)(const unsigned short ** a /*inout*/, const unsigned int count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_DBI)(const unsigned short ** a /*inout*/, immediate count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_DB_IC)(const unsigned short ** a /*inout*/, const unsigned int count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_DB_XC)(const unsigned short ** a /*inout*/, const unsigned int count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_DBI_IC)(const unsigned short ** a /*inout*/, immediate count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_DBI_XC)(const unsigned short ** a /*inout*/, immediate count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_DB_IP)(const unsigned short ** a /*inout*/, const unsigned int count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_DBI_IP)(const unsigned short ** a /*inout*/, immediate count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_ARDECNORM16)(xtbool* flag /*out*/, unsigned int* high_low /*inout*/, unsigned int* val /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LBKI_DBI_IC)(const unsigned short ** a /*inout*/, unsigned int* b /*out*/, const unsigned int a0 /*in*/, immediate count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LBKI_DBI_IP)(const unsigned short ** a /*inout*/, unsigned int* b /*out*/, const unsigned int a0 /*in*/, immediate count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LBKI_DBI)(const unsigned short ** a /*inout*/, unsigned int* b /*out*/, const unsigned int a0 /*in*/, immediate count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LBI_DBI_IC)(const unsigned short ** a /*inout*/, unsigned int* b /*out*/, immediate count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LBI_DBI_IP)(const unsigned short ** a /*inout*/, unsigned int* b /*out*/, immediate count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LBI_DBI)(const unsigned short ** a /*inout*/, unsigned int* b /*out*/, immediate count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LBK_DB_IC)(const unsigned short ** a /*inout*/, unsigned int* b /*out*/, const unsigned int a0 /*in*/, const unsigned int count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LBK_DB_IP)(const unsigned short ** a /*inout*/, unsigned int* b /*out*/, const unsigned int a0 /*in*/, const unsigned int count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LBK_DB)(const unsigned short ** a /*inout*/, unsigned int* b /*out*/, const unsigned int a0 /*in*/, const unsigned int count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LB_DB_IC)(const unsigned short ** a /*inout*/, unsigned int* b /*out*/, const unsigned int count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LB_DB_IP)(const unsigned short ** a /*inout*/, unsigned int* b /*out*/, const unsigned int count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_LB_DB)(const unsigned short ** a /*inout*/, unsigned int* b /*out*/, const unsigned int count /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SEXT32)(const ae_int32x2 d0 /*in*/, immediate bit /*in*/);
+CSTUB_EXTERN short CSTUB_(_TIE_xt_hifi2_AE_L16SI_N)(const short * ars /*in*/, immediate i /*in*/);
+CSTUB_EXTERN unsigned short CSTUB_(_TIE_xt_hifi2_AE_L16UI_N)(const unsigned short * ars /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S16I_N)(const short art /*in*/, const short * ars /*in*/, immediate i /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_ZEXT16)(const int ars /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_ZEXT8)(const int ars /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_CLAMPS16)(const int ars /*in*/);
+CSTUB_EXTERN ae_p16s CSTUB_(_TIE_xt_hifi2_ae_p16s_move)(const ae_p16s d0 /*in*/);
+CSTUB_EXTERN ae_p16x2s CSTUB_(_TIE_xt_hifi2_ae_p16x2s_move)(const ae_p16x2s d0 /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_ae_int24_move)(const ae_int24 d0 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_ae_p24s_move)(const ae_p24s d0 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_ae_int16_move)(const ae_int16 d0 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_ae_int16x4_move)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_ae_f16_move)(const ae_f16 d0 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_ae_f16x4_move)(const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_ae_int32_move)(const ae_int32 d0 /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_ae_f32_move)(const ae_f32 d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_ae_p24x2s_move)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_ae_int24x2_move)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_ae_f24_move)(const ae_f24 d0 /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_ae_p24f_move)(const ae_p24f d0 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_ae_p24x2f_move)(const ae_p24x2f d0 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_ae_f24x2_move)(const ae_f24x2 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_ae_int32x2_move)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_ae_f32x2_move)(const ae_f32x2 d0 /*in*/);
+CSTUB_EXTERN ae_q32s CSTUB_(_TIE_xt_hifi2_ae_q32s_move)(const ae_q32s d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_ae_q56s_move)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_ae_int64_move)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_ae_f64_move)(const ae_f64 d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtor_ae_p24x2s)(const ae_p24x2f d0 /*in*/);
+CSTUB_EXTERN ae_p16x2s CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtor_ae_p16x2s)(const ae_p24x2f d0 /*in*/);
+CSTUB_EXTERN ae_p16s CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtor_ae_p16s)(const ae_p24x2f d0 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtor_ae_p24s)(const ae_p24x2f d0 /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtor_ae_p24f)(const ae_p24x2f d0 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtor_ae_p24x2f)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_p16x2s CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtor_ae_p16x2s)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_p16s CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtor_ae_p16s)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtor_ae_p24s)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtor_ae_p24f)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_ae_p24s_rtor_ae_p24x2f)(const ae_p24s d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_ae_p24s_rtor_ae_p24x2s)(const ae_p24s d0 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_ae_p24f_rtor_ae_p24x2f)(const ae_p24f d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_ae_p24f_rtor_ae_p24x2s)(const ae_p24f d0 /*in*/);
+CSTUB_EXTERN ae_q32s CSTUB_(_TIE_xt_hifi2_ae_q56s_rtor_ae_q32s)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_CVTP24A16)(const unsigned int ai /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_CVTP24A16X2)(const unsigned int ah /*in*/, const unsigned int al /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_MOVPA24)(const unsigned int ai /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_TRUNCP24Q48)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_TRUNCI32F64S)(const ae_int64 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_TRUNCA32F64S)(const ae_int64 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_NOTP48)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_NOT32)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_NOT16)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_NOT24)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_NOTQ56)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_NOT64)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_NOT)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULF48Q32SP16S_H)(const ae_int64 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP16S_H)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MULF48Q32SP16U_H)(const ae_int64 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP16U_H)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULQ32SP16S_H)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULQ32SP16U_H)(const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF48Q32SP16S_H)(ae_int64* d /*inout*/, const ae_int64 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP16S_H)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF48Q32SP16U_H)(ae_int64* d /*inout*/, const ae_int64 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP16U_H)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAQ32SP16S_H)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAQ32SP16U_H)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF48Q32SP16S_H)(ae_int64* d /*inout*/, const ae_int64 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP16S_H)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSF48Q32SP16U_H)(ae_int64* d /*inout*/, const ae_int64 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP16U_H)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSQ32SP16S_H)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULSQ32SP16U_H)(ae_q56s* d /*inout*/, const ae_q56s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16S_LL)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16S_LL_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16S_LL)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16S_LL_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16U_LL)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16U_LL_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16U_LL)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16U_LL_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16S_HH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16S_HH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16S_HH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16S_HH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16U_HH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16U_HH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16U_HH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16U_HH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16S_LH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16S_LH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16S_LH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16S_LH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16U_LH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16U_LH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16U_LH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16U_LH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16S_LL)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16S_LL_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16S_LL)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16S_LL_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16U_LL)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16U_LL_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16U_LL)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16U_LL_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16S_HH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16S_HH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16S_HH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16S_HH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16U_HH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16U_HH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16U_HH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16U_HH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16S_LH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16S_LH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16S_LH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16S_LH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16U_LH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16U_LH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16U_LH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16U_LH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16S_LL)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16S_LL_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16S_LL)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16S_LL_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16U_LL)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16U_LL_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16U_LL)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16U_LL_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16S_HH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16S_HH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16S_HH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16S_HH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16U_HH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16U_HH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16U_HH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16U_HH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16S_LH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16S_LH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16S_LH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16S_LH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16U_LH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16U_LH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16U_LH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16U_LH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16S_LL)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16S_LL_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16S_LL)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16S_LL_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16U_LL)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16U_LL_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16U_LL)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16U_LL_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16S_HH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16S_HH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16S_HH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16S_HH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16U_HH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16U_HH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16U_HH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16U_HH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16S_LH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16S_LH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16S_LH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16S_LH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16U_LH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16U_LH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16U_LH)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16U_LH_S2)(const ae_q56s d0 /*in*/, const ae_int24x2 d1 /*in*/, const ae_q56s d2 /*in*/, const ae_int24x2 d3 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_VLDL16T)(xtbool* done /*out*/, unsigned int* symbol /*out*/, const unsigned short * a /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_VLDL16C)(const unsigned short ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_VLDL16C_XC)(const unsigned short ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_VLDL16C_IC)(const unsigned short ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_VLDL16C_IP)(const unsigned short ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_VLEL16T)(xtbool* done /*out*/, unsigned int* symbol /*inout*/, const unsigned short * a /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_VLES16C)(unsigned short ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_VLES16C_IC)(unsigned short ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_VLES16C_XC)(unsigned short ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_VLES16C_IP)(unsigned short ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_VLDL32T)(xtbool* done /*out*/, unsigned int* symbol /*out*/, const unsigned int * a /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_VLEL32T)(xtbool* done /*out*/, unsigned int* symbol /*inout*/, const unsigned int * a /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SB)(unsigned short ** a /*inout*/, const unsigned int bits /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SB_IC)(unsigned short ** a /*inout*/, const unsigned int bits /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SB_XC)(unsigned short ** a /*inout*/, const unsigned int bits /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SB_IP)(unsigned short ** a /*inout*/, const unsigned int bits /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SBI)(unsigned short ** a /*inout*/, const unsigned int bits /*in*/, immediate count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SBI_IC)(unsigned short ** a /*inout*/, const unsigned int bits /*in*/, immediate count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SBI_XC)(unsigned short ** a /*inout*/, const unsigned int bits /*in*/, immediate count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SBI_IP)(unsigned short ** a /*inout*/, const unsigned int bits /*in*/, immediate count /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SBF)(unsigned short ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SBF_IC)(unsigned short ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SBF_XC)(unsigned short ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SBF_IP)(unsigned short ** a /*inout*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_MULF_F16X4)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_MUL_INT16X4)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_ADD_INT24X2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_SUB_INT24X2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_AND_INT24X2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_XOR_INT24X2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_OR_INT24X2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_MUL_INT24X2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_EQ_INT24X2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_LT_INT24X2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_LE_INT24X2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_GT_INT24X2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_GE_INT24X2)(const ae_int24x2 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_ADD_INT24)(const ae_int24x2 d0 /*in*/, const ae_int24 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_SUB_INT24)(const ae_int24x2 d0 /*in*/, const ae_int24 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_AND_INT24)(const ae_int24x2 d0 /*in*/, const ae_int24 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_XOR_INT24)(const ae_int24x2 d0 /*in*/, const ae_int24 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_OR_INT24)(const ae_int24x2 d0 /*in*/, const ae_int24 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_NEG)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_BNOT)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_SLA)(const ae_int24x2 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_SRA)(const ae_int24x2 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_SLAI)(const ae_int24x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24X2_SRAI)(const ae_int24x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24_ADD_INT24X2)(const ae_int24 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24_SUB_INT24X2)(const ae_int24 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24_AND_INT24X2)(const ae_int24 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24_XOR_INT24X2)(const ae_int24 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_INT24_OR_INT24X2)(const ae_int24 d0 /*in*/, const ae_int24x2 d1 /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_INT24_ADD_INT24)(const ae_int24 d0 /*in*/, const ae_int24 d1 /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_INT24_SUB_INT24)(const ae_int24 d0 /*in*/, const ae_int24 d1 /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_INT24_AND_INT24)(const ae_int24 d0 /*in*/, const ae_int24 d1 /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_INT24_XOR_INT24)(const ae_int24 d0 /*in*/, const ae_int24 d1 /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_INT24_OR_INT24)(const ae_int24 d0 /*in*/, const ae_int24 d1 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_INT24_MUL_INT24)(const ae_int24 d0 /*in*/, const ae_int24 d1 /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_INT24_NEG)(const ae_int24 d0 /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_INT24_BNOT)(const ae_int24 d0 /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_INT24_SLA)(const ae_int24 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_INT24_SRA)(const ae_int24 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_INT24_SLAI)(const ae_int24 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_INT24_SRAI)(const ae_int24 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_ADDS_F24X2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_SUBS_F24X2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_AND_F24X2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_XOR_F24X2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_OR_F24X2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_MULF_F24X2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_EQ_F24X2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_LT_F24X2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_LE_F24X2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_GT_F24X2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_GE_F24X2)(const ae_f24x2 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_ADDS_F24)(const ae_f24x2 d0 /*in*/, const ae_f24 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_SUBS_F24)(const ae_f24x2 d0 /*in*/, const ae_f24 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_AND_F24)(const ae_f24x2 d0 /*in*/, const ae_f24 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_XOR_F24)(const ae_f24x2 d0 /*in*/, const ae_f24 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_OR_F24)(const ae_f24x2 d0 /*in*/, const ae_f24 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_NEGS)(const ae_f24x2 d0 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_BNOT)(const ae_f24x2 d0 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_SLA)(const ae_f24x2 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_SRA)(const ae_f24x2 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_SLAI)(const ae_f24x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24X2_SRAI)(const ae_f24x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24_ADDS_F24X2)(const ae_f24 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24_SUBS_F24X2)(const ae_f24 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24_AND_F24X2)(const ae_f24 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24_XOR_F24X2)(const ae_f24 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_F24_OR_F24X2)(const ae_f24 d0 /*in*/, const ae_f24x2 d1 /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_F24_ADDS_F24)(const ae_f24 d0 /*in*/, const ae_f24 d1 /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_F24_SUBS_F24)(const ae_f24 d0 /*in*/, const ae_f24 d1 /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_F24_AND_F24)(const ae_f24 d0 /*in*/, const ae_f24 d1 /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_F24_XOR_F24)(const ae_f24 d0 /*in*/, const ae_f24 d1 /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_F24_OR_F24)(const ae_f24 d0 /*in*/, const ae_f24 d1 /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_F24_MULF_F24)(const ae_f24 d0 /*in*/, const ae_f24 d1 /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_F24_NEGS)(const ae_f24 d0 /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_F24_BNOT)(const ae_f24 d0 /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_F24_SLA)(const ae_f24 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_F24_SRA)(const ae_f24 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_F24_SLAI)(const ae_f24 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_F24_SRAI)(const ae_f24 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_ADD_INT16X4)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_SUB_INT16X4)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_AND_INT16X4)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_XOR_INT16X4)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_OR_INT16X4)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_EQ_INT16X4)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_LT_INT16X4)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_LE_INT16X4)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_GT_INT16X4)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_GE_INT16X4)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_ADD_INT16)(const ae_int16x4 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_SUB_INT16)(const ae_int16x4 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_AND_INT16)(const ae_int16x4 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_XOR_INT16)(const ae_int16x4 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_OR_INT16)(const ae_int16x4 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_NEG)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_BNOT)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_SRA)(const ae_int16x4 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_SRAI)(const ae_int16x4 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16_ADD_INT16X4)(const ae_int16 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16_SUB_INT16X4)(const ae_int16 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16_AND_INT16X4)(const ae_int16 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16_XOR_INT16X4)(const ae_int16 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16_OR_INT16X4)(const ae_int16 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_INT16_ADD_INT16)(const ae_int16 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_INT16_SUB_INT16)(const ae_int16 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_INT16_AND_INT16)(const ae_int16 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_INT16_XOR_INT16)(const ae_int16 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_INT16_OR_INT16)(const ae_int16 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_INT16_NEG)(const ae_int16 d0 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_INT16_BNOT)(const ae_int16 d0 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_INT16_SRA)(const ae_int16 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_INT16_SRAI)(const ae_int16 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_ADDS_F16X4)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_SUBS_F16X4)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_AND_F16X4)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_XOR_F16X4)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_OR_F16X4)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_EQ_F16X4)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_LT_F16X4)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_LE_F16X4)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_GT_F16X4)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_GE_F16X4)(const ae_f16x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_ADDS_F16)(const ae_f16x4 d0 /*in*/, const ae_f16 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_SUBS_F16)(const ae_f16x4 d0 /*in*/, const ae_f16 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_AND_F16)(const ae_f16x4 d0 /*in*/, const ae_f16 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_XOR_F16)(const ae_f16x4 d0 /*in*/, const ae_f16 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_OR_F16)(const ae_f16x4 d0 /*in*/, const ae_f16 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_NEGS)(const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_BNOT)(const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_SLAS)(const ae_f16x4 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_SRA)(const ae_f16x4 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_SLAIS)(const ae_f16x4 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_SRAI)(const ae_f16x4 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16_ADDS_F16X4)(const ae_f16 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16_SUBS_F16X4)(const ae_f16 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16_AND_F16X4)(const ae_f16 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16_XOR_F16X4)(const ae_f16 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_F16_OR_F16X4)(const ae_f16 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_F16_ADDS_F16)(const ae_f16 d0 /*in*/, const ae_f16 d1 /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_F16_SUBS_F16)(const ae_f16 d0 /*in*/, const ae_f16 d1 /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_F16_AND_F16)(const ae_f16 d0 /*in*/, const ae_f16 d1 /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_F16_XOR_F16)(const ae_f16 d0 /*in*/, const ae_f16 d1 /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_F16_OR_F16)(const ae_f16 d0 /*in*/, const ae_f16 d1 /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_F16_NEGS)(const ae_f16 d0 /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_F16_BNOT)(const ae_f16 d0 /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_F16_SLAS)(const ae_f16 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_F16_SRA)(const ae_f16 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_F16_SLAIS)(const ae_f16 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_F16_SRAI)(const ae_f16 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_ADD_INT32X2)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_SUB_INT32X2)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_AND_INT32X2)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_XOR_INT32X2)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_OR_INT32X2)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_MUL_INT32X2)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_EQ_INT32X2)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_LT_INT32X2)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_LE_INT32X2)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_GT_INT32X2)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_GE_INT32X2)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_ADD_INT32)(const ae_int32x2 d0 /*in*/, const ae_int32 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_SUB_INT32)(const ae_int32x2 d0 /*in*/, const ae_int32 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_AND_INT32)(const ae_int32x2 d0 /*in*/, const ae_int32 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_XOR_INT32)(const ae_int32x2 d0 /*in*/, const ae_int32 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_OR_INT32)(const ae_int32x2 d0 /*in*/, const ae_int32 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_NEG)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_BNOT)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_SLA)(const ae_int32x2 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_SRA)(const ae_int32x2 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_SLAI)(const ae_int32x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_SRAI)(const ae_int32x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32_ADD_INT32X2)(const ae_int32 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32_SUB_INT32X2)(const ae_int32 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32_AND_INT32X2)(const ae_int32 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32_XOR_INT32X2)(const ae_int32 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32_OR_INT32X2)(const ae_int32 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_INT32_ADD_INT32)(const ae_int32 d0 /*in*/, const ae_int32 d1 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_INT32_SUB_INT32)(const ae_int32 d0 /*in*/, const ae_int32 d1 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_INT32_AND_INT32)(const ae_int32 d0 /*in*/, const ae_int32 d1 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_INT32_XOR_INT32)(const ae_int32 d0 /*in*/, const ae_int32 d1 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_INT32_OR_INT32)(const ae_int32 d0 /*in*/, const ae_int32 d1 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_INT32_MUL_INT32)(const ae_int32 d0 /*in*/, const ae_int32 d1 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_INT32_NEG)(const ae_int32 d0 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_INT32_BNOT)(const ae_int32 d0 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_INT32_SLA)(const ae_int32 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_INT32_SRA)(const ae_int32 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_INT32_SLAI)(const ae_int32 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_INT32_SRAI)(const ae_int32 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_ADDS_F32X2)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_SUBS_F32X2)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_AND_F32X2)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_XOR_F32X2)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_OR_F32X2)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_MULF_F32X2)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_EQ_F32X2)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_LT_F32X2)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_LE_F32X2)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_GT_F32X2)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_GE_F32X2)(const ae_f32x2 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_ADDS_F32)(const ae_f32x2 d0 /*in*/, const ae_f32 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_SUBS_F32)(const ae_f32x2 d0 /*in*/, const ae_f32 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_AND_F32)(const ae_f32x2 d0 /*in*/, const ae_f32 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_XOR_F32)(const ae_f32x2 d0 /*in*/, const ae_f32 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_OR_F32)(const ae_f32x2 d0 /*in*/, const ae_f32 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_NEGS)(const ae_f32x2 d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_BNOT)(const ae_f32x2 d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_SLAS)(const ae_f32x2 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_SRA)(const ae_f32x2 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_SLAIS)(const ae_f32x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32X2_SRAI)(const ae_f32x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32_ADDS_F32X2)(const ae_f32 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32_SUBS_F32X2)(const ae_f32 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32_AND_F32X2)(const ae_f32 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32_XOR_F32X2)(const ae_f32 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_F32_OR_F32X2)(const ae_f32 d0 /*in*/, const ae_f32x2 d1 /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_F32_ADDS_F32)(const ae_f32 d0 /*in*/, const ae_f32 d1 /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_F32_SUBS_F32)(const ae_f32 d0 /*in*/, const ae_f32 d1 /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_F32_AND_F32)(const ae_f32 d0 /*in*/, const ae_f32 d1 /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_F32_XOR_F32)(const ae_f32 d0 /*in*/, const ae_f32 d1 /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_F32_OR_F32)(const ae_f32 d0 /*in*/, const ae_f32 d1 /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_F32_MULF_F32)(const ae_f32 d0 /*in*/, const ae_f32 d1 /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_F32_NEGS)(const ae_f32 d0 /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_F32_BNOT)(const ae_f32 d0 /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_F32_SLAS)(const ae_f32 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_F32_SRA)(const ae_f32 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_F32_SLAIS)(const ae_f32 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_F32_SRAI)(const ae_f32 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_INT64_ADD)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_INT64_SUB)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_INT64_AND)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_INT64_XOR)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_INT64_OR)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_INT64_NEG)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_INT64_BNOT)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_INT64_SLA)(const ae_int64 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_INT64_SRA)(const ae_int64 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_INT64_SLAI)(const ae_int64 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_INT64_SRAI)(const ae_int64 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_INT64_EQ)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_INT64_LT)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_INT64_LE)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_INT64_GT)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_INT64_GE)(const ae_int64 d0 /*in*/, const ae_int64 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_F64_ADDS)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_F64_SUBS)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_F64_AND)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_F64_XOR)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_F64_OR)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_F64_NEGS)(const ae_f64 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_F64_BNOT)(const ae_f64 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_F64_SLAS)(const ae_f64 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_F64_SRA)(const ae_f64 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_F64_SLAIS)(const ae_f64 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_F64_SRAI)(const ae_f64 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_F64_EQ)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_F64_LT)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_F64_LE)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_F64_GT)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_F64_GE)(const ae_f64 d0 /*in*/, const ae_f64 d1 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_INT32_MUL_INT16)(const ae_int32 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_F32_MUL_F16)(const ae_f32 d0 /*in*/, const ae_f16 d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_ADDS_P24X2S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_SUBS_P24X2S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_AND_P24X2S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_XOR_P24X2S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_OR_P24X2S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_MULF_P24X2S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2S_EQ_P24X2S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2S_LT_P24X2S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2S_LE_P24X2S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2S_GT_P24X2S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2S_GE_P24X2S)(const ae_p24x2s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_ADDS_P24X2F)(const ae_p24x2s d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_SUBS_P24X2F)(const ae_p24x2s d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_AND_P24X2F)(const ae_p24x2s d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_XOR_P24X2F)(const ae_p24x2s d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_OR_P24X2F)(const ae_p24x2s d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_MULF_P24X2F)(const ae_p24x2s d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2S_EQ_P24X2F)(const ae_p24x2s d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2S_LT_P24X2F)(const ae_p24x2s d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2S_LE_P24X2F)(const ae_p24x2s d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2S_GT_P24X2F)(const ae_p24x2s d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2S_GE_P24X2F)(const ae_p24x2s d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_ADDS_P24S)(const ae_p24x2s d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_SUBS_P24S)(const ae_p24x2s d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_AND_P24S)(const ae_p24x2s d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_XOR_P24S)(const ae_p24x2s d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_OR_P24S)(const ae_p24x2s d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_ADDS_P24F)(const ae_p24x2s d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_SUBS_P24F)(const ae_p24x2s d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_AND_P24F)(const ae_p24x2s d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_XOR_P24F)(const ae_p24x2s d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_OR_P24F)(const ae_p24x2s d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_NEGS)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_BNOT)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_SLAS)(const ae_p24x2s d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_SRA)(const ae_p24x2s d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_SLAIS)(const ae_p24x2s d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2S_SRAI)(const ae_p24x2s d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2F_ADDS_P24X2S)(const ae_p24x2f d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2F_SUBS_P24X2S)(const ae_p24x2f d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2F_AND_P24X2S)(const ae_p24x2f d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2F_XOR_P24X2S)(const ae_p24x2f d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24X2F_OR_P24X2S)(const ae_p24x2f d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_P24X2F_MULF_P24X2S)(const ae_p24x2f d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2F_EQ_P24X2S)(const ae_p24x2f d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2F_LT_P24X2S)(const ae_p24x2f d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2F_LE_P24X2S)(const ae_p24x2f d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2F_GT_P24X2S)(const ae_p24x2f d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2F_GE_P24X2S)(const ae_p24x2f d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_ADDS_P24X2F)(const ae_p24x2f d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_SUBS_P24X2F)(const ae_p24x2f d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_AND_P24X2F)(const ae_p24x2f d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_XOR_P24X2F)(const ae_p24x2f d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_OR_P24X2F)(const ae_p24x2f d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_P24X2F_MULF_P24X2F)(const ae_p24x2f d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2F_EQ_P24X2F)(const ae_p24x2f d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2F_LT_P24X2F)(const ae_p24x2f d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2F_LE_P24X2F)(const ae_p24x2f d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2F_GT_P24X2F)(const ae_p24x2f d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_P24X2F_GE_P24X2F)(const ae_p24x2f d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_ADDS_P24S)(const ae_p24x2f d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_SUBS_P24S)(const ae_p24x2f d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_AND_P24S)(const ae_p24x2f d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_XOR_P24S)(const ae_p24x2f d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_OR_P24S)(const ae_p24x2f d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_ADDS_P24F)(const ae_p24x2f d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_SUBS_P24F)(const ae_p24x2f d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_AND_P24F)(const ae_p24x2f d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_XOR_P24F)(const ae_p24x2f d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_OR_P24F)(const ae_p24x2f d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_NEGS)(const ae_p24x2f d0 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_BNOT)(const ae_p24x2f d0 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_SLAS)(const ae_p24x2f d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_SRA)(const ae_p24x2f d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_SLAIS)(const ae_p24x2f d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24X2F_SRAI)(const ae_p24x2f d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24S_ADDS_P24X2S)(const ae_p24s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24S_SUBS_P24X2S)(const ae_p24s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24S_AND_P24X2S)(const ae_p24s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24S_XOR_P24X2S)(const ae_p24s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24S_OR_P24X2S)(const ae_p24s d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24S_ADDS_P24X2F)(const ae_p24s d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24S_SUBS_P24X2F)(const ae_p24s d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24S_AND_P24X2F)(const ae_p24s d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24S_XOR_P24X2F)(const ae_p24s d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24S_OR_P24X2F)(const ae_p24s d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24S_ADDS_P24S)(const ae_p24s d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24S_SUBS_P24S)(const ae_p24s d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24S_AND_P24S)(const ae_p24s d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24S_XOR_P24S)(const ae_p24s d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24S_OR_P24S)(const ae_p24s d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_P24S_MULF_P24S)(const ae_p24s d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24S_ADDS_P24F)(const ae_p24s d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24S_SUBS_P24F)(const ae_p24s d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24S_AND_P24F)(const ae_p24s d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24S_XOR_P24F)(const ae_p24s d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24S_OR_P24F)(const ae_p24s d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_P24S_MULF_P24F)(const ae_p24s d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24S_NEGS)(const ae_p24s d0 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24S_BNOT)(const ae_p24s d0 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24S_SLAS)(const ae_p24s d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24S_SRA)(const ae_p24s d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24S_SLAIS)(const ae_p24s d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24S_SRAI)(const ae_p24s d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24F_ADDS_P24X2S)(const ae_p24f d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24F_SUBS_P24X2S)(const ae_p24f d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24F_AND_P24X2S)(const ae_p24f d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24F_XOR_P24X2S)(const ae_p24f d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_AE_P24F_OR_P24X2S)(const ae_p24f d0 /*in*/, const ae_p24x2s d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24F_ADDS_P24X2F)(const ae_p24f d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24F_SUBS_P24X2F)(const ae_p24f d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24F_AND_P24X2F)(const ae_p24f d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24F_XOR_P24X2F)(const ae_p24f d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_AE_P24F_OR_P24X2F)(const ae_p24f d0 /*in*/, const ae_p24x2f d1 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24F_ADDS_P24S)(const ae_p24f d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24F_SUBS_P24S)(const ae_p24f d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24F_AND_P24S)(const ae_p24f d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24F_XOR_P24S)(const ae_p24f d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_AE_P24F_OR_P24S)(const ae_p24f d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_P24F_MULF_P24S)(const ae_p24f d0 /*in*/, const ae_p24s d1 /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_AE_P24F_ADDS_P24F)(const ae_p24f d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_AE_P24F_SUBS_P24F)(const ae_p24f d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_AE_P24F_AND_P24F)(const ae_p24f d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_AE_P24F_XOR_P24F)(const ae_p24f d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_AE_P24F_OR_P24F)(const ae_p24f d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_P24F_MULF_P24F)(const ae_p24f d0 /*in*/, const ae_p24f d1 /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_AE_P24F_NEGS)(const ae_p24f d0 /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_AE_P24F_BNOT)(const ae_p24f d0 /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_AE_P24F_SLAS)(const ae_p24f d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_AE_P24F_SRA)(const ae_p24f d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_AE_P24F_SLAIS)(const ae_p24f d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_AE_P24F_SRAI)(const ae_p24f d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_Q56S_ADD)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_Q56S_SUB)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_Q56S_AND)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_Q56S_XOR)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_Q56S_OR)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_Q56S_NEG)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_Q56S_BNOT)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_Q56S_SLA)(const ae_q56s d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_Q56S_SRA)(const ae_q56s d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_AE_Q56S_SRAI)(const ae_q56s d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_Q56S_EQ)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_Q56S_LT)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_Q56S_LE)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_Q56S_GT)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_AE_Q56S_GE)(const ae_q56s d0 /*in*/, const ae_q56s d1 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_ae_int32x4_loadi)(const ae_int32x4 * b /*in*/, immediate c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x4_storei)(const ae_int32x4 d /*in*/, const ae_int32x4 * b /*in*/, immediate c /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_ae_int32x4_move)(const ae_int32x4 b /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_NOT)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_ae_f32x4_loadi)(const ae_f32x4 * b /*in*/, immediate c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f32x4_storei)(const ae_f32x4 d /*in*/, const ae_f32x4 * b /*in*/, immediate c /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_ae_f32x4_move)(const ae_f32x4 b /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SEL16X4IR)(const ae_int16x4 v0 /*in*/, const ae_int16x4 v1 /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SEL32X2IR)(const ae_int32x2 v0 /*in*/, const ae_int32x2 v1 /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_SELF32X2IR)(const ae_f32x2 v0 /*in*/, const ae_f32x2 v1 /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_AND_rinit)(const int a /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_AND_rvec)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_INT32X2_AND_rfini)(const ae_int32x2 d /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_OR_rinit)(const int a /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_OR_rvec)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_INT32X2_OR_rfini)(const ae_int32x2 d /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_XOR_rinit)(const int a /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_XOR_rvec)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_INT32X2_XOR_rfini)(const ae_int32x2 d /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_INT32X2_RMIN)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_INT32X2_RMAX)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_INT32X2_RADD)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_F32X2_RADD)(const ae_f32x2 d0 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_ABS32S_scalar)(const ae_int32 d0 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_ABS32S)(const ae_int32x4 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_ABS32S)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_ADD32S_scalar)(const int d0 /*in*/, const ae_int32 d1 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_ADD32S)(const ae_int32x4 d0 /*in*/, const ae_int32x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_ADD32S)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_NEG32S_scalar)(const ae_int32 d0 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_NEG32S)(const ae_int32x4 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_NEG32S)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_SUB32S_scalar)(const int d0 /*in*/, const ae_int32 d1 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_SUB32S)(const ae_int32x4 d0 /*in*/, const ae_int32x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_INT32X2_SUB32S)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_SLAA32S_scalar)(const ae_int32 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_SLAA32S_vector)(const ae_int32x4 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_SRAA32S_scalar)(const ae_int32 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_SRAA32S_vector)(const ae_int32x4 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_SRAA32RS_scalar)(const ae_int32 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_SRAA32RS_vector)(const ae_int32x4 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_NAND_INT16X4)(const ae_int16x4 a /*in*/, const ae_int16x4 b /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_ABS16S_scalar)(const ae_int16 d0 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_ABS16S_vector)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_ADD16S_scalar)(const ae_int16 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_ADD16S_vector)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_MULFP16X4S_scalar)(const ae_int16 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MULFP16X4S_vector)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_MULFP16X4RAS_scalar)(const ae_int16 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MULFP16X4RAS_vector)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_NSAZ16_0_scalar)(const ae_int16 d0 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_SAT16X4_scalar)(const ae_int32 d0 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SAT16X4_vector)(const ae_int32x4 d0 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MULF16X4SS_scalar)(const ae_int16 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_MULF16X4SS_vector)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_MUL16X4_vector)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA16X4_vector)(ae_int32x4* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAAR16P16X4S_vector)(ae_int16x4* d /*inout*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MULR16P16X4S_vector)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_MULAF16X4SS_scalar)(const int ain /*in*/, const ae_int16 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_MULAF16X4SS_vector)(const ae_int32x4 pin /*in*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_MULSF16X4SS_scalar)(const int ain /*in*/, const ae_int16 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_MULSF16X4SS_vector)(const ae_int32x4 pin /*in*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_RLmac_rinit)(const int a /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_RLmac_rvec)(const ae_int32 din /*in*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_RLmac_rfini)(const ae_int32 d /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_RLmsu_rinit)(const int a /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_RLmsu_rvec)(const ae_int32 din /*in*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_RLmsu_rfini)(const ae_int32 d /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_RLadd_rinit)(const int a /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_RLadd_rvec)(const ae_int32 din /*in*/, const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_RLadd_rfini)(const ae_int32 d /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_RLadd4_rinit)(const int a /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_RLadd4_rvec)(const ae_int32 din /*in*/, const ae_int32x4 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_RLadd4_rfini)(const ae_int32 d /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_RLsub_rinit)(const int a /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_RLsub_rvec)(const ae_int32 din /*in*/, const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_RLsub_rfini)(const ae_int32 d /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_RLsub4_rinit)(const int a /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_RLsub4_rvec)(const ae_int32 din /*in*/, const ae_int32x4 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_RLsub4_rfini)(const ae_int32 d /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_NEG16S_scalar)(const ae_int16 d0 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_NEG16S_vector)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_ROUND16X4F32SASYM_scalar)(const ae_int32 d0 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_ROUND16X4F32SASYM_vector)(const ae_int32x4 d0 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_SUB16S_scalar)(const ae_int16 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SUB16S_vector)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_SLAA16S_scalar)(const ae_int16 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SLAA16S_vector)(const ae_int16x4 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_SRAA16S_scalar)(const ae_int16 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SRAA16S_vector)(const ae_int16x4 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_SRAA16RS_scalar)(const ae_int16 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SRAA16RS_vector)(const ae_int16x4 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_CVT16X4_scalar)(const ae_int32 d0 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_CVT16X4_vector)(const ae_int32x4 d0 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_TRUNC16X4F32_scalar)(const ae_int32 d0 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_TRUNC16X4F32_vector)(const ae_int32x4 d0 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_SEXT32X2D16_10_scalar)(const ae_int16 p /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_SEXT32X2D16_10_vector)(const ae_int16x4 p /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_CVT32X2F16_10_scalar)(const ae_int16 p /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_CVT32X2F16_10_vector)(const ae_int16x4 p /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_ae_int16x4_rtor_ae_int32x4)(const ae_int16x4 b /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_ae_int32x4_rtor_ae_int16x4)(const ae_int32x4 b /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SRAA16_VECTOR)(const ae_int16x4 b /*in*/, const int sa /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_F32X4_RADD)(const ae_f32x4 d0 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_INT32X4_RADD)(const ae_int32x4 d0 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_ADD)(const ae_int32x4 d0 /*in*/, const ae_int32x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_SUB)(const ae_int32x4 d0 /*in*/, const ae_int32x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_AND)(const ae_int32x4 d0 /*in*/, const ae_int32x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_OR)(const ae_int32x4 d0 /*in*/, const ae_int32x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_XOR)(const ae_int32x4 d0 /*in*/, const ae_int32x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_BNOT)(const ae_int32x4 d0 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_INT16X4_MUL)(const ae_int32x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_INT32X4_MUL)(const ae_int16x4 d0 /*in*/, const ae_int32x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_SRAI32)(const ae_int32x4 d0 /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_SRAA32)(const ae_int32x4 d0 /*in*/, const int a /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_SLAI32)(const ae_int32x4 d0 /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_SLAA32)(const ae_int32x4 d0 /*in*/, const int a /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_NEG32)(const ae_int32x4 d0 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_ABS32)(const ae_int32x4 d0 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_MAX)(const ae_int32x4 d0 /*in*/, const ae_int32x4 d1 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_INT32X4_MIN)(const ae_int32x4 d0 /*in*/, const ae_int32x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_MIN)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_MAX)(const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN short CSTUB_(_TIE_xt_hifi2_AE_INT16X4_RMAX)(const ae_int16x4 d /*in*/);
+CSTUB_EXTERN short CSTUB_(_TIE_xt_hifi2_AE_INT16X4_RMIN)(const ae_int16x4 d /*in*/);
+CSTUB_EXTERN short CSTUB_(_TIE_xt_hifi2_AE_INT16X4_RADD)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_AE_F32X4_ADD)(const ae_f32x4 d0 /*in*/, const ae_f32x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_AE_F32X4_SUB)(const ae_f32x4 d0 /*in*/, const ae_f32x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_AE_F32X4_NEG32)(const ae_f32x4 d0 /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_AE_F32X4_F16X4_MUL)(const ae_f32x4 d0 /*in*/, const ae_f16x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_AE_F16X4_F32X4_MUL)(const ae_f16x4 d0 /*in*/, const ae_f32x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_AE_F32X4_AND)(const ae_f32x4 d0 /*in*/, const ae_f32x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_AE_F32X4_OR)(const ae_f32x4 d0 /*in*/, const ae_f32x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_AE_F32X4_XOR)(const ae_f32x4 d0 /*in*/, const ae_f32x4 d1 /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_AE_F32X4_BNOT)(const ae_f32x4 d0 /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_AE_F32X4_SLAI32S)(const ae_f32x4 d0 /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_AE_F32X4_SLAA32S)(const ae_f32x4 d0 /*in*/, const int a /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_AE_F32X4_SRAI32)(const ae_f32x4 d0 /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_AE_F32X4_SRAA32)(const ae_f32x4 d0 /*in*/, const int a /*in*/);
+CSTUB_EXTERN ae_valign CSTUB_(_TIE_xt_hifi2_ae_int16x4_aligning_load_prime)(const ae_int16x4 * a /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_aligning_load_post_update_positive)(ae_int16x4* v /*out*/, ae_valign* u /*inout*/, const ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_aligning_load_post_update_negative)(ae_int16x4* v /*out*/, ae_valign* u /*inout*/, const ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_load_post_update_positive)(ae_int16x4* v /*out*/, const ae_int16x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_load_post_update_negative)(ae_int16x4* v /*out*/, const ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN ae_valign CSTUB_(_TIE_xt_hifi2_ae_int16x4_aligning_store_prime)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_aligning_store_post_update_positive)(const ae_int16x4 v /*in*/, ae_valign* u /*inout*/, ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_aligning_store_post_update_negative)(const ae_int16x4 v /*in*/, ae_valign* u /*inout*/, ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_store_post_update_positive)(const ae_int16x4 v /*in*/, ae_int16x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_store_post_update_negative)(const ae_int16x4 v /*in*/, ae_int16x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_aligning_store_flush_positive)(ae_valign* u /*inout*/, const ae_int16x4 * a /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_aligning_store_flush_negative)(ae_valign* u /*inout*/, const ae_int16x4 * a /*in*/);
+CSTUB_EXTERN ae_valign CSTUB_(_TIE_xt_hifi2_ae_int32x2_aligning_load_prime)(const ae_int32x2 * a /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_aligning_load_post_update_positive)(ae_int32x2* v /*out*/, ae_valign* u /*inout*/, const ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_aligning_load_post_update_negative)(ae_int32x2* v /*out*/, ae_valign* u /*inout*/, const ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_load_post_update_positive)(ae_int32x2* v /*out*/, const ae_int32x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_load_post_update_negative)(ae_int32x2* v /*out*/, const ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN ae_valign CSTUB_(_TIE_xt_hifi2_ae_int32x2_aligning_store_prime)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_aligning_store_post_update_positive)(const ae_int32x2 v /*in*/, ae_valign* u /*inout*/, ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_aligning_store_post_update_negative)(const ae_int32x2 v /*in*/, ae_valign* u /*inout*/, ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_store_post_update_positive)(const ae_int32x2 v /*in*/, ae_int32x2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_store_post_update_negative)(const ae_int32x2 v /*in*/, ae_int32x2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_aligning_store_flush_positive)(ae_valign* u /*inout*/, const ae_int32x2 * a /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_aligning_store_flush_negative)(ae_valign* u /*inout*/, const ae_int32x2 * a /*in*/);
+CSTUB_EXTERN ae_valign CSTUB_(_TIE_xt_hifi2_ae_int32x4_aligning_load_prime)(const ae_int32x4 * a /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x4_aligning_load_post_update_positive)(ae_int32x4* v /*out*/, ae_valign* u /*inout*/, const ae_int32x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x4_aligning_load_post_update_negative)(ae_int32x4* v /*out*/, ae_valign* u /*inout*/, const ae_int32x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x4_load_post_update_positive)(ae_int32x4* v /*out*/, const ae_int32x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x4_load_post_update_negative)(ae_int32x4* v /*out*/, const ae_int32x4 ** a /*inout*/);
+CSTUB_EXTERN ae_valign CSTUB_(_TIE_xt_hifi2_ae_int32x4_aligning_store_prime)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x4_aligning_store_post_update_positive)(const ae_int32x4 v /*in*/, ae_valign* u /*inout*/, ae_int32x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x4_aligning_store_post_update_negative)(const ae_int32x4 v /*in*/, ae_valign* u /*inout*/, ae_int32x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x4_store_post_update_positive)(const ae_int32x4 v /*in*/, ae_int32x4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x4_store_post_update_negative)(const ae_int32x4 v /*in*/, ae_int32x4 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x4_aligning_store_flush_positive)(ae_valign* u /*inout*/, const ae_int32x4 * a /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x4_aligning_store_flush_negative)(ae_valign* u /*inout*/, const ae_int32x4 * a /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_ae_int32x2_vextract_0_p32s)(const ae_int32x2 d /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_ae_int32x2_vextract_1_p32s)(const ae_int32x2 d /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_ae_int32x2_vpack_p32s)(const int d1 /*in*/, const int d0 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_ae_int32x2_vextract_0_ae_int32)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_ae_int32x2_vextract_1_ae_int32)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_ae_int32x2_vpack_ae_int32)(const ae_int32 d1 /*in*/, const ae_int32 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_int64)(const int a /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_int64)(const short a /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_ae_int64)(const ae_int32 a /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_ae_int64)(const ae_int16 a /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_f64)(const int a /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_f64)(const short a /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_int64_rtor_ae_f64)(const long long a /*in*/);
+CSTUB_EXTERN long long CSTUB_(_TIE_xt_hifi2_ae_f64_rtor_int64)(const ae_f64 d /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_int64_rtor_ae_int64)(const long long a /*in*/);
+CSTUB_EXTERN long long CSTUB_(_TIE_xt_hifi2_ae_int64_rtor_int64)(const ae_int64 d /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_uint64_rtor_ae_int64)(const unsigned long long a /*in*/);
+CSTUB_EXTERN unsigned long long CSTUB_(_TIE_xt_hifi2_ae_int64_rtor_uint64)(const ae_int64 d /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_int32)(const int a /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_int32)(const ae_int32 d /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_f32)(const int a /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_ae_f32_rtor_int32)(const ae_f32 d /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_int32)(const ae_f24 d /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_f24)(const int a /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_int24)(const int a /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_int32)(const ae_int24 d /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_uint32_rtor_ae_int32)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_uint32)(const ae_int32 d /*in*/);
+CSTUB_EXTERN ae_int32u CSTUB_(_TIE_xt_hifi2_uint32_rtor_ae_int32u)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_ae_int32u_rtor_uint32)(const ae_int32u d /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_int16)(const int a /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_int16x4)(const int a /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_int32)(const ae_int16 d /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_f16)(const int a /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_ae_f16_rtor_int32)(const ae_f16 d /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_int16)(const short a /*in*/);
+CSTUB_EXTERN short CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_int16)(const ae_int16 d /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_f16)(const short a /*in*/);
+CSTUB_EXTERN short CSTUB_(_TIE_xt_hifi2_ae_f16_rtor_int16)(const ae_f16 d /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_f32)(const short a /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_f24)(const short a /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_int24)(const short a /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_f32x2)(const short a /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_f24x2)(const short a /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_int24x2)(const short a /*in*/);
+CSTUB_EXTERN unsigned short CSTUB_(_TIE_xt_hifi2_ae_int16u_rtor_uint16)(const ae_int16u d /*in*/);
+CSTUB_EXTERN ae_int16u CSTUB_(_TIE_xt_hifi2_uint16_rtor_ae_int16u)(const unsigned short a /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_int32x2)(const int a /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtor_int32)(const ae_int32x2 d /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_f32x2)(const int a /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_f24x2)(const int a /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_int24x2)(const int a /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_int32x4)(const int a /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_ae_int32x4_rtor_int32)(const ae_int32x4 d /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_f32x4)(const int a /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_ae_f32x4_rtor_int32)(const ae_f32x4 d /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_uint32_rtor_ae_int32x2)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtor_uint32)(const ae_int32x2 d /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_uint32_rtor_ae_f32x2)(const unsigned int a /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_uint32_rtor_ae_f24x2)(const unsigned int a /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_uint32_rtor_ae_int24x2)(const unsigned int a /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_uint32_rtor_ae_int32x4)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_ae_int32x4_rtor_uint32)(const ae_int32x4 d /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_uint32_rtor_ae_f32x4)(const unsigned int a /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_ae_f32x4_rtor_uint32)(const ae_f32x4 d /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_int32x2)(const short a /*in*/);
+CSTUB_EXTERN short CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtor_int16)(const ae_int32x2 d /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_int32)(const short a /*in*/);
+CSTUB_EXTERN short CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_int16)(const ae_int32 d /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_int16x4)(const short a /*in*/);
+CSTUB_EXTERN short CSTUB_(_TIE_xt_hifi2_ae_int16x4_rtor_int16)(const ae_int16x4 d /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_f16x4)(const short a /*in*/);
+CSTUB_EXTERN short CSTUB_(_TIE_xt_hifi2_ae_f16x4_rtor_int16)(const ae_f16x4 d /*in*/);
+CSTUB_EXTERN ae_int16u CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_ae_int16u)(const ae_int16 b /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_ae_int16u_rtor_ae_int16)(const ae_int16u b /*in*/);
+CSTUB_EXTERN ae_int32u CSTUB_(_TIE_xt_hifi2_ae_int16u_rtor_ae_int32u)(const ae_int16u b /*in*/);
+CSTUB_EXTERN ae_int16u CSTUB_(_TIE_xt_hifi2_ae_int32u_rtor_ae_int16u)(const ae_int32u b /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_ae_int16u_rtor_ae_int32)(const ae_int16u b /*in*/);
+CSTUB_EXTERN ae_int16u CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_ae_int16u)(const ae_int32 b /*in*/);
+CSTUB_EXTERN ae_int32u CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_ae_int32u)(const ae_int16 b /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_ae_int32u_rtor_ae_int16)(const ae_int32u b /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_ae_int32u_rtor_ae_int32)(const ae_int32u b /*in*/);
+CSTUB_EXTERN ae_int32u CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_ae_int32u)(const ae_int32 b /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_uint16_rtor_ae_int32)(const unsigned short a /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_uint16_rtor_ae_int32x2)(const unsigned short a /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_uint8_rtor_ae_int32)(const unsigned char a /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_int8_rtor_ae_int32)(const signed char a /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_uint8_rtor_ae_int32x2)(const unsigned char a /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_int8_rtor_ae_int32x2)(const signed char a /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_f24)(const ae_int24x2 b /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_int24)(const ae_f24x2 b /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_ae_f24x2)(const ae_int24 b /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_ae_int24x2)(const ae_f24 b /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtor_ae_f32)(const ae_int32x2 b /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_ae_f32x2_rtor_ae_int32)(const ae_f32x2 b /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_ae_f32x2)(const ae_int32 b /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_ae_f32_rtor_ae_int32x2)(const ae_f32 b /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_f32)(const ae_int24x2 b /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_int32)(const ae_f24x2 b /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_ae_f32x2)(const ae_int24 b /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_ae_int32x2)(const ae_f24 b /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_ae_f32x2)(const ae_f24 b /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_ae_int32x2)(const ae_int24 b /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_int64_mtor_ae_int64)(const long long * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int64_rtom_int64)(const ae_int64 d /*in*/, const long long * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_uint64_mtor_ae_int64)(const unsigned long long * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int64_rtom_uint64)(const ae_int64 d /*in*/, const unsigned long long * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_int32_mtor_ae_int32)(const int * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32_rtom_int32)(const ae_int32 d /*in*/, const int * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_int32u CSTUB_(_TIE_xt_hifi2_uint32_mtor_ae_int32u)(const unsigned int * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32u_rtom_uint32)(const ae_int32u d /*in*/, const unsigned int * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_int16_mtor_ae_int16)(const short * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16_rtom_int16)(const ae_int16 d /*in*/, const short * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_int16u CSTUB_(_TIE_xt_hifi2_uint16_mtor_ae_int16u)(const unsigned short * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16u_rtom_uint16)(const ae_int16u d /*in*/, const unsigned short * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_int32_mtor_ae_int32x2)(const int * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtom_int32)(const ae_int32x2 d /*in*/, const int * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtom_ae_int32)(const ae_int32x2 d /*in*/, const ae_int32 * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_int32_mtor_ae_int32x4)(const int * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32x4_rtom_int32)(const ae_int32x4 d /*in*/, const int * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_int32_mtor_ae_f32x4)(const int * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f32x4_rtom_int32)(const ae_f32x4 d /*in*/, const int * a /*in*/, immediate i /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_ae_p24s_rtor_ae_int24x2)(const ae_p24s d0 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_p24s)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_ae_p24s_rtor_ae_f24x2)(const ae_p24s d0 /*in*/);
+CSTUB_EXTERN ae_p24s CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_p24s)(const ae_f24x2 d0 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_ae_p24f_rtor_ae_int24x2)(const ae_p24f d0 /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_p24f)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_ae_p24f_rtor_ae_f24x2)(const ae_p24f d0 /*in*/);
+CSTUB_EXTERN ae_p24f CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_p24f)(const ae_f24x2 d0 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtor_ae_int24x2)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_p24x2s)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtor_ae_f24x2)(const ae_p24x2s d0 /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_p24x2s)(const ae_f24x2 d0 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtor_ae_int24x2)(const ae_p24x2f d0 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_p24x2f)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtor_ae_f24x2)(const ae_p24x2f d0 /*in*/);
+CSTUB_EXTERN ae_p24x2f CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_p24x2f)(const ae_f24x2 d0 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_ae_p16s_rtor_ae_int24x2)(const ae_p16s d0 /*in*/);
+CSTUB_EXTERN ae_p16s CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_p16s)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_ae_p16s_rtor_ae_f24x2)(const ae_p16s d0 /*in*/);
+CSTUB_EXTERN ae_p16s CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_p16s)(const ae_f24x2 d0 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_ae_p16x2s_rtor_ae_int24x2)(const ae_p16x2s d0 /*in*/);
+CSTUB_EXTERN ae_p16x2s CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_p16x2s)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_ae_p16x2s_rtor_ae_f24x2)(const ae_p16x2s d0 /*in*/);
+CSTUB_EXTERN ae_p16x2s CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_p16x2s)(const ae_f24x2 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_ae_q56s_rtor_ae_int64)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_ae_int64_rtor_ae_q56s)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_ae_q56s_rtor_ae_f64)(const ae_q56s d0 /*in*/);
+CSTUB_EXTERN ae_q56s CSTUB_(_TIE_xt_hifi2_ae_f64_rtor_ae_q56s)(const ae_f64 d0 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_ae_f32_rtor_ae_int32)(const ae_f32 d0 /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_ae_f32)(const ae_int32 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_ae_f32x2_rtor_ae_int32x2)(const ae_f32x2 d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtor_ae_f32x2)(const ae_int32x2 d0 /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_ae_int24)(const ae_f24 d0 /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_ae_f24)(const ae_int24 d0 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_int24x2)(const ae_f24x2 d0 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_f24x2)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_ae_f64_rtor_ae_int64)(const ae_f64 d0 /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_ae_int64_rtor_ae_f64)(const ae_int64 d0 /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_ae_f16_rtor_ae_int16)(const ae_f16 d0 /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_ae_f16)(const ae_int16 d0 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_ae_f16x4_rtor_ae_int16x4)(const ae_f16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_ae_int16x4_rtor_ae_f16x4)(const ae_int16x4 d0 /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_ae_f32)(const ae_f24 d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_f32x2)(const ae_f24x2 d0 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_ae_int32)(const ae_int24 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_int32x2)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_ae_int32)(const ae_f24 d0 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_int32x2)(const ae_f24x2 d0 /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_ae_f32)(const ae_int24 d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_f32x2)(const ae_int24x2 d0 /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_ae_f32_rtor_ae_f32x2)(const ae_f32 d0 /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_ae_f32x2_rtor_ae_f32)(const ae_f32x2 d01 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_ae_int32x2)(const ae_int32 d0 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtor_ae_int32)(const ae_int32x2 d01 /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_ae_int32u_rtor_ae_int32x2)(const ae_int32u d0 /*in*/);
+CSTUB_EXTERN ae_int32u CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtor_ae_int32u)(const ae_int32x2 d01 /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_ae_f24x2)(const ae_f24 d0 /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_f24)(const ae_f24x2 d01 /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_ae_int24x2)(const ae_int24 d0 /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_int24)(const ae_int24x2 d01 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_ae_int16x4)(const ae_int16 d0 /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_ae_f16_rtor_ae_f16x4)(const ae_f16 d0 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_ae_f16_rtor_ae_int16x4)(const ae_f16 d0 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_rtom_ae_int16)(const ae_int16x4 v /*in*/, const ae_int16 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f16x4_rtom_ae_f16)(const ae_f16x4 v /*in*/, const ae_f16 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16x4_rtom_ae_f16)(const ae_int16x4 v /*in*/, const ae_f16 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_f16x4_rtom_ae_int16)(const ae_f16x4 v /*in*/, const ae_int16 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_ae_int32x4)(const ae_int32 b /*in*/);
+CSTUB_EXTERN ae_f32x4 CSTUB_(_TIE_xt_hifi2_ae_f32_rtor_ae_f32x4)(const ae_f32 b /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_ae_int32)(const ae_int16 b /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_ae_int16)(const ae_int32 b /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_ae_f16_rtor_ae_f32)(const ae_f16 b /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_ae_f32_rtor_ae_f16)(const ae_f32 b /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_ae_int24)(const ae_int16 b /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_ae_int16)(const ae_int24 b /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_ae_f16_rtor_ae_f24)(const ae_f16 b /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_ae_f16)(const ae_f24 b /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMINT16)(const ae_int16 i /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMINT16)(const ae_int16 i /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMINT16)(const ae_int16 i /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMINT16)(const ae_int16 i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMINT16)(const ae_int16 i /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMINT16)(const ae_int16 i /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMINT16)(const ae_int16 i /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMINT16)(const ae_int16 i /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMINT16)(const ae_int16 i /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMINT16)(const ae_int16 i /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMINT16)(const ae_int16 i /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMINT16)(const ae_int16 i /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMINT16)(const ae_int16 i /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMINT16X4)(const ae_int16x4 i /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMINT16X4)(const ae_int16x4 i /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMINT16X4)(const ae_int16x4 i /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMINT16X4)(const ae_int16x4 i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMINT16X4)(const ae_int16x4 i /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMINT16X4)(const ae_int16x4 i /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMINT16X4)(const ae_int16x4 i /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMINT16X4)(const ae_int16x4 i /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMINT16X4)(const ae_int16x4 i /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMINT16X4)(const ae_int16x4 i /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMINT16X4)(const ae_int16x4 i /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMINT16X4)(const ae_int16x4 i /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMINT16X4)(const ae_int16x4 i /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMINT24)(const ae_int24 i /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMINT24)(const ae_int24 i /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMINT24)(const ae_int24 i /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMINT24)(const ae_int24 i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMINT24)(const ae_int24 i /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMINT24)(const ae_int24 i /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMINT24)(const ae_int24 i /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMINT24)(const ae_int24 i /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMINT24)(const ae_int24 i /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMINT24)(const ae_int24 i /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMINT24)(const ae_int24 i /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMINT24)(const ae_int24 i /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMINT24)(const ae_int24 i /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMINT24X2)(const ae_int24x2 i /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMINT24X2)(const ae_int24x2 i /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMINT24X2)(const ae_int24x2 i /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMINT24X2)(const ae_int24x2 i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMINT24X2)(const ae_int24x2 i /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMINT24X2)(const ae_int24x2 i /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMINT24X2)(const ae_int24x2 i /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMINT24X2)(const ae_int24x2 i /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMINT24X2)(const ae_int24x2 i /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMINT24X2)(const ae_int24x2 i /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMINT24X2)(const ae_int24x2 i /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMINT24X2)(const ae_int24x2 i /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMINT24X2)(const ae_int24x2 i /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMINT32)(const ae_int32 i /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMINT32)(const ae_int32 i /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMINT32)(const ae_int32 i /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMINT32)(const ae_int32 i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMINT32)(const ae_int32 i /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMINT32)(const ae_int32 i /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMINT32)(const ae_int32 i /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMINT32)(const ae_int32 i /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMINT32)(const ae_int32 i /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMINT32)(const ae_int32 i /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMINT32)(const ae_int32 i /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMINT32)(const ae_int32 i /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMINT32)(const ae_int32 i /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMINT32X2)(const ae_int32x2 i /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMINT32X2)(const ae_int32x2 i /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMINT32X2)(const ae_int32x2 i /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMINT32X2)(const ae_int32x2 i /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMINT32X2)(const ae_int32x2 i /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMINT32X2)(const ae_int32x2 i /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMINT32X2)(const ae_int32x2 i /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMINT32X2)(const ae_int32x2 i /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMINT32X2)(const ae_int32x2 i /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMINT32X2)(const ae_int32x2 i /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMINT32X2)(const ae_int32x2 i /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMINT32X2)(const ae_int32x2 i /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMINT32X2)(const ae_int32x2 i /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMINT64)(const ae_int64 i /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMINT64)(const ae_int64 i /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMINT64)(const ae_int64 i /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMINT64)(const ae_int64 i /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMINT64)(const ae_int64 i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMINT64)(const ae_int64 i /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMINT64)(const ae_int64 i /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMINT64)(const ae_int64 i /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMINT64)(const ae_int64 i /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMINT64)(const ae_int64 i /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMINT64)(const ae_int64 i /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMINT64)(const ae_int64 i /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMINT64)(const ae_int64 i /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMF16)(const ae_f16 i /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMF16)(const ae_f16 i /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMF16)(const ae_f16 i /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMF16)(const ae_f16 i /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMF16)(const ae_f16 i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMF16)(const ae_f16 i /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMF16)(const ae_f16 i /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMF16)(const ae_f16 i /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMF16)(const ae_f16 i /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMF16)(const ae_f16 i /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMF16)(const ae_f16 i /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMF16)(const ae_f16 i /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMF16)(const ae_f16 i /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMF16X4)(const ae_f16x4 i /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMF16X4)(const ae_f16x4 i /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMF16X4)(const ae_f16x4 i /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMF16X4)(const ae_f16x4 i /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMF16X4)(const ae_f16x4 i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMF16X4)(const ae_f16x4 i /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMF16X4)(const ae_f16x4 i /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMF16X4)(const ae_f16x4 i /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMF16X4)(const ae_f16x4 i /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMF16X4)(const ae_f16x4 i /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMF16X4)(const ae_f16x4 i /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMF16X4)(const ae_f16x4 i /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMF16X4)(const ae_f16x4 i /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMF24)(const ae_f24 i /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMF24)(const ae_f24 i /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMF24)(const ae_f24 i /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMF24)(const ae_f24 i /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMF24)(const ae_f24 i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMF24)(const ae_f24 i /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMF24)(const ae_f24 i /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMF24)(const ae_f24 i /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMF24)(const ae_f24 i /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMF24)(const ae_f24 i /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMF24)(const ae_f24 i /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMF24)(const ae_f24 i /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMF24)(const ae_f24 i /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMF24X2)(const ae_f24x2 i /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMF24X2)(const ae_f24x2 i /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMF24X2)(const ae_f24x2 i /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMF24X2)(const ae_f24x2 i /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMF24X2)(const ae_f24x2 i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMF24X2)(const ae_f24x2 i /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMF24X2)(const ae_f24x2 i /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMF24X2)(const ae_f24x2 i /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMF24X2)(const ae_f24x2 i /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMF24X2)(const ae_f24x2 i /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMF24X2)(const ae_f24x2 i /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMF24X2)(const ae_f24x2 i /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMF24X2)(const ae_f24x2 i /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMF32)(const ae_f32 i /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMF32)(const ae_f32 i /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMF32)(const ae_f32 i /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMF32)(const ae_f32 i /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMF32)(const ae_f32 i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMF32)(const ae_f32 i /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMF32)(const ae_f32 i /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMF32)(const ae_f32 i /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMF32)(const ae_f32 i /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMF32)(const ae_f32 i /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMF32)(const ae_f32 i /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMF32)(const ae_f32 i /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMF32)(const ae_f32 i /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMF32X2)(const ae_f32x2 i /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMF32X2)(const ae_f32x2 i /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMF32X2)(const ae_f32x2 i /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMF32X2)(const ae_f32x2 i /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMF32X2)(const ae_f32x2 i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMF32X2)(const ae_f32x2 i /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMF32X2)(const ae_f32x2 i /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMF32X2)(const ae_f32x2 i /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMF32X2)(const ae_f32x2 i /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMF32X2)(const ae_f32x2 i /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMF32X2)(const ae_f32x2 i /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMF32X2)(const ae_f32x2 i /*in*/);
+CSTUB_EXTERN ae_f64 CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMF32X2)(const ae_f32x2 i /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMF64)(const ae_f64 i /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMF64)(const ae_f64 i /*in*/);
+CSTUB_EXTERN ae_int24 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMF64)(const ae_f64 i /*in*/);
+CSTUB_EXTERN ae_int24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMF64)(const ae_f64 i /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMF64)(const ae_f64 i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMF64)(const ae_f64 i /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMF64)(const ae_f64 i /*in*/);
+CSTUB_EXTERN ae_f16 CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMF64)(const ae_f64 i /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMF64)(const ae_f64 i /*in*/);
+CSTUB_EXTERN ae_f24 CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMF64)(const ae_f64 i /*in*/);
+CSTUB_EXTERN ae_f24x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMF64)(const ae_f64 i /*in*/);
+CSTUB_EXTERN ae_f32 CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMF64)(const ae_f64 i /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMF64)(const ae_f64 i /*in*/);
+CSTUB_EXTERN ae_int32u CSTUB_(_TIE_xt_hifi2_ae_int32u_loadi)(const ae_int32u * base /*in*/, immediate c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int32u_storei)(const ae_int32u a /*in*/, const ae_int32u * base /*in*/, immediate c /*in*/);
+CSTUB_EXTERN ae_int32u CSTUB_(_TIE_xt_hifi2_ae_int32u_move)(const ae_int32u b /*in*/);
+CSTUB_EXTERN ae_int16u CSTUB_(_TIE_xt_hifi2_ae_int16u_loadi)(const ae_int16u * base /*in*/, immediate c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int16u_storei)(const ae_int16u a /*in*/, const ae_int16u * base /*in*/, immediate c /*in*/);
+CSTUB_EXTERN ae_int16u CSTUB_(_TIE_xt_hifi2_ae_int16u_move)(const ae_int16u b /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_ABS_32)(const ae_int32 b /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MOV_32)(const ae_int32 b /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_NEG_32)(const ae_int32 b /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_ADD_32)(const ae_int32 b /*in*/, const ae_int32 c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_ADDI_32)(const ae_int32 b /*in*/, immediate c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_ADDMI_32)(const ae_int32 b /*in*/, immediate c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_ADDX2_32)(const ae_int32 b /*in*/, const ae_int32 c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_ADDX4_32)(const ae_int32 b /*in*/, const ae_int32 c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_ADDX8_32)(const ae_int32 b /*in*/, const ae_int32 c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_SUBX2_32)(const ae_int32 b /*in*/, const ae_int32 c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_SUBX4_32)(const ae_int32 b /*in*/, const ae_int32 c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_SUBX8_32)(const ae_int32 b /*in*/, const ae_int32 c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_SUB_32)(const ae_int32 b /*in*/, const ae_int32 c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_SEXT_32)(const ae_int32 b /*in*/, immediate c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_SRAI_32)(const ae_int32 b /*in*/, immediate c /*in*/);
+CSTUB_EXTERN ae_int32u CSTUB_(_TIE_xt_hifi2_AE_SRLI_32)(const ae_int32u b /*in*/, immediate c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_SLLI_32)(const ae_int32 b /*in*/, immediate c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_L_32)(const ae_int32 * base /*in*/, immediate c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S_32)(const ae_int32 a /*in*/, const ae_int32 * base /*in*/, immediate c /*in*/);
+CSTUB_EXTERN ae_int16 CSTUB_(_TIE_xt_hifi2_AE_L_16)(const ae_int16 * base /*in*/, immediate c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MAX_32_signed)(const ae_int32 b /*in*/, const ae_int32 c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MIN_32_signed)(const ae_int32 b /*in*/, const ae_int32 c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_AND_32)(const ae_int32 b /*in*/, const ae_int32 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_00_scalar)(ae_int32* a /*inout*/, const ae_f16x4 b /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_30_scalar)(ae_int32* a /*inout*/, const ae_f16x4 b /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_30_scalar)(const ae_f16x4 b /*in*/, const ae_f16x4 c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_OR_32)(const ae_int32 b /*in*/, const ae_int32 c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_XOR_32)(const ae_int32 b /*in*/, const ae_int32 c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_NAND_32)(const ae_int32 b /*in*/, const ae_int32 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVLTZ_32)(ae_int32* a /*inout*/, const ae_int32 b /*in*/, const ae_int32 test_value /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVGEZ_32)(ae_int32* a /*inout*/, const ae_int32 b /*in*/, const ae_int32 test_value /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVEQZ_32)(ae_int32* a /*inout*/, const ae_int32 b /*in*/, const ae_int32 test_value /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVNEZ_32)(ae_int32* a /*inout*/, const ae_int32 b /*in*/, const ae_int32 test_value /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVT_32)(ae_int32* a /*inout*/, const ae_int32 b /*in*/, const xtbool cond /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MOVI_32)(immediate i /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVT_32_unsigned)(ae_int32u* a /*inout*/, const ae_int32u b /*in*/, const xtbool cond /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVF_32)(ae_int32* a /*inout*/, const ae_int32 b /*in*/, const xtbool cond /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MOVF_32_unsigned)(ae_int32u* a /*inout*/, const ae_int32u b /*in*/, const xtbool cond /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_S_16)(const ae_int16 a /*in*/, const ae_int16 * base /*in*/, immediate c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MUL16S)(const ae_int16 b /*in*/, const ae_int16 c /*in*/);
+CSTUB_EXTERN ae_int16u CSTUB_(_TIE_xt_hifi2_AE_L_16U)(const ae_int16u * base /*in*/, immediate c /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_MUL32)(const ae_int32 b /*in*/, const ae_int32 c /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_xtbool_join_xtbool2)(const xtbool src0 /*in*/, const xtbool src1 /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_xtbool_join_xtbool4)(const xtbool src0 /*in*/, const xtbool src1 /*in*/, const xtbool src2 /*in*/, const xtbool src3 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_xtbool2_extract_0)(const xtbool2 src /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_xtbool2_extract_1)(const xtbool2 src /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_xtbool4_extract_0)(const xtbool4 src /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_xtbool4_extract_1)(const xtbool4 src /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_xtbool4_extract_2)(const xtbool4 src /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_hifi2_xtbool4_extract_3)(const xtbool4 src /*in*/);
+CSTUB_EXTERN ae_int64x2 CSTUB_(_TIE_xt_hifi2_ae_int64x2_loadi)(const ae_int64x2 * b /*in*/, immediate c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int64x2_storei)(const ae_int64x2 d /*in*/, const ae_int64x2 * b /*in*/, immediate c /*in*/);
+CSTUB_EXTERN ae_int64x2 CSTUB_(_TIE_xt_hifi2_ae_int64x2_move)(const ae_int64x2 b /*in*/);
+CSTUB_EXTERN ae_int64x2 CSTUB_(_TIE_xt_hifi2_AE_SLAA64X2_vector)(const ae_int64x2 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int64x2 CSTUB_(_TIE_xt_hifi2_AE_SLAI64X2_vector)(const ae_int64x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int64x2 CSTUB_(_TIE_xt_hifi2_AE_SRAA64X2_vector)(const ae_int64x2 d0 /*in*/, const int sa /*in*/);
+CSTUB_EXTERN ae_int64x2 CSTUB_(_TIE_xt_hifi2_AE_SRAI64X2_vector)(const ae_int64x2 d0 /*in*/, immediate sa /*in*/);
+CSTUB_EXTERN ae_int64x2 CSTUB_(_TIE_xt_hifi2_AE_NEG64X2_vector)(const ae_int64x2 d0 /*in*/);
+CSTUB_EXTERN ae_int64x2 CSTUB_(_TIE_xt_hifi2_AE_ADD64X2_vector)(const ae_int64x2 d0 /*in*/, const ae_int64x2 d1 /*in*/);
+CSTUB_EXTERN ae_int64x2 CSTUB_(_TIE_xt_hifi2_AE_SUB64X2_vector)(const ae_int64x2 d0 /*in*/, const ae_int64x2 d1 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_MULA32X2_vector)(ae_int64x2* d /*inout*/, const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int64x2 CSTUB_(_TIE_xt_hifi2_AE_MUL32X2_vector)(const ae_int32x2 d0 /*in*/, const ae_int32x2 d1 /*in*/);
+CSTUB_EXTERN ae_int64x2 CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtor_ae_int64x2)(const ae_int32x2 b /*in*/);
+CSTUB_EXTERN long long CSTUB_(_TIE_xt_hifi2_AE_INT64X2_RADD)(const ae_int64x2 d0 /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_hifi2_AE_INT16X4_RMADD_INT16X4_vector)(const ae_int64 ain /*in*/, const ae_int16 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN long long CSTUB_(_TIE_xt_hifi2_AE_INT16X4_RMADD_INT16X4_scalar)(const long long ain /*in*/, const ae_int16 d0 /*in*/, const ae_int16 d1 /*in*/);
+CSTUB_EXTERN ae_int64x4 CSTUB_(_TIE_xt_hifi2_ae_int64x4_loadi)(const ae_int64x4 * b /*in*/, immediate c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_ae_int64x4_storei)(const ae_int64x4 d /*in*/, const ae_int64x4 * b /*in*/, immediate c /*in*/);
+CSTUB_EXTERN ae_int64x4 CSTUB_(_TIE_xt_hifi2_ae_int64x4_move)(const ae_int64x4 b /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_hifi2_AE_SRLA32_vector)(const ae_int32x2 var1 /*in*/, const int var2 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_SRLA32_scalar)(const int var1 /*in*/, const int var2 /*in*/);
+CSTUB_EXTERN ae_int16x4 CSTUB_(_TIE_xt_hifi2_AE_SRLA16_vector)(const ae_int16x4 var1 /*in*/, const int var2 /*in*/);
+CSTUB_EXTERN short CSTUB_(_TIE_xt_hifi2_AE_SRLA16_scalar)(const short var1 /*in*/, const int var2 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_MULA16S_scalar)(const int ain /*in*/, const ae_int16 var1 /*in*/, const ae_int16 var2 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_MULA16S_vector)(const ae_int32x4 ain /*in*/, const ae_int16x4 var1 /*in*/, const ae_int16x4 var2 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_MULS16S_scalar)(const int ain /*in*/, const short var1 /*in*/, const short var2 /*in*/);
+CSTUB_EXTERN ae_int32x4 CSTUB_(_TIE_xt_hifi2_AE_MULS16S_vector)(const ae_int32x4 ain /*in*/, const ae_int16x4 var1 /*in*/, const ae_int16x4 var2 /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_RLmula0_rinit)(const int a /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_RLmula0_rvec)(const ae_int32 din /*in*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_RLmula0_rfini)(const ae_int32 d /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_RLmuls0_rinit)(const int a /*in*/);
+CSTUB_EXTERN ae_int32 CSTUB_(_TIE_xt_hifi2_AE_RLmuls0_rvec)(const ae_int32 din /*in*/, const ae_int16x4 d0 /*in*/, const ae_int16x4 d1 /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_hifi2_AE_RLmuls0_rfini)(const ae_int32 d /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_xtfloat_loadi)(const xtfloat * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_xtfloat_loadx)(const xtfloat * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xtfloat_loadxp)(xtfloat* d /*out*/, const xtfloat ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xtfloat_loadip)(xtfloat* d /*out*/, const xtfloat ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xtfloat_storei)(const xtfloat d /*in*/, const xtfloat * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xtfloat_storex)(const xtfloat d /*in*/, const xtfloat * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xtfloat_storexp)(const xtfloat d /*in*/, xtfloat ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xtfloat_storeip)(const xtfloat d /*in*/, xtfloat ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_xtfloat_move)(const xtfloat d0 /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_xtfloat_rtor_xtfloatx2)(const xtfloat d0 /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_ZERO_S)(void);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_ae_int32x2_rtor_xtfloatx2)(const ae_int32x2 i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_FP_xtfloatx2_rtor_ae_int32x2)(const xtfloatx2 i /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_AE_SELSX2IR)(const xtfloatx2 v0 /*in*/, const xtfloatx2 v1 /*in*/, immediate i /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_SEL32_LH_SX2)(const xtfloatx2 d0 /*in*/, const xtfloatx2 d1 /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_SEL32_HL_SX2)(const xtfloatx2 d0 /*in*/, const xtfloatx2 d1 /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_SEL32_HH_SX2)(const xtfloatx2 d0 /*in*/, const xtfloatx2 d1 /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_SEL32_LL_SX2)(const xtfloatx2 d0 /*in*/, const xtfloatx2 d1 /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_LOW_S)(const xtfloatx2 d01 /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_HIGH_S)(const xtfloatx2 d01 /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_xtfloatx2_rtor_xtfloat)(const xtfloatx2 d01 /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_xtfloatx2_loadi)(const xtfloatx2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_xtfloatx2_loadx)(const xtfloatx2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xtfloatx2_loadxp)(xtfloatx2* d /*out*/, const xtfloatx2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xtfloatx2_loadip)(xtfloatx2* d /*out*/, const xtfloatx2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xtfloatx2_loadrip)(xtfloatx2* d /*out*/, const xtfloatx2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xtfloatx2_storei)(const xtfloatx2 d /*in*/, const xtfloatx2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xtfloatx2_storex)(const xtfloatx2 d /*in*/, const xtfloatx2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xtfloatx2_storexp)(const xtfloatx2 d /*in*/, xtfloatx2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xtfloatx2_storeip)(const xtfloatx2 d /*in*/, xtfloatx2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_xtfloatx2_move)(const xtfloatx2 d0 /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_ZERO_SX2)(void);
+CSTUB_EXTERN xthalfx4 CSTUB_(_TIE_xt_FP_xthalfx4_loadi)(const xthalfx4 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN xthalfx4 CSTUB_(_TIE_xt_FP_xthalfx4_loadx)(const xthalfx4 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xthalfx4_loadxp)(xthalfx4* d /*out*/, const xthalfx4 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xthalfx4_loadip)(xthalfx4* d /*out*/, const xthalfx4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xthalfx4_storei)(const xthalfx4 d /*in*/, const xthalfx4 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xthalfx4_storex)(const xthalfx4 d /*in*/, const xthalfx4 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xthalfx4_storexp)(const xthalfx4 d /*in*/, xthalfx4 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xthalfx4_storeip)(const xthalfx4 d /*in*/, xthalfx4 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN xthalfx4 CSTUB_(_TIE_xt_FP_xthalfx4_move)(const xthalfx4 d0 /*in*/);
+CSTUB_EXTERN xthalfx4 CSTUB_(_TIE_xt_FP_ZERO_HX4)(void);
+CSTUB_EXTERN ae_valign CSTUB_(_TIE_xt_FP_LASX2PP)(const xtfloatx2 * a /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_LASX2POSPC)(ae_valign* u /*out*/, const xtfloatx2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_LASX2NEGPC)(ae_valign* u /*out*/, const xtfloatx2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_LASX2IP)(xtfloatx2* v /*out*/, ae_valign* u /*inout*/, const xtfloatx2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_LASX2IC)(xtfloatx2* v /*out*/, ae_valign* u /*inout*/, const xtfloatx2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_LASX2RIC)(xtfloatx2* v /*out*/, ae_valign* u /*inout*/, const xtfloatx2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_LASX2RIP)(xtfloatx2* v /*out*/, ae_valign* u /*inout*/, const xtfloatx2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SASX2IP)(const xtfloatx2 v /*in*/, ae_valign* u /*inout*/, xtfloatx2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SASX2IC)(const xtfloatx2 v /*in*/, ae_valign* u /*inout*/, xtfloatx2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SASX2RIC)(const xtfloatx2 v /*in*/, ae_valign* u /*inout*/, xtfloatx2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SASX2RIP)(const xtfloatx2 v /*in*/, ae_valign* u /*inout*/, xtfloatx2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SASX2POSFP)(ae_valign* u /*inout*/, const xtfloatx2 * a /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SASX2NEGFP)(ae_valign* u /*inout*/, const xtfloatx2 * a /*in*/);
+CSTUB_EXTERN ae_valign CSTUB_(_TIE_xt_FP_xtfloatx2_aligning_store_prime)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xtfloatx2_load_post_update_negative)(xtfloatx2* v /*out*/, const xtfloatx2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_xtfloatx2_store_post_update_negative)(const xtfloatx2 v /*in*/, xtfloatx2 ** a /*inout*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_LSI)(const xtfloat * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_LSX)(const xtfloat * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_LSXP)(xtfloat* d /*out*/, const xtfloat ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_LSXC)(xtfloat* d /*out*/, const xtfloat ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_LSIP)(xtfloat* d /*out*/, const xtfloat ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SSI)(const xtfloat d /*in*/, const xtfloat * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SSX)(const xtfloat d /*in*/, const xtfloat * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SSXP)(const xtfloat d /*in*/, xtfloat ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SSXC)(const xtfloat d /*in*/, xtfloat ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SSIP)(const xtfloat d /*in*/, xtfloat ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_LSX2I)(const xtfloatx2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_LSX2X)(const xtfloatx2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_LSX2XP)(xtfloatx2* d /*out*/, const xtfloatx2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_LSX2XC)(xtfloatx2* d /*out*/, const xtfloatx2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_LSX2RIC)(xtfloatx2* d /*out*/, const xtfloatx2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_LSX2IP)(xtfloatx2* d /*out*/, const xtfloatx2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_LSX2RIP)(xtfloatx2* d /*out*/, const xtfloatx2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_LSX2RI)(const xtfloatx2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SSX2I)(const xtfloatx2 d /*in*/, const xtfloatx2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SSX2RI)(const xtfloatx2 d /*in*/, const xtfloatx2 * a /*in*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SSX2X)(const xtfloatx2 d /*in*/, const xtfloatx2 * a /*in*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SSX2XP)(const xtfloatx2 d /*in*/, xtfloatx2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SSX2XC)(const xtfloatx2 d /*in*/, xtfloatx2 ** a /*inout*/, const int off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SSX2RIC)(const xtfloatx2 d /*in*/, xtfloatx2 ** a /*inout*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SSX2IP)(const xtfloatx2 d /*in*/, xtfloatx2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SSX2RIP)(const xtfloatx2 d /*in*/, xtfloatx2 ** a /*inout*/, immediate off /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_LFCR_FSR)(const unsigned int * a /*in*/, immediate b /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_SFCR_FSR)(const unsigned int * a /*in*/, immediate b /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_MOV_S)(const xtfloat s /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_MOV_SX2)(const xtfloatx2 s /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MOVF_S)(xtfloat* r /*inout*/, const xtfloat s /*in*/, const xtbool t /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MOVT_S)(xtfloat* r /*inout*/, const xtfloat s /*in*/, const xtbool t /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MOVF_SX2)(xtfloatx2* r /*inout*/, const xtfloatx2 s /*in*/, const xtbool2 t /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MOVT_SX2)(xtfloatx2* r /*inout*/, const xtfloatx2 s /*in*/, const xtbool2 t /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MOVEQZ_S)(xtfloat* a /*inout*/, const xtfloat b /*in*/, const int c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MOVEQZ_SX2)(xtfloatx2* a /*inout*/, const xtfloatx2 b /*in*/, const int c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MOVNEZ_S)(xtfloat* a /*inout*/, const xtfloat b /*in*/, const int c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MOVNEZ_SX2)(xtfloatx2* a /*inout*/, const xtfloatx2 b /*in*/, const int c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MOVGEZ_S)(xtfloat* a /*inout*/, const xtfloat b /*in*/, const int c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MOVGEZ_SX2)(xtfloatx2* a /*inout*/, const xtfloatx2 b /*in*/, const int c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MOVLTZ_S)(xtfloat* a /*inout*/, const xtfloat b /*in*/, const int c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MOVLTZ_SX2)(xtfloatx2* a /*inout*/, const xtfloatx2 b /*in*/, const int c /*in*/);
+CSTUB_EXTERN int CSTUB_(_TIE_xt_FP_TRUNC_S)(const xtfloat s /*in*/, immediate t /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_FP_UTRUNC_S)(const xtfloat s /*in*/, immediate t /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_FP_TRUNC_SX2)(const xtfloatx2 s /*in*/, immediate t /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_FP_UTRUNC_SX2)(const xtfloatx2 s /*in*/, immediate t /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_FICEIL_S)(const xtfloat b /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_FICEIL_SX2)(const xtfloatx2 b /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_FIFLOOR_S)(const xtfloat b /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_FIFLOOR_SX2)(const xtfloatx2 b /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_FIROUND_S)(const xtfloat b /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_FIROUND_SX2)(const xtfloatx2 b /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_FITRUNC_S)(const xtfloat b /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_FITRUNC_SX2)(const xtfloatx2 b /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_FIRINT_S)(const xtfloat b /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_FIRINT_SX2)(const xtfloatx2 b /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_CVTSF16_L)(const xthalfx4 b /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_CVTSF16_H)(const xthalfx4 b /*in*/);
+CSTUB_EXTERN xthalfx4 CSTUB_(_TIE_xt_FP_CVTF16S_L)(const xtfloatx2 b /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_CVTF16S_H)(xthalfx4* a /*inout*/, const xtfloatx2 b /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_FP_RFR)(const xtfloat vs /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_FP_RUR_FCR)(void);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_FP_RUR_FSR)(void);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_WFR)(const unsigned int vs /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_WUR_FCR)(const unsigned int v /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_WUR_FSR)(const unsigned int v /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_ABS_S)(const xtfloat b /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_ABS_SX2)(const xtfloatx2 b /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_MUL_S)(const xtfloat b /*in*/, const xtfloat c /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_MUL_SX2)(const xtfloatx2 b /*in*/, const xtfloatx2 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MADD_S)(xtfloat* a /*inout*/, const xtfloat b /*in*/, const xtfloat c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MADD_SX2)(xtfloatx2* a /*inout*/, const xtfloatx2 b /*in*/, const xtfloatx2 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MSUB_S)(xtfloat* a /*inout*/, const xtfloat b /*in*/, const xtfloat c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MSUB_SX2)(xtfloatx2* a /*inout*/, const xtfloatx2 b /*in*/, const xtfloatx2 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MSUBN_S)(xtfloat* a /*inout*/, const xtfloat b /*in*/, const xtfloat c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MSUBN_SX2)(xtfloatx2* a /*inout*/, const xtfloatx2 b /*in*/, const xtfloatx2 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MADDN_S)(xtfloat* a /*inout*/, const xtfloat b /*in*/, const xtfloat c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MADDN_SX2)(xtfloatx2* a /*inout*/, const xtfloatx2 b /*in*/, const xtfloatx2 c /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_ADD_S)(const xtfloat b /*in*/, const xtfloat c /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_ADD_SX2)(const xtfloatx2 b /*in*/, const xtfloatx2 c /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_RADD_SX2)(const xtfloatx2 s /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_SUB_S)(const xtfloat b /*in*/, const xtfloat c /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_SUB_SX2)(const xtfloatx2 b /*in*/, const xtfloatx2 c /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_NEG_S)(const xtfloat b /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_NEG_SX2)(const xtfloatx2 b /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_FLOAT_S)(const int s /*in*/, immediate t /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_UFLOAT_S)(const unsigned int s /*in*/, immediate t /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_FLOAT_SX2)(const ae_int32x2 s /*in*/, immediate t /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_UFLOAT_SX2)(const ae_int32x2 s /*in*/, immediate t /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_OEQ_S)(const xtfloat s /*in*/, const xtfloat t /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_OLE_S)(const xtfloat s /*in*/, const xtfloat t /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_OLT_S)(const xtfloat s /*in*/, const xtfloat t /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_UEQ_S)(const xtfloat s /*in*/, const xtfloat t /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_ULE_S)(const xtfloat s /*in*/, const xtfloat t /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_ULT_S)(const xtfloat s /*in*/, const xtfloat t /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_UN_S)(const xtfloat s /*in*/, const xtfloat t /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_OEQ_SX2)(const xtfloatx2 s /*in*/, const xtfloatx2 t /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_OLE_SX2)(const xtfloatx2 s /*in*/, const xtfloatx2 t /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_OLT_SX2)(const xtfloatx2 s /*in*/, const xtfloatx2 t /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_UEQ_SX2)(const xtfloatx2 s /*in*/, const xtfloatx2 t /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_ULE_SX2)(const xtfloatx2 s /*in*/, const xtfloatx2 t /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_ULT_SX2)(const xtfloatx2 s /*in*/, const xtfloatx2 t /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_UN_SX2)(const xtfloatx2 s /*in*/, const xtfloatx2 t /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_CONST_S)(immediate b /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_NEXP01_S)(const xtfloat s /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_NEXP01_SX2)(const xtfloatx2 s /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_MKSADJ_S)(const xtfloat s /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_MKSADJ_SX2)(const xtfloatx2 s /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MKDADJ_S)(xtfloat* r /*inout*/, const xtfloat s /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MKDADJ_SX2)(xtfloatx2* r /*inout*/, const xtfloatx2 s /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_DIV0_S)(const xtfloat s /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_DIV0_SX2)(const xtfloatx2 s /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_SQRT0_S)(const xtfloat s /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_SQRT0_SX2)(const xtfloatx2 s /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_RECIP0_S)(const xtfloat s /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_RECIP0_SX2)(const xtfloatx2 s /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_RECIP_S)(const xtfloat s /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_RECIP_SX2)(const xtfloatx2 s /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_RSQRT_S)(const xtfloat s /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_RSQRT_SX2)(const xtfloatx2 s /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_FSQRT_S)(const xtfloat s /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_FSQRT_SX2)(const xtfloatx2 s /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_DIV_S)(const xtfloat vs /*in*/, const xtfloat vr /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_DIV_SX2)(const xtfloatx2 vs /*in*/, const xtfloatx2 vr /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_SQRT_S)(const xtfloat vs /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_SQRT_SX2)(const xtfloatx2 vs /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_RSQRT0_S)(const xtfloat s /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_RSQRT0_SX2)(const xtfloatx2 s /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_DIVN_S)(xtfloat* r /*inout*/, const xtfloat s /*in*/, const xtfloat t /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_DIVN_SX2)(xtfloatx2* r /*inout*/, const xtfloatx2 s /*in*/, const xtfloatx2 t /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_ADDEXP_S)(xtfloat* r /*inout*/, const xtfloat s /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_ADDEXP_SX2)(xtfloatx2* r /*inout*/, const xtfloatx2 s /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_ADDEXPM_S)(xtfloat* r /*inout*/, const xtfloat s /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_ADDEXPM_SX2)(xtfloatx2* r /*inout*/, const xtfloatx2 s /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_MIN_S)(const xtfloat b /*in*/, const xtfloat c /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_MIN_SX2)(const xtfloatx2 b /*in*/, const xtfloatx2 c /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_RMIN_S)(const xtfloatx2 s /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_MAX_S)(const xtfloat b /*in*/, const xtfloat c /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_MAX_SX2)(const xtfloatx2 b /*in*/, const xtfloatx2 c /*in*/);
+CSTUB_EXTERN xtfloat CSTUB_(_TIE_xt_FP_RMAX_S)(const xtfloatx2 s /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_MULMUX_S)(const xtfloatx2 b /*in*/, const xtfloatx2 c /*in*/, immediate d /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MADDMUX_S)(xtfloatx2* a /*inout*/, const xtfloatx2 b /*in*/, const xtfloatx2 c /*in*/, immediate d /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_MULC_S)(const xtfloatx2 b /*in*/, const xtfloatx2 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MADDC_S)(xtfloatx2* a /*inout*/, const xtfloatx2 b /*in*/, const xtfloatx2 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MSUBC_S)(xtfloatx2* a /*inout*/, const xtfloatx2 b /*in*/, const xtfloatx2 c /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_MULCCONJ_S)(const xtfloatx2 b /*in*/, const xtfloatx2 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MADDCCONJ_S)(xtfloatx2* a /*inout*/, const xtfloatx2 b /*in*/, const xtfloatx2 c /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_MSUBCCONJ_S)(xtfloatx2* a /*inout*/, const xtfloatx2 b /*in*/, const xtfloatx2 c /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_CONJC_S)(const xtfloatx2 b /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_AE_MOVXTFLOATX2_FROMINT32X2)(const ae_int32x2 i /*in*/);
+CSTUB_EXTERN ae_int32x2 CSTUB_(_TIE_xt_FP_AE_MOVINT32X2_FROMXTFLOATX2)(const xtfloatx2 i /*in*/);
+CSTUB_EXTERN xtfloatx2 CSTUB_(_TIE_xt_FP_AE_MOVXTFLOATX2_FROMF32X2)(const ae_f32x2 i /*in*/);
+CSTUB_EXTERN ae_f32x2 CSTUB_(_TIE_xt_FP_AE_MOVF32X2_FROMXTFLOATX2)(const xtfloatx2 i /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_xtfloatx2_EQ_xtfloatx2)(const xtfloatx2 d0 /*in*/, const xtfloatx2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_xtfloatx2_LT_xtfloatx2)(const xtfloatx2 d0 /*in*/, const xtfloatx2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_xtfloatx2_LE_xtfloatx2)(const xtfloatx2 d0 /*in*/, const xtfloatx2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_xtfloatx2_GT_xtfloatx2)(const xtfloatx2 d0 /*in*/, const xtfloatx2 d1 /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_FP_xtfloatx2_GE_xtfloatx2)(const xtfloatx2 d0 /*in*/, const xtfloatx2 d1 /*in*/);
+CSTUB_EXTERN ae_valign CSTUB_(_TIE_xt_hifi2_AE_ZALIGN64)(void);
+CSTUB_EXTERN ae_valign CSTUB_(_TIE_xt_hifi2_AE_LALIGN64_I)(const ae_valign * a /*in*/, immediate i64 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_SALIGN64_I)(const ae_valign su /*in*/, const ae_valign * a /*in*/, immediate i64 /*in*/);
+CSTUB_EXTERN ae_valign CSTUB_(_TIE_xt_hifi2_AE_MOVALIGN)(const ae_valign v /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_AE_ADDBRBA32)(const unsigned int ab /*in*/, const unsigned int ai /*in*/);
+CSTUB_EXTERN xtbool2 CSTUB_(_TIE_xt_hifi2_AE_MOVB2)(const xtbool2 bhl2 /*in*/);
+CSTUB_EXTERN xtbool4 CSTUB_(_TIE_xt_hifi2_AE_MOVB4)(const xtbool4 bhl4 /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_AE_CALCRNG3)(void);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_AE_SHA32)(const unsigned int ai /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_hifi2_AE_VLDSHT)(const unsigned int ar_t /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_FP_AE_MOVFCRFSRV)(const ae_int64 v /*in*/);
+CSTUB_EXTERN ae_int64 CSTUB_(_TIE_xt_FP_AE_MOVVFCRFSR)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_density_NOP_N)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_core_NOP)(void);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_booleans_ANDB)(const xtbool bs /*in*/, const xtbool bt /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_booleans_ANDBC)(const xtbool bs /*in*/, const xtbool bt /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_booleans_ORB)(const xtbool bs /*in*/, const xtbool bt /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_booleans_ORBC)(const xtbool bs /*in*/, const xtbool bt /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_booleans_XORB)(const xtbool bs /*in*/, const xtbool bt /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_booleans_ALL4)(const xtbool4 bs4 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_booleans_ANY4)(const xtbool4 bs4 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_booleans_ALL8)(const xtbool8 bs8 /*in*/);
+CSTUB_EXTERN xtbool CSTUB_(_TIE_xt_booleans_ANY8)(const xtbool8 bs8 /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_booleans_MOVF)(unsigned int* arr /*inout*/, const unsigned int ars /*in*/, const xtbool bt /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_booleans_MOVT)(unsigned int* arr /*inout*/, const unsigned int ars /*in*/, const xtbool bt /*in*/);
+CSTUB_EXTERN unsigned int CSTUB_(_TIE_xt_hifi2_AE_SEXT16)(const unsigned int ars /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_ld8_AE_LP8X2F2_IU)(ae_f16x4* pr /*out*/, const void ** ars /*inout*/, immediate ae_lsimm16_IU /*in*/);
+CSTUB_EXTERN ae_f16x4 CSTUB_(_TIE_ld8_AE_LP8X2F2_I)(const void * ars /*in*/, immediate ae_lsimm16_I /*in*/);
+CSTUB_EXTERN void CSTUB_(_TIE_ld8_AE_LP8X2F_IU)(ae_p24x2s* pr /*out*/, const void ** ars /*inout*/, immediate ae_lsimm16_IU /*in*/);
+CSTUB_EXTERN ae_p24x2s CSTUB_(_TIE_ld8_AE_LP8X2F_I)(const void * ars /*in*/, immediate ae_lsimm16_IU /*in*/);
+
+CSTUB_EXTERN int CSTUB_(_TIE_xt_core_RSR_PRID)(void);
+CSTUB_EXTERN unsigned CSTUB_(_TIE_xt_core_RSR_SAR)(void);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_core_WSR_SAR)(unsigned t);
+CSTUB_EXTERN void CSTUB_(_TIE_xt_core_XSR_SAR)(unsigned* t /*inout*/);
+
+CSTUB_EXTERN unsigned int CSTUB_(QUOU)(unsigned int a, unsigned int b);
+CSTUB_EXTERN int CSTUB_(QUOS)(int a, int b);
+CSTUB_EXTERN unsigned int CSTUB_(REMU)(unsigned int a, unsigned int b);
+CSTUB_EXTERN int CSTUB_(REMS)(int a, int b);
+
+/* Proto macros */
+#define XT_L32I_N(p, i) \
+	CSTUB_(_TIE_xt_density_L32I_N)(p, i)
+#define XT_S32I_N(t, p, i) \
+	CSTUB_(_TIE_xt_density_S32I_N)(t, p, i)
+#define XT_ADD_N(s, t) \
+	CSTUB_(_TIE_xt_density_ADD_N)(s, t)
+#define XT_ADDI_N(s, i) \
+	CSTUB_(_TIE_xt_density_ADDI_N)(s, i)
+#define XT_MOV_N(s) \
+	CSTUB_(_TIE_xt_density_MOV_N)(s)
+#define XT_MOVI_N(i) \
+	CSTUB_(_TIE_xt_density_MOVI_N)(i)
+#define XT_uint32_loadi(p, o) \
+	CSTUB_(_TIE_xt_core_uint32_loadi)(p, o)
+#define XT_uint32_storei(c, p, o) \
+	CSTUB_(_TIE_xt_core_uint32_storei)(c, p, o)
+#define XT_uint32_move(b) \
+	CSTUB_(_TIE_xt_core_uint32_move)(b)
+#define XT_ADDI(s, i) \
+	CSTUB_(_TIE_xt_core_ADDI)(s, i)
+#define XT_OR(s, t) \
+	CSTUB_(_TIE_xt_core_OR)(s, t)
+#define XT_L32I(p, i) \
+	CSTUB_(_TIE_xt_core_L32I)(p, i)
+#define XT_S32I(r, p, i) \
+	CSTUB_(_TIE_xt_core_S32I)(r, p, i)
+#define XT_S32NB(r, p, i) \
+	CSTUB_(_TIE_xt_core_S32NB)(r, p, i)
+#define XT_L8UI(p, i) \
+	CSTUB_(_TIE_xt_core_L8UI)(p, i)
+#define XT_S8I(r, p, i) \
+	CSTUB_(_TIE_xt_core_S8I)(r, p, i)
+#define XT_L16UI(p, i) \
+	CSTUB_(_TIE_xt_core_L16UI)(p, i)
+#define XT_L16SI(p, i) \
+	CSTUB_(_TIE_xt_core_L16SI)(p, i)
+#define XT_S16I(r, p, i) \
+	CSTUB_(_TIE_xt_core_S16I)(r, p, i)
+#define XT_ADDMI(s, i) \
+	CSTUB_(_TIE_xt_core_ADDMI)(s, i)
+#define XT_ADD(s, t) \
+	CSTUB_(_TIE_xt_core_ADD)(s, t)
+#define XT_ADDX2(s, t) \
+	CSTUB_(_TIE_xt_core_ADDX2)(s, t)
+#define XT_ADDX4(s, t) \
+	CSTUB_(_TIE_xt_core_ADDX4)(s, t)
+#define XT_ADDX8(s, t) \
+	CSTUB_(_TIE_xt_core_ADDX8)(s, t)
+#define XT_SUB(s, t) \
+	CSTUB_(_TIE_xt_core_SUB)(s, t)
+#define XT_SUBX2(s, t) \
+	CSTUB_(_TIE_xt_core_SUBX2)(s, t)
+#define XT_SUBX4(s, t) \
+	CSTUB_(_TIE_xt_core_SUBX4)(s, t)
+#define XT_SUBX8(s, t) \
+	CSTUB_(_TIE_xt_core_SUBX8)(s, t)
+#define XT_SALT(s, t) \
+	CSTUB_(_TIE_xt_core_SALT)(s, t)
+#define XT_SALTU(s, t) \
+	CSTUB_(_TIE_xt_core_SALTU)(s, t)
+#define XT_AND(s, t) \
+	CSTUB_(_TIE_xt_core_AND)(s, t)
+#define XT_XOR(s, t) \
+	CSTUB_(_TIE_xt_core_XOR)(s, t)
+#define XT_EXTUI(t, i, o) \
+	CSTUB_(_TIE_xt_core_EXTUI)(t, i, o)
+#define XT_MOVI(i) \
+	CSTUB_(_TIE_xt_core_MOVI)(i)
+#define XT_MOVEQZ(r, s, t) \
+	CSTUB_(_TIE_xt_core_MOVEQZ)(&r, s, t)
+#define XT_MOVNEZ(r, s, t) \
+	CSTUB_(_TIE_xt_core_MOVNEZ)(&r, s, t)
+#define XT_MOVLTZ(r, s, t) \
+	CSTUB_(_TIE_xt_core_MOVLTZ)(&r, s, t)
+#define XT_MOVGEZ(r, s, t) \
+	CSTUB_(_TIE_xt_core_MOVGEZ)(&r, s, t)
+#define XT_NEG(t) \
+	CSTUB_(_TIE_xt_core_NEG)(t)
+#define XT_ABS(t) \
+	CSTUB_(_TIE_xt_core_ABS)(t)
+#define XT_SSR(s) \
+	CSTUB_(_TIE_xt_core_SSR)(s)
+#define XT_SSL(s) \
+	CSTUB_(_TIE_xt_core_SSL)(s)
+#define XT_SSA8L(s) \
+	CSTUB_(_TIE_xt_core_SSA8L)(s)
+#define XT_SSA8B(s) \
+	CSTUB_(_TIE_xt_core_SSA8B)(s)
+#define XT_SSAI(i) \
+	CSTUB_(_TIE_xt_core_SSAI)(i)
+#define XT_SLL(s) \
+	CSTUB_(_TIE_xt_core_SLL)(s)
+#define XT_SRC(s, t) \
+	CSTUB_(_TIE_xt_core_SRC)(s, t)
+#define XT_SRL(t) \
+	CSTUB_(_TIE_xt_core_SRL)(t)
+#define XT_SRA(t) \
+	CSTUB_(_TIE_xt_core_SRA)(t)
+#define XT_SLLI(s, i) \
+	CSTUB_(_TIE_xt_core_SLLI)(s, i)
+#define XT_SRAI(t, i) \
+	CSTUB_(_TIE_xt_core_SRAI)(t, i)
+#define XT_SRLI(t, i) \
+	CSTUB_(_TIE_xt_core_SRLI)(t, i)
+#define XT_SSAI_SRC(src1, src2, amount) \
+	CSTUB_(_TIE_xt_core_SSAI_SRC)(src1, src2, amount)
+#define XT_SSR_SRC(src1, src2, amount) \
+	CSTUB_(_TIE_xt_core_SSR_SRC)(src1, src2, amount)
+#define XT_SSR_SRA(src, amount) \
+	CSTUB_(_TIE_xt_core_SSR_SRA)(src, amount)
+#define XT_SSR_SRL(src, amount) \
+	CSTUB_(_TIE_xt_core_SSR_SRL)(src, amount)
+#define XT_SSL_SLL(src, amount) \
+	CSTUB_(_TIE_xt_core_SSL_SLL)(src, amount)
+#define XT_MUL16S(s, t) \
+	CSTUB_(_TIE_xt_mul_MUL16S)(s, t)
+#define XT_MUL16U(s, t) \
+	CSTUB_(_TIE_xt_mul_MUL16U)(s, t)
+#define XT_MULL(s, t) \
+	CSTUB_(_TIE_xt_mul_MULL)(s, t)
+#define XT_MULUH(s, t) \
+	CSTUB_(_TIE_xt_mul_MULUH)(s, t)
+#define XT_MULSH(s, t) \
+	CSTUB_(_TIE_xt_mul_MULSH)(s, t)
+#define XT_CLAMPS(s, i) \
+	CSTUB_(_TIE_xt_misc_CLAMPS)(s, i)
+#define XT_MIN(s, t) \
+	CSTUB_(_TIE_xt_misc_MIN)(s, t)
+#define XT_MAX(s, t) \
+	CSTUB_(_TIE_xt_misc_MAX)(s, t)
+#define XT_MINU(s, t) \
+	CSTUB_(_TIE_xt_misc_MINU)(s, t)
+#define XT_MAXU(s, t) \
+	CSTUB_(_TIE_xt_misc_MAXU)(s, t)
+#define XT_NSA(s) \
+	CSTUB_(_TIE_xt_misc_NSA)(s)
+#define XT_NSAU(s) \
+	CSTUB_(_TIE_xt_misc_NSAU)(s)
+#define XT_SEXT(s, i) \
+	CSTUB_(_TIE_xt_misc_SEXT)(s, i)
+#define RUR_AE_OVF_SAR() \
+	CSTUB_(_TIE_xt_hifi2_RUR_AE_OVF_SAR)()
+#define WUR_AE_OVF_SAR(v) \
+	CSTUB_(_TIE_xt_hifi2_WUR_AE_OVF_SAR)(v)
+#define RUR_AE_BITHEAD() \
+	CSTUB_(_TIE_xt_hifi2_RUR_AE_BITHEAD)()
+#define WUR_AE_BITHEAD(v) \
+	CSTUB_(_TIE_xt_hifi2_WUR_AE_BITHEAD)(v)
+#define RUR_AE_TS_FTS_BU_BP() \
+	CSTUB_(_TIE_xt_hifi2_RUR_AE_TS_FTS_BU_BP)()
+#define WUR_AE_TS_FTS_BU_BP(v) \
+	CSTUB_(_TIE_xt_hifi2_WUR_AE_TS_FTS_BU_BP)(v)
+#define RUR_AE_CW_SD_NO() \
+	CSTUB_(_TIE_xt_hifi2_RUR_AE_CW_SD_NO)()
+#define WUR_AE_CW_SD_NO(v) \
+	CSTUB_(_TIE_xt_hifi2_WUR_AE_CW_SD_NO)(v)
+#define RUR_AE_CBEGIN0() \
+	CSTUB_(_TIE_xt_hifi2_RUR_AE_CBEGIN0)()
+#define WUR_AE_CBEGIN0(v) \
+	CSTUB_(_TIE_xt_hifi2_WUR_AE_CBEGIN0)(v)
+#define RUR_AE_CEND0() \
+	CSTUB_(_TIE_xt_hifi2_RUR_AE_CEND0)()
+#define WUR_AE_CEND0(v) \
+	CSTUB_(_TIE_xt_hifi2_WUR_AE_CEND0)(v)
+#define RAE_OVERFLOW() \
+	CSTUB_(_TIE_xt_hifi2_RAE_OVERFLOW)()
+#define WAE_OVERFLOW(a) \
+	CSTUB_(_TIE_xt_hifi2_WAE_OVERFLOW)(a)
+#define RUR_AE_OVERFLOW() \
+	CSTUB_(_TIE_xt_hifi2_RUR_AE_OVERFLOW)()
+#define WUR_AE_OVERFLOW(a) \
+	CSTUB_(_TIE_xt_hifi2_WUR_AE_OVERFLOW)(a)
+#define RAE_SAR() \
+	CSTUB_(_TIE_xt_hifi2_RAE_SAR)()
+#define WAE_SAR(a) \
+	CSTUB_(_TIE_xt_hifi2_WAE_SAR)(a)
+#define RUR_AE_SAR() \
+	CSTUB_(_TIE_xt_hifi2_RUR_AE_SAR)()
+#define WUR_AE_SAR(a) \
+	CSTUB_(_TIE_xt_hifi2_WUR_AE_SAR)(a)
+#define RAE_BITPTR() \
+	CSTUB_(_TIE_xt_hifi2_RAE_BITPTR)()
+#define WAE_BITPTR(a) \
+	CSTUB_(_TIE_xt_hifi2_WAE_BITPTR)(a)
+#define RUR_AE_BITPTR() \
+	CSTUB_(_TIE_xt_hifi2_RUR_AE_BITPTR)()
+#define WUR_AE_BITPTR(a) \
+	CSTUB_(_TIE_xt_hifi2_WUR_AE_BITPTR)(a)
+#define RAE_BITSUSED() \
+	CSTUB_(_TIE_xt_hifi2_RAE_BITSUSED)()
+#define WAE_BITSUSED(a) \
+	CSTUB_(_TIE_xt_hifi2_WAE_BITSUSED)(a)
+#define RUR_AE_BITSUSED() \
+	CSTUB_(_TIE_xt_hifi2_RUR_AE_BITSUSED)()
+#define WUR_AE_BITSUSED(a) \
+	CSTUB_(_TIE_xt_hifi2_WUR_AE_BITSUSED)(a)
+#define RAE_TABLESIZE() \
+	CSTUB_(_TIE_xt_hifi2_RAE_TABLESIZE)()
+#define WAE_TABLESIZE(a) \
+	CSTUB_(_TIE_xt_hifi2_WAE_TABLESIZE)(a)
+#define RUR_AE_TABLESIZE() \
+	CSTUB_(_TIE_xt_hifi2_RUR_AE_TABLESIZE)()
+#define WUR_AE_TABLESIZE(a) \
+	CSTUB_(_TIE_xt_hifi2_WUR_AE_TABLESIZE)(a)
+#define RAE_FIRST_TS() \
+	CSTUB_(_TIE_xt_hifi2_RAE_FIRST_TS)()
+#define WAE_FIRST_TS(a) \
+	CSTUB_(_TIE_xt_hifi2_WAE_FIRST_TS)(a)
+#define RUR_AE_FIRST_TS() \
+	CSTUB_(_TIE_xt_hifi2_RUR_AE_FIRST_TS)()
+#define WUR_AE_FIRST_TS(a) \
+	CSTUB_(_TIE_xt_hifi2_WUR_AE_FIRST_TS)(a)
+#define RAE_NEXTOFFSET() \
+	CSTUB_(_TIE_xt_hifi2_RAE_NEXTOFFSET)()
+#define WAE_NEXTOFFSET(a) \
+	CSTUB_(_TIE_xt_hifi2_WAE_NEXTOFFSET)(a)
+#define RUR_AE_NEXTOFFSET() \
+	CSTUB_(_TIE_xt_hifi2_RUR_AE_NEXTOFFSET)()
+#define WUR_AE_NEXTOFFSET(a) \
+	CSTUB_(_TIE_xt_hifi2_WUR_AE_NEXTOFFSET)(a)
+#define RAE_SEARCHDONE() \
+	CSTUB_(_TIE_xt_hifi2_RAE_SEARCHDONE)()
+#define WAE_SEARCHDONE(a) \
+	CSTUB_(_TIE_xt_hifi2_WAE_SEARCHDONE)(a)
+#define RUR_AE_SEARCHDONE() \
+	CSTUB_(_TIE_xt_hifi2_RUR_AE_SEARCHDONE)()
+#define WUR_AE_SEARCHDONE(a) \
+	CSTUB_(_TIE_xt_hifi2_WUR_AE_SEARCHDONE)(a)
+#define RAE_CWRAP() \
+	CSTUB_(_TIE_xt_hifi2_RAE_CWRAP)()
+#define WAE_CWRAP(a) \
+	CSTUB_(_TIE_xt_hifi2_WAE_CWRAP)(a)
+#define RUR_AE_CWRAP() \
+	CSTUB_(_TIE_xt_hifi2_RUR_AE_CWRAP)()
+#define WUR_AE_CWRAP(a) \
+	CSTUB_(_TIE_xt_hifi2_WUR_AE_CWRAP)(a)
+#define AE_GETCBEGIN0() \
+	CSTUB_(_TIE_xt_hifi2_AE_GETCBEGIN0)()
+#define AE_SETCBEGIN0(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SETCBEGIN0)(a)
+#define AE_GETCEND0() \
+	CSTUB_(_TIE_xt_hifi2_AE_GETCEND0)()
+#define AE_SETCEND0(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SETCEND0)(a)
+#define AE_L8X4F_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L8X4F_I)(a, off)
+#define AE_L8X4F_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L8X4F_IP)(&d, (const signed char **)&(a), off)
+#define AE_L8X4F_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L8X4F_X)(a, off)
+#define AE_L8X4F_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L8X4F_XP)(&d, (const signed char **)&(a), off)
+#define AE_L8X8_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L8X8_I)(a, off)
+#define AE_L8X8_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L8X8_IP)(&d, (const unsigned char **)&(a), off)
+#define AE_L16M_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16M_XC)(&d, (const ae_p16s **)&(a), off)
+#define AE_LP16F_C(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16F_C)(&d, (const ae_p16s **)&(a), off)
+#define AE_L16M_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16M_I)(a, off)
+#define AE_LP16F_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16F_I)(a, off)
+#define AE_LP16S_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16S_I)(a, off)
+#define ae_p16s_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16s_loadi)(a, off)
+#define AE_L16M_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16M_IU)(&d, (const ae_p16s **)&(a), off)
+#define AE_LP16F_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16F_IU)(&d, (const ae_p16s **)&(a), off)
+#define AE_LP16S_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16S_IU)(&d, (const ae_p16s **)&(a), off)
+#define ae_p16s_loadiu(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16s_loadiu)(&d, (const ae_p16s **)&(a), off)
+#define AE_L16M_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16M_X)(a, off)
+#define AE_LP16F_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16F_X)(a, off)
+#define AE_LP16S_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16S_X)(a, off)
+#define ae_p16s_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16s_loadx)(a, off)
+#define AE_L16M_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16M_XU)(&d, (const ae_p16s **)&(a), off)
+#define AE_LP16F_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16F_XU)(&d, (const ae_p16s **)&(a), off)
+#define AE_LP16S_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16S_XU)(&d, (const ae_p16s **)&(a), off)
+#define ae_p16s_loadxu(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16s_loadxu)(&d, (const ae_p16s **)&(a), off)
+#define AE_L16_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16_XC)(&d, (const ae_int16 **)&(a), off)
+#define AE_L16_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16_I)(a, off)
+#define ae_int16_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_loadi)(a, off)
+#define ae_f16_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16_loadi)(a, off)
+#define AE_L16_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16_IP)(&d, (const ae_int16 **)&(a), off)
+#define ae_int16_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_loadip)(&d, (const ae_int16 **)&(a), off)
+#define ae_f16_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16_loadip)(&d, (const ae_f16 **)&(a), off)
+#define AE_L16_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16_X)(a, off)
+#define ae_int16_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_loadx)(a, off)
+#define ae_f16_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16_loadx)(a, off)
+#define AE_L16_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16_XP)(&d, (const ae_int16 **)&(a), off)
+#define ae_int16_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_loadxp)(&d, (const ae_int16 **)&(a), off)
+#define ae_f16_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16_loadxp)(&d, (const ae_f16 **)&(a), off)
+#define AE_L32F24_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32F24_XC)(&d, (const ae_f24 **)&(a), off)
+#define AE_LP24F_C(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24F_C)(&d, (const ae_p24f **)&(a), off)
+#define AE_L32F24_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32F24_I)(a, off)
+#define AE_LP24F_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24F_I)(a, off)
+#define AE_LF24_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LF24_I)(a, off)
+#define ae_f24_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_loadi)(a, off)
+#define ae_p24f_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24f_loadi)(a, off)
+#define AE_L32F24_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32F24_IP)(&d, (const ae_f24 **)&(a), off)
+#define AE_LP24F_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24F_IU)(&d, (const ae_p24f **)&(a), off)
+#define AE_LF24_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LF24_IP)(&d, (const ae_f24 **)&(a), off)
+#define ae_f24_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_loadip)(&d, (const ae_f24 **)&(a), off)
+#define ae_p24f_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24f_loadip)(&d, (const ae_p24f **)&(a), off)
+#define AE_L32F24_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32F24_X)(a, off)
+#define AE_LP24F_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24F_X)(a, off)
+#define AE_LF24_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LF24_X)(a, off)
+#define ae_f24_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_loadx)(a, off)
+#define ae_p24f_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24f_loadx)(a, off)
+#define AE_L32F24_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32F24_XP)(&d, (const ae_f24 **)&(a), off)
+#define AE_LP24F_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24F_XU)(&d, (const ae_p24f **)&(a), off)
+#define AE_LF24_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LF24_XP)(&d, (const ae_f24 **)&(a), off)
+#define ae_f24_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_loadxp)(&d, (const ae_f24 **)&(a), off)
+#define ae_p24f_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24f_loadxp)(&d, (const ae_p24f **)&(a), off)
+#define AE_L32_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32_XC)(&d, (const ae_int32 **)&(a), off)
+#define AE_LP24_C(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24_C)(&d, (const ae_p24s **)&(a), off)
+#define AE_L32_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32_I)(a, off)
+#define ae_int32_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_loadi)(a, off)
+#define ae_f32_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32_loadi)(a, off)
+#define AE_LP24_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24_I)(a, off)
+#define ae_int24_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_loadi)(a, off)
+#define ae_p24s_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_loadi)(a, off)
+#define AE_L32_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32_IP)(&d, (const ae_int32 **)&(a), off)
+#define ae_int32_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_loadip)(&d, (const ae_int32 **)&(a), off)
+#define ae_f32_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32_loadip)(&d, (const ae_f32 **)&(a), off)
+#define AE_LP24_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24_IU)(&d, (const ae_p24s **)&(a), off)
+#define ae_int24_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_loadip)(&d, (const ae_int24 **)&(a), off)
+#define ae_p24s_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_loadip)(&d, (const ae_p24s **)&(a), off)
+#define AE_L32_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32_X)(a, off)
+#define ae_int32_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_loadx)(a, off)
+#define ae_f32_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32_loadx)(a, off)
+#define AE_LP24_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24_X)(a, off)
+#define ae_int24_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_loadx)(a, off)
+#define ae_p24s_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_loadx)(a, off)
+#define AE_L32_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32_XP)(&d, (const ae_int32 **)&(a), off)
+#define ae_int32_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_loadxp)(&d, (const ae_int32 **)&(a), off)
+#define ae_f32_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32_loadxp)(&d, (const ae_f32 **)&(a), off)
+#define AE_LP24_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24_XU)(&d, (const ae_p24s **)&(a), off)
+#define ae_int24_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_loadxp)(&d, (const ae_int24 **)&(a), off)
+#define ae_p24s_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_loadxp)(&d, (const ae_p24s **)&(a), off)
+#define AE_L32M_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32M_XC)(&d, (const ae_q32s **)&(a), off)
+#define AE_LQ32F_C(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LQ32F_C)(&d, (const ae_q32s **)&(a), off)
+#define AE_L32M_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32M_I)(a, off)
+#define AE_LQ32F_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LQ32F_I)(a, off)
+#define ae_q32s_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_q32s_loadi)(a, off)
+#define AE_L32M_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32M_IU)(&d, (const ae_q32s **)&(a), off)
+#define AE_LQ32F_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LQ32F_IU)(&d, (const ae_q32s **)&(a), off)
+#define ae_q32s_loadiu(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_q32s_loadiu)(&d, (const ae_q32s **)&(a), off)
+#define AE_L32M_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32M_X)(a, off)
+#define AE_LQ32F_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LQ32F_X)(a, off)
+#define ae_q32s_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_q32s_loadx)(a, off)
+#define AE_L32M_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32M_XU)(&d, (const ae_q32s **)&(a), off)
+#define AE_LQ32F_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LQ32F_XU)(&d, (const ae_q32s **)&(a), off)
+#define ae_q32s_loadxu(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_q32s_loadxu)(&d, (const ae_q32s **)&(a), off)
+#define AE_L16X2M_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16X2M_XC)(&d, (const ae_p16x2s **)&(a), off)
+#define AE_LP16X2F_C(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16X2F_C)(&d, (const ae_p16x2s **)&(a), off)
+#define AE_L16X2M_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16X2M_I)(a, off)
+#define AE_LP16X2F_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16X2F_I)(a, off)
+#define AE_LP16X2S_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16X2S_I)(a, off)
+#define ae_p16x2s_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16x2s_loadi)(a, off)
+#define AE_L16X2M_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16X2M_IU)(&d, (const ae_p16x2s **)&(a), off)
+#define AE_LP16X2F_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16X2F_IU)(&d, (const ae_p16x2s **)&(a), off)
+#define AE_LP16X2S_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16X2S_IU)(&d, (const ae_p16x2s **)&(a), off)
+#define ae_p16x2s_loadiu(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16x2s_loadiu)(&d, (const ae_p16x2s **)&(a), off)
+#define AE_L16X2M_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16X2M_X)(a, off)
+#define AE_LP16X2F_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16X2F_X)(a, off)
+#define AE_LP16X2S_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16X2S_X)(a, off)
+#define ae_p16x2s_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16x2s_loadx)(a, off)
+#define AE_L16X2M_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16X2M_XU)(&d, (const ae_p16x2s **)&(a), off)
+#define AE_LP16X2F_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16X2F_XU)(&d, (const ae_p16x2s **)&(a), off)
+#define AE_LP16X2S_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP16X2S_XU)(&d, (const ae_p16x2s **)&(a), off)
+#define ae_p16x2s_loadxu(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16x2s_loadxu)(&d, (const ae_p16x2s **)&(a), off)
+#define AE_L32X2F24_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32X2F24_XC)(&d, (const ae_f24x2 **)&(a), off)
+#define AE_LP24X2F_C(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24X2F_C)(&d, (const ae_p24x2f **)&(a), off)
+#define AE_L32X2F24_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32X2F24_I)(a, off)
+#define AE_LP24X2F_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24X2F_I)(a, off)
+#define AE_LF24X2_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LF24X2_I)(a, off)
+#define ae_f24x2_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_loadi)(a, off)
+#define ae_p24x2f_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_loadi)(a, off)
+#define AE_L32X2F24_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32X2F24_IP)(&d, (const ae_f24x2 **)&(a), off)
+#define AE_LP24X2F_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24X2F_IU)(&d, (const ae_p24x2f **)&(a), off)
+#define AE_LF24X2_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LF24X2_IP)(&d, (const ae_f24x2 **)&(a), off)
+#define ae_f24x2_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_loadip)(&d, (const ae_f24x2 **)&(a), off)
+#define ae_p24x2f_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_loadip)(&d, (const ae_p24x2f **)&(a), off)
+#define AE_L32X2F24_RIP(d, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32X2F24_RIP)(&d, (const ae_f24x2 **)&(a))
+#define AE_L32X2F24_RIC(d, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32X2F24_RIC)(&d, (const ae_f24x2 **)&(a))
+#define AE_L32X2F24_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32X2F24_X)(a, off)
+#define AE_LP24X2F_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24X2F_X)(a, off)
+#define AE_LF24X2_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LF24X2_X)(a, off)
+#define ae_f24x2_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_loadx)(a, off)
+#define ae_p24x2f_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_loadx)(a, off)
+#define AE_L32X2F24_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32X2F24_XP)(&d, (const ae_f24x2 **)&(a), off)
+#define AE_LP24X2F_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24X2F_XU)(&d, (const ae_p24x2f **)&(a), off)
+#define AE_LF24X2_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LF24X2_XP)(&d, (const ae_f24x2 **)&(a), off)
+#define ae_f24x2_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_loadxp)(&d, (const ae_f24x2 **)&(a), off)
+#define ae_p24x2f_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_loadxp)(&d, (const ae_p24x2f **)&(a), off)
+#define AE_L32X2_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32X2_XC)(&d, (const ae_int32x2 **)&(a), off)
+#define AE_LP24X2_C(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24X2_C)(&d, (const ae_p24x2s **)&(a), off)
+#define AE_L32X2_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32X2_I)(a, off)
+#define ae_int32x2_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_loadi)(a, off)
+#define AE_LF32X2_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LF32X2_I)(a, off)
+#define ae_f32x2_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x2_loadi)(a, off)
+#define AE_LP24X2_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24X2_I)(a, off)
+#define AE_L24X2_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L24X2_I)(a, off)
+#define ae_int24x2_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_loadi)(a, off)
+#define AE_LP24X2S_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24X2S_I)(a, off)
+#define ae_p24x2s_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_loadi)(a, off)
+#define AE_L32X2_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32X2_IP)(&d, (const ae_int32x2 **)&(a), off)
+#define ae_int32x2_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_loadip)(&d, (const ae_int32x2 **)&(a), off)
+#define AE_LF32X2_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LF32X2_IP)(&d, (const ae_f32x2 **)&(a), off)
+#define ae_f32x2_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x2_loadip)(&d, (const ae_f32x2 **)&(a), off)
+#define AE_LP24X2_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24X2_IU)(&d, (const ae_p24x2s **)&(a), off)
+#define AE_L24X2_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L24X2_IP)(&d, (const ae_int24x2 **)&(a), off)
+#define ae_int24x2_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_loadip)(&d, (const ae_int24x2 **)&(a), off)
+#define AE_LP24X2S_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24X2S_IP)(&d, (const ae_p24x2s **)&(a), off)
+#define ae_p24x2s_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_loadip)(&d, (const ae_p24x2s **)&(a), off)
+#define AE_L32X2_RIC(d, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32X2_RIC)(&d, (const ae_int32x2 **)&(a))
+#define AE_L32X2_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32X2_X)(a, off)
+#define ae_int32x2_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_loadx)(a, off)
+#define AE_LF32X2_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LF32X2_X)(a, off)
+#define ae_f32x2_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x2_loadx)(a, off)
+#define AE_LP24X2_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24X2_X)(a, off)
+#define AE_L24X2_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L24X2_X)(a, off)
+#define ae_int24x2_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_loadx)(a, off)
+#define AE_LP24X2S_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24X2S_X)(a, off)
+#define ae_p24x2s_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_loadx)(a, off)
+#define AE_L32X2_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32X2_XP)(&d, (const ae_int32x2 **)&(a), off)
+#define ae_int32x2_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_loadxp)(&d, (const ae_int32x2 **)&(a), off)
+#define AE_LF32X2_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LF32X2_XP)(&d, (const ae_f32x2 **)&(a), off)
+#define ae_f32x2_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x2_loadxp)(&d, (const ae_f32x2 **)&(a), off)
+#define AE_LP24X2_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24X2_XU)(&d, (const ae_p24x2s **)&(a), off)
+#define AE_L24X2_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L24X2_XP)(&d, (const ae_int24x2 **)&(a), off)
+#define ae_int24x2_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_loadxp)(&d, (const ae_int24x2 **)&(a), off)
+#define AE_LP24X2S_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LP24X2S_XP)(&d, (const ae_p24x2s **)&(a), off)
+#define ae_p24x2s_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_loadxp)(&d, (const ae_p24x2s **)&(a), off)
+#define AE_L16X4_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16X4_XC)(&d, (const ae_int16x4 **)&(a), off)
+#define AE_L16X4_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16X4_I)(a, off)
+#define ae_int16x4_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_loadi)(a, off)
+#define AE_LF16X4_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LF16X4_I)(a, off)
+#define ae_f16x4_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16x4_loadi)(a, off)
+#define AE_L16X4_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16X4_IP)(&d, (const ae_int16x4 **)&(a), off)
+#define ae_int16x4_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_loadip)(&d, (const ae_int16x4 **)&(a), off)
+#define AE_LF16X4_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LF16X4_IP)(&d, (const ae_f16x4 **)&(a), off)
+#define ae_f16x4_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16x4_loadip)(&d, (const ae_f16x4 **)&(a), off)
+#define AE_L16X4_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16X4_X)(a, off)
+#define ae_int16x4_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_loadx)(a, off)
+#define AE_LF16X4_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LF16X4_X)(a, off)
+#define ae_f16x4_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16x4_loadx)(a, off)
+#define AE_L16X4_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16X4_XP)(&d, (const ae_int16x4 **)&(a), off)
+#define ae_int16x4_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_loadxp)(&d, (const ae_int16x4 **)&(a), off)
+#define AE_LF16X4_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LF16X4_XP)(&d, (const ae_f16x4 **)&(a), off)
+#define ae_f16x4_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16x4_loadxp)(&d, (const ae_f16x4 **)&(a), off)
+#define AE_L64_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L64_XC)(&d, (const ae_int64 **)&(a), off)
+#define AE_LQ56_C(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LQ56_C)(&d, (const ae_q56s **)&(a), off)
+#define AE_L64_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L64_I)(a, off)
+#define ae_int64_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64_loadi)(a, off)
+#define ae_f64_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f64_loadi)(a, off)
+#define AE_LQ56_I(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LQ56_I)(a, off)
+#define ae_q56s_loadi(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_q56s_loadi)(a, off)
+#define AE_L64_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L64_IP)(&d, (const ae_int64 **)&(a), off)
+#define ae_int64_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64_loadip)(&d, (const ae_int64 **)&(a), off)
+#define ae_f64_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f64_loadip)(&d, (const ae_f64 **)&(a), off)
+#define AE_LQ56_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LQ56_IU)(&d, (const ae_q56s **)&(a), off)
+#define ae_q56s_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_q56s_loadip)(&d, (const ae_q56s **)&(a), off)
+#define AE_L64_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L64_X)(a, off)
+#define ae_int64_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64_loadx)(a, off)
+#define ae_f64_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f64_loadx)(a, off)
+#define AE_LQ56_X(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LQ56_X)(a, off)
+#define ae_q56s_loadx(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_q56s_loadx)(a, off)
+#define AE_L64_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L64_XP)(&d, (const ae_int64 **)&(a), off)
+#define ae_int64_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64_loadxp)(&d, (const ae_int64 **)&(a), off)
+#define ae_f64_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f64_loadxp)(&d, (const ae_f64 **)&(a), off)
+#define AE_LQ56_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_LQ56_XU)(&d, (const ae_q56s **)&(a), off)
+#define ae_q56s_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_q56s_loadxp)(&d, (const ae_q56s **)&(a), off)
+#define AE_S16X2M_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X2M_XC)(d, (ae_p16x2s **)&(a), off)
+#define AE_SP16X2F_C(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP16X2F_C)(d, (ae_p16x2s **)&(a), off)
+#define AE_S16X2M_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X2M_I)(d, a, off)
+#define AE_SP16X2F_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP16X2F_I)(d, a, off)
+#define AE_SP16X2S_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP16X2S_I)(d, a, off)
+#define ae_p16x2s_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16x2s_storei)(d, a, off)
+#define AE_S16X2M_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X2M_IU)(d, (ae_p16x2s **)&(a), off)
+#define AE_SP16X2F_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP16X2F_IU)(d, (ae_p16x2s **)&(a), off)
+#define AE_SP16X2S_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP16X2S_IU)(d, (ae_p16x2s **)&(a), off)
+#define ae_p16x2s_storeiu(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16x2s_storeiu)(d, (ae_p16x2s **)&(a), off)
+#define AE_S16X2M_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X2M_X)(d, a, off)
+#define AE_SP16X2F_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP16X2F_X)(d, a, off)
+#define AE_SP16X2S_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP16X2S_X)(d, a, off)
+#define ae_p16x2s_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16x2s_storex)(d, a, off)
+#define AE_S16X2M_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X2M_XU)(d, (ae_p16x2s **)&(a), off)
+#define AE_SP16X2F_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP16X2F_XU)(d, (ae_p16x2s **)&(a), off)
+#define AE_SP16X2S_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP16X2S_XU)(d, (ae_p16x2s **)&(a), off)
+#define ae_p16x2s_storexu(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16x2s_storexu)(d, (ae_p16x2s **)&(a), off)
+#define AE_S32X2F24_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32X2F24_XC)(d, (ae_f24x2 **)&(a), off)
+#define AE_SP24X2F_C(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24X2F_C)(d, (ae_p24x2f **)&(a), off)
+#define AE_S32X2F24_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32X2F24_I)(d, a, off)
+#define AE_SP24X2F_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24X2F_I)(d, a, off)
+#define AE_SF24X2_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SF24X2_I)(d, a, off)
+#define ae_f24x2_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_storei)(d, a, off)
+#define ae_p24x2f_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_storei)(d, a, off)
+#define AE_S32X2F24_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32X2F24_IP)(d, (ae_f24x2 **)&(a), off)
+#define AE_SP24X2F_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24X2F_IU)(d, (ae_p24x2f **)&(a), off)
+#define AE_SF24X2_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SF24X2_IP)(d, (ae_f24x2 **)&(a), off)
+#define ae_f24x2_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_storeip)(d, (ae_f24x2 **)&(a), off)
+#define ae_p24x2f_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_storeip)(d, (ae_p24x2f **)&(a), off)
+#define AE_S32X2F24_RIP(d, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32X2F24_RIP)(d, (ae_f24x2 **)&(a))
+#define AE_S32X2F24_RIC(d, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32X2F24_RIC)(d, (ae_f24x2 **)&(a))
+#define AE_S32X2F24_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32X2F24_X)(d, a, off)
+#define AE_SP24X2F_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24X2F_X)(d, a, off)
+#define AE_SF24X2_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SF24X2_X)(d, a, off)
+#define ae_f24x2_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_storex)(d, a, off)
+#define ae_p24x2f_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_storex)(d, a, off)
+#define AE_S32X2F24_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32X2F24_XP)(d, (ae_f24x2 **)&(a), off)
+#define AE_SP24X2F_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24X2F_XU)(d, (ae_p24x2f **)&(a), off)
+#define AE_SF24X2_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SF24X2_XP)(d, (ae_f24x2 **)&(a), off)
+#define ae_f24x2_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_storexp)(d, (ae_f24x2 **)&(a), off)
+#define ae_p24x2f_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_storexp)(d, (ae_p24x2f **)&(a), off)
+#define AE_S32X2_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32X2_XC)(d, (ae_int32x2 **)&(a), off)
+#define AE_SP24X2S_C(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24X2S_C)(d, (ae_p24x2s **)&(a), off)
+#define AE_S32X2_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32X2_I)(d, a, off)
+#define ae_int32x2_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_storei)(d, a, off)
+#define AE_SF32X2_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SF32X2_I)(d, a, off)
+#define ae_f32x2_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x2_storei)(d, a, off)
+#define AE_SP24X2S_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24X2S_I)(d, a, off)
+#define ae_p24x2s_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_storei)(d, a, off)
+#define AE_S24X2_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S24X2_I)(d, a, off)
+#define ae_int24x2_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_storei)(d, a, off)
+#define AE_S32X2_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32X2_IP)(d, (ae_int32x2 **)&(a), off)
+#define ae_int32x2_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_storeip)(d, (ae_int32x2 **)&(a), off)
+#define AE_SF32X2_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SF32X2_IP)(d, (ae_f32x2 **)&(a), off)
+#define ae_f32x2_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x2_storeip)(d, (ae_f32x2 **)&(a), off)
+#define AE_SP24X2S_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24X2S_IU)(d, (ae_p24x2s **)&(a), off)
+#define ae_p24x2s_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_storeip)(d, (ae_p24x2s **)&(a), off)
+#define AE_S24X2_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S24X2_IP)(d, (ae_int24x2 **)&(a), off)
+#define ae_int24x2_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_storeip)(d, (ae_int24x2 **)&(a), off)
+#define AE_S32X2_RIC(d, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32X2_RIC)(d, (ae_int32x2 **)&(a))
+#define AE_S32X2_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32X2_X)(d, a, off)
+#define ae_int32x2_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_storex)(d, a, off)
+#define AE_SF32X2_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SF32X2_X)(d, a, off)
+#define ae_f32x2_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x2_storex)(d, a, off)
+#define AE_SP24X2S_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24X2S_X)(d, a, off)
+#define ae_p24x2s_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_storex)(d, a, off)
+#define AE_S24X2_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S24X2_X)(d, a, off)
+#define ae_int24x2_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_storex)(d, a, off)
+#define AE_S32X2_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32X2_XP)(d, (ae_int32x2 **)&(a), off)
+#define ae_int32x2_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_storexp)(d, (ae_int32x2 **)&(a), off)
+#define AE_SF32X2_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SF32X2_XP)(d, (ae_f32x2 **)&(a), off)
+#define ae_f32x2_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x2_storexp)(d, (ae_f32x2 **)&(a), off)
+#define AE_SP24X2S_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24X2S_XU)(d, (ae_p24x2s **)&(a), off)
+#define ae_p24x2s_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_storexp)(d, (ae_p24x2s **)&(a), off)
+#define AE_S24X2_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S24X2_XP)(d, (ae_int24x2 **)&(a), off)
+#define ae_int24x2_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_storexp)(d, (ae_int24x2 **)&(a), off)
+#define AE_S16X4_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X4_XC)(d, (ae_int16x4 **)&(a), off)
+#define AE_S16X4_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X4_I)(d, a, off)
+#define ae_int16x4_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_storei)(d, a, off)
+#define AE_SF16X4_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SF16X4_I)(d, a, off)
+#define ae_f16x4_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16x4_storei)(d, a, off)
+#define AE_S16X4_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X4_IP)(d, (ae_int16x4 **)&(a), off)
+#define ae_int16x4_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_storeip)(d, (ae_int16x4 **)&(a), off)
+#define AE_SF16X4_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SF16X4_IP)(d, (ae_f16x4 **)&(a), off)
+#define ae_f16x4_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16x4_storeip)(d, (ae_f16x4 **)&(a), off)
+#define AE_S16X4_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X4_X)(d, a, off)
+#define ae_int16x4_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_storex)(d, a, off)
+#define AE_SF16X4_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SF16X4_X)(d, a, off)
+#define ae_f16x4_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16x4_storex)(d, a, off)
+#define AE_S16X4_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X4_XP)(d, (ae_int16x4 **)&(a), off)
+#define ae_int16x4_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_storexp)(d, (ae_int16x4 **)&(a), off)
+#define AE_SF16X4_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SF16X4_XP)(d, (ae_f16x4 **)&(a), off)
+#define ae_f16x4_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16x4_storexp)(d, (ae_f16x4 **)&(a), off)
+#define AE_S16X4RNG_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X4RNG_I)(d, a, off)
+#define AE_S16X4RNG_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X4RNG_IP)(d, (ae_int16x4 **)&(a), off)
+#define AE_S16X4RNG_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X4RNG_X)(d, a, off)
+#define AE_S16X4RNG_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X4RNG_XP)(d, (ae_int16x4 **)&(a), off)
+#define AE_S16M_L_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16M_L_XC)(d, (ae_p16s **)&(a), off)
+#define AE_SP16F_L_C(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP16F_L_C)(d, (ae_p16s **)&(a), off)
+#define AE_S16M_L_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16M_L_I)(d, a, off)
+#define AE_SP16F_L_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP16F_L_I)(d, a, off)
+#define ae_p16s_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16s_storei)(d, a, off)
+#define AE_S16M_L_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16M_L_IU)(d, (ae_p16s **)&(a), off)
+#define AE_SP16F_L_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP16F_L_IU)(d, (ae_p16s **)&(a), off)
+#define ae_p16s_storeiu(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16s_storeiu)(d, (ae_p16s **)&(a), off)
+#define AE_S16M_L_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16M_L_X)(d, a, off)
+#define AE_SP16F_L_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP16F_L_X)(d, a, off)
+#define ae_p16s_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16s_storex)(d, a, off)
+#define AE_S16M_L_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16M_L_XU)(d, (ae_p16s **)&(a), off)
+#define AE_SP16F_L_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP16F_L_XU)(d, (ae_p16s **)&(a), off)
+#define ae_p16s_storexu(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16s_storexu)(d, (ae_p16s **)&(a), off)
+#define AE_S32F24_L_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32F24_L_XC)(d, (ae_f24 **)&(a), off)
+#define AE_SP24F_L_C(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24F_L_C)(d, (ae_p24f **)&(a), off)
+#define AE_S32F24_L_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32F24_L_I)(d, a, off)
+#define AE_SP24F_L_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24F_L_I)(d, a, off)
+#define ae_f24_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_storei)(d, a, off)
+#define ae_p24f_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24f_storei)(d, a, off)
+#define AE_S32F24_L_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32F24_L_IP)(d, (ae_f24 **)&(a), off)
+#define AE_SP24F_L_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24F_L_IU)(d, (ae_p24f **)&(a), off)
+#define ae_f24_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_storeip)(d, (ae_f24 **)&(a), off)
+#define ae_p24f_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24f_storeip)(d, (ae_p24f **)&(a), off)
+#define AE_S32F24_L_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32F24_L_X)(d, a, off)
+#define AE_SP24F_L_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24F_L_X)(d, a, off)
+#define ae_f24_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_storex)(d, a, off)
+#define ae_p24f_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24f_storex)(d, a, off)
+#define AE_S32F24_L_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32F24_L_XP)(d, (ae_f24 **)&(a), off)
+#define AE_SP24F_L_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24F_L_XU)(d, (ae_p24f **)&(a), off)
+#define ae_f24_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_storexp)(d, (ae_f24 **)&(a), off)
+#define ae_p24f_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24f_storexp)(d, (ae_p24f **)&(a), off)
+#define AE_S32_L_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32_L_XC)(d, (ae_int32 **)&(a), off)
+#define AE_SP24S_L_C(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24S_L_C)(d, (ae_p24s **)&(a), off)
+#define AE_S32_L_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32_L_I)(d, a, off)
+#define ae_int32_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_storei)(d, a, off)
+#define ae_f32_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32_storei)(d, a, off)
+#define AE_SP24S_L_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24S_L_I)(d, a, off)
+#define ae_int24_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_storei)(d, a, off)
+#define ae_p24s_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_storei)(d, a, off)
+#define AE_S32_L_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32_L_IP)(d, (ae_int32 **)&(a), off)
+#define ae_int32_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_storeip)(d, (ae_int32 **)&(a), off)
+#define ae_f32_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32_storeip)(d, (ae_f32 **)&(a), off)
+#define AE_SP24S_L_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24S_L_IU)(d, (ae_p24s **)&(a), off)
+#define ae_int24_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_storeip)(d, (ae_int24 **)&(a), off)
+#define ae_p24s_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_storeip)(d, (ae_p24s **)&(a), off)
+#define AE_S32_L_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32_L_X)(d, a, off)
+#define ae_int32_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_storex)(d, a, off)
+#define ae_f32_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32_storex)(d, a, off)
+#define AE_SP24S_L_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24S_L_X)(d, a, off)
+#define ae_int24_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_storex)(d, a, off)
+#define ae_p24s_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_storex)(d, a, off)
+#define AE_S32_L_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32_L_XP)(d, (ae_int32 **)&(a), off)
+#define ae_int32_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_storexp)(d, (ae_int32 **)&(a), off)
+#define ae_f32_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32_storexp)(d, (ae_f32 **)&(a), off)
+#define AE_SP24S_L_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SP24S_L_XU)(d, (ae_p24s **)&(a), off)
+#define ae_int24_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_storexp)(d, (ae_int24 **)&(a), off)
+#define ae_p24s_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_storexp)(d, (ae_p24s **)&(a), off)
+#define AE_S16_0_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16_0_XC)(d, (ae_int16 **)&(a), off)
+#define AE_S16_0_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16_0_I)(d, a, off)
+#define ae_int16_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_storei)(d, a, off)
+#define ae_f16_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16_storei)(d, a, off)
+#define AE_S16_0_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16_0_IP)(d, (ae_int16 **)&(a), off)
+#define ae_int16_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_storeip)(d, (ae_int16 **)&(a), off)
+#define ae_f16_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16_storeip)(d, (ae_f16 **)&(a), off)
+#define AE_S16_0_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16_0_X)(d, a, off)
+#define ae_int16_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_storex)(d, a, off)
+#define ae_f16_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16_storex)(d, a, off)
+#define AE_S16_0_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16_0_XP)(d, (ae_int16 **)&(a), off)
+#define ae_int16_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_storexp)(d, (ae_int16 **)&(a), off)
+#define ae_f16_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16_storexp)(d, (ae_f16 **)&(a), off)
+#define AE_S64_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S64_XC)(d, (ae_int64 **)&(a), off)
+#define AE_SQ56S_C(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SQ56S_C)(d, (ae_q56s **)&(a), off)
+#define AE_S64_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S64_I)(d, a, off)
+#define ae_int64_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64_storei)(d, a, off)
+#define ae_f64_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f64_storei)(d, a, off)
+#define AE_SQ56S_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SQ56S_I)(d, a, off)
+#define ae_q56s_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_q56s_storei)(d, a, off)
+#define AE_S64_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S64_IP)(d, (ae_int64 **)&(a), off)
+#define ae_int64_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64_storeip)(d, (ae_int64 **)&(a), off)
+#define ae_f64_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f64_storeip)(d, (ae_f64 **)&(a), off)
+#define AE_SQ56S_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SQ56S_IU)(d, (ae_q56s **)&(a), off)
+#define ae_q56s_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_q56s_storeip)(d, (ae_q56s **)&(a), off)
+#define AE_S64_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S64_X)(d, a, off)
+#define ae_int64_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64_storex)(d, a, off)
+#define ae_f64_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f64_storex)(d, a, off)
+#define AE_SQ56S_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SQ56S_X)(d, a, off)
+#define ae_q56s_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_q56s_storex)(d, a, off)
+#define AE_S64_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S64_XP)(d, (ae_int64 **)&(a), off)
+#define ae_int64_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64_storexp)(d, (ae_int64 **)&(a), off)
+#define ae_f64_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f64_storexp)(d, (ae_f64 **)&(a), off)
+#define AE_SQ56S_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SQ56S_XU)(d, (ae_q56s **)&(a), off)
+#define ae_q56s_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_q56s_storexp)(d, (ae_q56s **)&(a), off)
+#define AE_S32M_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32M_XC)(d, (ae_q32s **)&(a), off)
+#define AE_SQ32F_C(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SQ32F_C)(d, (ae_q32s **)&(a), off)
+#define AE_S32M_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32M_I)(d, a, off)
+#define AE_SQ32F_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SQ32F_I)(d, a, off)
+#define ae_q32s_storei(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_q32s_storei)(d, a, off)
+#define AE_S32M_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32M_IU)(d, (ae_q32s **)&(a), off)
+#define AE_SQ32F_IU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SQ32F_IU)(d, (ae_q32s **)&(a), off)
+#define ae_q32s_storeiu(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_q32s_storeiu)(d, (ae_q32s **)&(a), off)
+#define AE_S32M_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32M_X)(d, a, off)
+#define AE_SQ32F_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SQ32F_X)(d, a, off)
+#define ae_q32s_storex(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_q32s_storex)(d, a, off)
+#define AE_S32M_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32M_XU)(d, (ae_q32s **)&(a), off)
+#define AE_SQ32F_XU(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_SQ32F_XU)(d, (ae_q32s **)&(a), off)
+#define ae_q32s_storexu(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_q32s_storexu)(d, (ae_q32s **)&(a), off)
+#define ae_int32x2_loadri(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_loadri)(a, off)
+#define ae_f32x2_loadri(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x2_loadri)(a, off)
+#define ae_int24x2_loadri(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_loadri)(a, off)
+#define ae_p24x2s_loadri(a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_loadri)(a, off)
+#define ae_int32x2_loadrip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_loadrip)(&d, (const ae_int32x2 **)&(a), off)
+#define ae_f32x2_loadrip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x2_loadrip)(&d, (const ae_f32x2 **)&(a), off)
+#define ae_int24x2_loadrip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_loadrip)(&d, (const ae_int24x2 **)&(a), off)
+#define ae_int16x4_loadrip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_loadrip)(&d, (const ae_int16x4 **)&(a), off)
+#define ae_f16x4_loadrip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16x4_loadrip)(&d, (const ae_f16x4 **)&(a), off)
+#define ae_int32x2_storeri(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_storeri)(d, a, off)
+#define ae_f32x2_storeri(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x2_storeri)(d, a, off)
+#define ae_int24x2_storeri(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_storeri)(d, a, off)
+#define ae_p24x2s_storeri(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_storeri)(d, a, off)
+#define ae_int32x2_storerip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_storerip)(d, (ae_int32x2 **)&(a), off)
+#define ae_f32x2_storerip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x2_storerip)(d, (ae_f32x2 **)&(a), off)
+#define ae_int24x2_storerip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_storerip)(d, (ae_int24x2 **)&(a), off)
+#define ae_int16x4_storerip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_storerip)(d, (ae_int16x4 **)&(a), off)
+#define ae_f16x4_storerip(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16x4_storerip)(d, (ae_f16x4 **)&(a), off)
+#define AE_SA24_IC(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA24_IC)(d, &su, (void **)&(a))
+#define AE_SA24_IP(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA24_IP)(d, &su, (void **)&(a))
+#define AE_SA24_RIP(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA24_RIP)(d, &su, (void **)&(a))
+#define AE_SA24_RIC(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA24_RIC)(d, &su, (void **)&(a))
+#define ae_p16s_mtor_ae_p24x2s(a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16s_mtor_ae_p24x2s)(a, i)
+#define ae_p16s_mtor_ae_p24x2f(a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16s_mtor_ae_p24x2f)(a, i)
+#define ae_p16s_mtor_ae_p24s(a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16s_mtor_ae_p24s)(a, i)
+#define ae_p16s_mtor_ae_p24f(a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16s_mtor_ae_p24f)(a, i)
+#define ae_p24s_mtor_ae_p24x2s(a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_mtor_ae_p24x2s)(a, i)
+#define ae_p24s_mtor_ae_p24x2f(a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_mtor_ae_p24x2f)(a, i)
+#define ae_p24s_mtor_ae_p24f(a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_mtor_ae_p24f)(a, i)
+#define ae_p24f_mtor_ae_p24x2s(a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24f_mtor_ae_p24x2s)(a, i)
+#define ae_p24f_mtor_ae_p24x2f(a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24f_mtor_ae_p24x2f)(a, i)
+#define ae_p24x2f_mtor_ae_p24x2s(a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_mtor_ae_p24x2s)(a, i)
+#define ae_p16x2s_mtor_ae_p24x2s(a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16x2s_mtor_ae_p24x2s)(a, i)
+#define ae_p16x2s_mtor_ae_p24x2f(a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16x2s_mtor_ae_p24x2f)(a, i)
+#define ae_p24x2s_rtom_ae_p16x2s(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtom_ae_p16x2s)(d, a, i)
+#define ae_p24x2f_rtom_ae_p16x2s(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtom_ae_p16x2s)(d, a, i)
+#define ae_p24x2s_rtom_ae_p24x2f(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtom_ae_p24x2f)(d, a, i)
+#define ae_p24x2f_rtom_ae_p24x2s(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtom_ae_p24x2s)(d, a, i)
+#define ae_p24x2s_rtom_ae_p16s(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtom_ae_p16s)(d, a, i)
+#define ae_p24x2f_rtom_ae_p16s(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtom_ae_p16s)(d, a, i)
+#define ae_p24s_rtom_ae_p16s(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_rtom_ae_p16s)(d, a, i)
+#define ae_p24f_rtom_ae_p16s(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24f_rtom_ae_p16s)(d, a, i)
+#define ae_p24x2s_rtom_ae_p24s(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtom_ae_p24s)(d, a, i)
+#define ae_p24x2f_rtom_ae_p24s(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtom_ae_p24s)(d, a, i)
+#define ae_p24f_rtom_ae_p24s(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24f_rtom_ae_p24s)(d, a, i)
+#define ae_p24x2s_rtom_ae_p24f(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtom_ae_p24f)(d, a, i)
+#define ae_p24x2f_rtom_ae_p24f(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtom_ae_p24f)(d, a, i)
+#define ae_p24s_rtom_ae_p24f(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_rtom_ae_p24f)(d, a, i)
+#define ae_q32s_mtor_ae_q56s(a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_q32s_mtor_ae_q56s)(a, i)
+#define ae_q56s_rtom_ae_q32s(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_q56s_rtom_ae_q32s)(d, a, i)
+#define ae_valign_loadi(a, imm) \
+	CSTUB_(_TIE_xt_hifi2_ae_valign_loadi)(a, imm)
+#define ae_valign_storei(su, a, imm) \
+	CSTUB_(_TIE_xt_hifi2_ae_valign_storei)(su, a, imm)
+#define ae_valign_move(v) \
+	CSTUB_(_TIE_xt_hifi2_ae_valign_move)(v)
+#define AE_LA64_PP(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA64_PP)(a)
+#define AE_LA24POS_PC(uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA24POS_PC)(&uu, (const void **)&(a))
+#define AE_LA24X2POS_PC(uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA24X2POS_PC)(&uu, (const void **)&(a))
+#define AE_LA32X2POS_PC(uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA32X2POS_PC)(&uu, (const ae_int32x2 **)&(a))
+#define AE_LA16X4POS_PC(uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA16X4POS_PC)(&uu, (const ae_int16x4 **)&(a))
+#define AE_LA24NEG_PC(uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA24NEG_PC)(&uu, (const void **)&(a))
+#define AE_LA24X2NEG_PC(uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA24X2NEG_PC)(&uu, (const void **)&(a))
+#define AE_LA32X2NEG_PC(uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA32X2NEG_PC)(&uu, (const ae_int32x2 **)&(a))
+#define AE_LA16X4NEG_PC(uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA16X4NEG_PC)(&uu, (const ae_int16x4 **)&(a))
+#define AE_LA32X2F24POS_PC(uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA32X2F24POS_PC)(&uu, (const ae_f24x2 **)&(a))
+#define AE_LA32X2F24NEG_PC(uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA32X2F24NEG_PC)(&uu, (const ae_f24x2 **)&(a))
+#define AE_SA64POS_FP(su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA64POS_FP)(&su, a)
+#define AE_SA64POS_FC(su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA64POS_FC)(&su, a)
+#define AE_SA64NEG_FP(su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA64NEG_FP)(&su, a)
+#define AE_SA64NEG_FC(su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA64NEG_FC)(&su, a)
+#define AE_LA32X2_IC(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA32X2_IC)(&d, &uu, (const ae_int32x2 **)&(a))
+#define AE_LA32X2_IP(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA32X2_IP)(&d, &uu, (const ae_int32x2 **)&(a))
+#define AE_LA32X2_RIP(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA32X2_RIP)(&d, &uu, (const ae_int32x2 **)&(a))
+#define AE_LA32X2_RIC(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA32X2_RIC)(&d, &uu, (const ae_int32x2 **)&(a))
+#define AE_LA16X4_IC(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA16X4_IC)(&d, &uu, (const ae_int16x4 **)&(a))
+#define AE_LA16X4_IP(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA16X4_IP)(&d, &uu, (const ae_int16x4 **)&(a))
+#define AE_LA16X4_RIP(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA16X4_RIP)(&d, &uu, (const ae_int16x4 **)&(a))
+#define AE_LA16X4_RIC(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA16X4_RIC)(&d, &uu, (const ae_int16x4 **)&(a))
+#define AE_LA32X2F24_IC(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA32X2F24_IC)(&d, &uu, (const ae_f24x2 **)&(a))
+#define AE_LA32X2F24_IP(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA32X2F24_IP)(&d, &uu, (const ae_f24x2 **)&(a))
+#define AE_LA32X2F24_RIP(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA32X2F24_RIP)(&d, &uu, (const ae_f24x2 **)&(a))
+#define AE_LA32X2F24_RIC(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA32X2F24_RIC)(&d, &uu, (const ae_f24x2 **)&(a))
+#define AE_LA24_IC(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA24_IC)(&d, &uu, (const void **)&(a))
+#define AE_LA24_IP(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA24_IP)(&d, &uu, (const void **)&(a))
+#define AE_LA24_RIP(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA24_RIP)(&d, &uu, (const void **)&(a))
+#define AE_LA24_RIC(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA24_RIC)(&d, &uu, (const void **)&(a))
+#define AE_LA24X2_IC(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA24X2_IC)(&d, &uu, (const void **)&(a))
+#define AE_LA24X2_IP(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA24X2_IP)(&d, &uu, (const void **)&(a))
+#define AE_LA24X2_RIP(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA24X2_RIP)(&d, &uu, (const void **)&(a))
+#define AE_LA24X2_RIC(d, uu, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_LA24X2_RIC)(&d, &uu, (const void **)&(a))
+#define AE_SA32X2_IC(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA32X2_IC)(d, &su, (ae_int32x2 **)&(a))
+#define AE_SA32X2_IP(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA32X2_IP)(d, &su, (ae_int32x2 **)&(a))
+#define AE_SA32X2_RIP(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA32X2_RIP)(d, &su, (ae_int32x2 **)&(a))
+#define AE_SA32X2_RIC(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA32X2_RIC)(d, &su, (ae_int32x2 **)&(a))
+#define AE_SA16X4_IC(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA16X4_IC)(d, &su, (ae_int16x4 **)&(a))
+#define AE_SA16X4_IP(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA16X4_IP)(d, &su, (ae_int16x4 **)&(a))
+#define AE_SA16X4_RIP(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA16X4_RIP)(d, &su, (ae_int16x4 **)&(a))
+#define AE_SA16X4_RIC(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA16X4_RIC)(d, &su, (ae_int16x4 **)&(a))
+#define AE_SA32X2F24_IC(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA32X2F24_IC)(d, &su, (ae_f24x2 **)&(a))
+#define AE_SA32X2F24_IP(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA32X2F24_IP)(d, &su, (ae_f24x2 **)&(a))
+#define AE_SA32X2F24_RIP(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA32X2F24_RIP)(d, &su, (ae_f24x2 **)&(a))
+#define AE_SA32X2F24_RIC(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA32X2F24_RIC)(d, &su, (ae_f24x2 **)&(a))
+#define AE_SA24_L_IC(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA24_L_IC)(d, &su, (void **)&(a))
+#define AE_SA24_L_IP(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA24_L_IP)(d, &su, (void **)&(a))
+#define AE_SA24_L_RIP(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA24_L_RIP)(d, &su, (void **)&(a))
+#define AE_SA24_L_RIC(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA24_L_RIC)(d, &su, (void **)&(a))
+#define AE_SA24X2_IC(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA24X2_IC)(d, &su, (void **)&(a))
+#define AE_SA24X2_IP(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA24X2_IP)(d, &su, (void **)&(a))
+#define AE_SA24X2_RIP(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA24X2_RIP)(d, &su, (void **)&(a))
+#define AE_SA24X2_RIC(d, su, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SA24X2_RIC)(d, &su, (void **)&(a))
+#define AE_L32X2_RIP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32X2_RIP)(&d, (const ae_int32x2 **)&(a), off)
+#define AE_S32X2_RIP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32X2_RIP)(d, (ae_int32x2 **)&(a), off)
+#define AE_L32X2_RI(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L32X2_RI)(a, off)
+#define AE_S32X2_RI(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32X2_RI)(d, a, off)
+#define AE_L16X4_RIP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16X4_RIP)(&d, (const ae_int16x4 **)&(a), off)
+#define AE_S16X4_RIP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X4_RIP)(d, (ae_int16x4 **)&(a), off)
+#define AE_L16X4_RI(a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16X4_RI)(a, off)
+#define AE_S16X4_RI(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X4_RI)(d, a, off)
+#define AE_L16X4_RIC(d, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16X4_RIC)(&d, (const ae_int16x4 **)&(a))
+#define AE_S16X4_RIC(d, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X4_RIC)(d, (ae_int16x4 **)&(a))
+#define AE_S32RA64S_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32RA64S_I)(d, a, off)
+#define AE_S32RA64S_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32RA64S_IP)(d, (ae_f32 **)&(a), off)
+#define AE_S32RA64S_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32RA64S_X)(d, a, off)
+#define AE_S32RA64S_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32RA64S_XP)(d, (ae_f32 **)&(a), off)
+#define AE_S32RA64S_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32RA64S_XC)(d, (ae_f32 **)&(a), off)
+#define AE_S24RA64S_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S24RA64S_I)(d, a, off)
+#define AE_S24RA64S_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S24RA64S_IP)(d, (ae_f24 **)&(a), off)
+#define AE_S24RA64S_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S24RA64S_X)(d, a, off)
+#define AE_S24RA64S_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S24RA64S_XP)(d, (ae_f24 **)&(a), off)
+#define AE_S24RA64S_XC(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S24RA64S_XC)(d, (ae_f24 **)&(a), off)
+#define AE_S32X2RA64S_IP(d2, d1, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32X2RA64S_IP)(d2, d1, (ae_f32x2 **)&(a))
+#define AE_S24X2RA64S_IP(d2, d1, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_S24X2RA64S_IP)(d2, d1, (ae_f24x2 **)&(a))
+#define AE_S16X4RA32S_IP(d2, d1, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16X4RA32S_IP)(d2, d1, (ae_f16x4 **)&(a))
+#define AE_S32_H_I(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32_H_I)(d, a, off)
+#define AE_S32_H_IP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32_H_IP)(d, (ae_int32 **)&(a), off)
+#define AE_S32_H_X(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32_H_X)(d, a, off)
+#define AE_S32_H_XP(d, a, off) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32_H_XP)(d, (ae_int32 **)&(a), off)
+#define AE_S32X2_L_IP(d2, d1, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_S32X2_L_IP)(d2, d1, (ae_int32x2 **)&(a))
+#define AE_MUL32JS(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32JS)(d0)
+#define AE_ZERO() \
+	CSTUB_(_TIE_xt_hifi2_AE_ZERO)()
+#define AE_ZERO64() \
+	CSTUB_(_TIE_xt_hifi2_AE_ZERO64)()
+#define AE_ZERO32() \
+	CSTUB_(_TIE_xt_hifi2_AE_ZERO32)()
+#define AE_ZERO24() \
+	CSTUB_(_TIE_xt_hifi2_AE_ZERO24)()
+#define AE_ZERO16() \
+	CSTUB_(_TIE_xt_hifi2_AE_ZERO16)()
+#define AE_ZEROP48() \
+	CSTUB_(_TIE_xt_hifi2_AE_ZEROP48)()
+#define AE_MOV(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOV)(d0)
+#define AE_MOV64(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOV64)(d0)
+#define AE_MOV16(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOV16)(d0)
+#define AE_MOV24(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOV24)(d0)
+#define AE_MOV32(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOV32)(d0)
+#define AE_MOVP48(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVP48)(d0)
+#define AE_SEL16I_N(d0, d1, i) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16I_N)(d0, d1, i)
+#define AE_SEL16I(d0, d1, i) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16I)(d0, d1, i)
+#define AE_SEL32I(d0, d1, i) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL32I)(d0, d1, i)
+#define AE_SEL16_5432(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16_5432)(d0, d1)
+#define AE_SEL32_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL32_LH)(d0, d1)
+#define AE_SEL24_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL24_LH)(d0, d1)
+#define AE_SELP24_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SELP24_LH)(d0, d1)
+#define AE_SEL16_7520(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16_7520)(d0, d1)
+#define AE_SEL16_7610(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16_7610)(d0, d1)
+#define AE_SEL32_HL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL32_HL)(d0, d1)
+#define AE_SEL24_HL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL24_HL)(d0, d1)
+#define AE_SELP24_HL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SELP24_HL)(d0, d1)
+#define AE_SEL16_4321(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16_4321)(d0, d1)
+#define AE_SEL16_6543(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16_6543)(d0, d1)
+#define AE_SEL16_7632(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16_7632)(d0, d1)
+#define AE_SEL32_HH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL32_HH)(d0, d1)
+#define AE_SEL24_HH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL24_HH)(d0, d1)
+#define AE_SELP24_HH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SELP24_HH)(d0, d1)
+#define AE_SEL16_5410(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16_5410)(d0, d1)
+#define AE_SEL32_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL32_LL)(d0, d1)
+#define AE_SEL24_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL24_LL)(d0, d1)
+#define AE_SELP24_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SELP24_LL)(d0, d1)
+#define AE_SEL16_6420(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16_6420)(d0, d1)
+#define AE_CVT16X4(dl, dh) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVT16X4)(dl, dh)
+#define AE_SEL16_7362(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16_7362)(d0, d1)
+#define AE_SEL16_5146(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16_5146)(d0, d1)
+#define AE_SEL16_5140(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16_5140)(d0, d1)
+#define AE_SEL16_2301(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16_2301)(d0, d1)
+#define AE_SEL16_7160(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16_7160)(d0, d1)
+#define AE_SEL16_5342(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16_5342)(d0, d1)
+#define AE_SEL16_7351(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16_7351)(d0, d1)
+#define AE_TRUNC16X4F32(dl, dh) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNC16X4F32)(dl, dh)
+#define AE_SHORTSWAP(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SHORTSWAP)(d0)
+#define xtbool4_move(s) \
+	CSTUB_(_TIE_xt_hifi2_xtbool4_move)(s)
+#define xtbool4_loadi(s, o) \
+	CSTUB_(_TIE_xt_hifi2_xtbool4_loadi)(s, o)
+#define xtbool4_storei(r, s, o) \
+	CSTUB_(_TIE_xt_hifi2_xtbool4_storei)(r, s, o)
+#define AE_MOVAB4(b4) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVAB4)(b4)
+#define AE_MOVBA4(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVBA4)(a)
+#define xtbool4_rtor_int32(b) \
+	CSTUB_(_TIE_xt_hifi2_xtbool4_rtor_int32)(b)
+#define xtbool4_rtor_uint32(b) \
+	CSTUB_(_TIE_xt_hifi2_xtbool4_rtor_uint32)(b)
+#define int32_rtor_xtbool4(b) \
+	CSTUB_(_TIE_xt_hifi2_int32_rtor_xtbool4)(b)
+#define uint32_rtor_xtbool4(b) \
+	CSTUB_(_TIE_xt_hifi2_uint32_rtor_xtbool4)(b)
+#define xtbool2_move(s) \
+	CSTUB_(_TIE_xt_hifi2_xtbool2_move)(s)
+#define xtbool2_loadi(s, o) \
+	CSTUB_(_TIE_xt_hifi2_xtbool2_loadi)(s, o)
+#define xtbool2_storei(r, s, o) \
+	CSTUB_(_TIE_xt_hifi2_xtbool2_storei)(r, s, o)
+#define AE_MOVAB2(b2) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVAB2)(b2)
+#define AE_MOVBA2(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVBA2)(a)
+#define AE_MOVAB(b) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVAB)(b)
+#define AE_MOVBA(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVBA)(a)
+#define AE_MOVBA1X2(a1, a2) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVBA1X2)(a1, a2)
+#define xtbool2_rtor_int32(b) \
+	CSTUB_(_TIE_xt_hifi2_xtbool2_rtor_int32)(b)
+#define int32_rtor_xtbool2(b) \
+	CSTUB_(_TIE_xt_hifi2_int32_rtor_xtbool2)(b)
+#define xtbool2_rtor_uint32(b) \
+	CSTUB_(_TIE_xt_hifi2_xtbool2_rtor_uint32)(b)
+#define uint32_rtor_xtbool2(b) \
+	CSTUB_(_TIE_xt_hifi2_uint32_rtor_xtbool2)(b)
+#define xtbool_loadi(s, o) \
+	CSTUB_(_TIE_xt_hifi2_xtbool_loadi)(s, o)
+#define xtbool_storei(r, s, o) \
+	CSTUB_(_TIE_xt_hifi2_xtbool_storei)(r, s, o)
+#define AE_MOVT16X4(d, d0, bhl) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVT16X4)(&d, d0, bhl)
+#define AE_MOVF16X4(d, d0, bhl) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4)(&d, d0, bhl)
+#define AE_MOVT32X2(d, d0, bhl) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVT32X2)(&d, d0, bhl)
+#define AE_MOVTP24X2(d, d0, bhl) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVTP24X2)(&d, d0, bhl)
+#define AE_MOVF32X2(d, d0, bhl) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2)(&d, d0, bhl)
+#define AE_MOVFP24X2(d, d0, bhl) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVFP24X2)(&d, d0, bhl)
+#define AE_MOVT64(d, d0, bi) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVT64)(&d, d0, bi)
+#define AE_MOVTP48(d, d0, bi) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVTP48)(&d, d0, bi)
+#define AE_MOVF64(d, d0, bi) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF64)(&d, d0, bi)
+#define AE_MOVFP48(d, d0, bi) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVFP48)(&d, d0, bi)
+#define AE_MOVDA32X2(a0, a1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVDA32X2)(a0, a1)
+#define AE_MOVPA24X2(ah, al) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVPA24X2)(ah, al)
+#define AE_MOVDA32(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVDA32)(a)
+#define AE_MOVDA16X2(ah, al) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVDA16X2)(ah, al)
+#define AE_MOVDA16(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVDA16)(a)
+#define AE_MOVI(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVI)(i)
+#define AE_TRUNCP24A32X2(ah, al) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNCP24A32X2)(ah, al)
+#define AE_SAT16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SAT16X4)(d0, d1)
+#define AE_CVT32X2F16_32(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVT32X2F16_32)(d0)
+#define AE_CVT32X2F16_10(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVT32X2F16_10)(d0)
+#define AE_SEXT32X2D16_32(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEXT32X2D16_32)(d0)
+#define AE_SEXT32X2D16_10(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEXT32X2D16_10)(d0)
+#define AE_CVTA32F24S_L(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVTA32F24S_L)(d0)
+#define AE_CVTA32P24_L(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVTA32P24_L)(d0)
+#define AE_CVTA32F24S_H(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVTA32F24S_H)(d0)
+#define AE_CVTA32P24_H(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVTA32P24_H)(d0)
+#define AE_CVTP24A16X2_LL(ah, al) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVTP24A16X2_LL)(ah, al)
+#define AE_CVTP24A16X2_LH(ah, al) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVTP24A16X2_LH)(ah, al)
+#define AE_CVTP24A16X2_HL(ah, al) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVTP24A16X2_HL)(ah, al)
+#define AE_CVTP24A16X2_HH(ah, al) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVTP24A16X2_HH)(ah, al)
+#define AE_TRUNCP24Q48X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNCP24Q48X2)(d0, d1)
+#define AE_TRUNCA32X2F64S(d0, d1, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNCA32X2F64S)(d0, d1, sa)
+#define AE_TRUNCI32X2F64S(d0, d1, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNCI32X2F64S)(d0, d1, sa)
+#define AE_TRUNCA32F64S_L(d0, d1, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNCA32F64S_L)(d0, d1, sa)
+#define AE_TRUNCI32F64S_L(d0, d1, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNCI32F64S_L)(d0, d1, sa)
+#define AE_TRUNCP16(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNCP16)(d0)
+#define AE_ROUND32X2F64SSYM(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUND32X2F64SSYM)(d0, d1)
+#define AE_ROUND32F64SSYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUND32F64SSYM)(d0)
+#define AE_ROUND32X2F64SASYM(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUND32X2F64SASYM)(d0, d1)
+#define AE_ROUND32F64SASYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUND32F64SASYM)(d0)
+#define AE_ROUND32X2F48SSYM(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUND32X2F48SSYM)(d0, d1)
+#define AE_ROUND32F48SSYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUND32F48SSYM)(d0)
+#define AE_ROUND32X2F48SASYM(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUND32X2F48SASYM)(d0, d1)
+#define AE_ROUND32F48SASYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUND32F48SASYM)(d0)
+#define AE_ROUND16X4F32SSYM(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUND16X4F32SSYM)(d1, d0)
+#define AE_ROUND16X4F32SASYM(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUND16X4F32SASYM)(d1, d0)
+#define AE_ROUND24X2F48SSYM(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUND24X2F48SSYM)(d0, d1)
+#define AE_ROUND24F48SSYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUND24F48SSYM)(d0)
+#define AE_ROUND24X2F48SASYM(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUND24X2F48SASYM)(d0, d1)
+#define AE_ROUND24F48SASYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUND24F48SASYM)(d0)
+#define AE_ROUNDSP16Q48X2SYM(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP16Q48X2SYM)(d0, d1)
+#define AE_ROUNDSP16Q48SYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP16Q48SYM)(d0)
+#define AE_ROUNDSP16Q48X2ASYM(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP16Q48X2ASYM)(d0, d1)
+#define AE_ROUNDSP16Q48ASYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP16Q48ASYM)(d0)
+#define AE_ROUNDSP24Q48ASYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP24Q48ASYM)(d0)
+#define AE_ROUNDSP24Q48SYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP24Q48SYM)(d0)
+#define AE_MINABS32S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MINABS32S)(d0, d1)
+#define AE_MINABSSP24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MINABSSP24S)(d0, d1)
+#define AE_MAXABS32S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MAXABS32S)(d0, d1)
+#define AE_MAXABSSP24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MAXABSSP24S)(d0, d1)
+#define AE_ROUNDSP16F24SYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP16F24SYM)(d0)
+#define AE_ROUNDSP16SYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP16SYM)(d0)
+#define AE_ROUNDSP16F24ASYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP16F24ASYM)(d0)
+#define AE_ROUNDSP16ASYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUNDSP16ASYM)(d0)
+#define AE_ZEROQ56() \
+	CSTUB_(_TIE_xt_hifi2_AE_ZEROQ56)()
+#define AE_MOVQ56(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVQ56)(d0)
+#define AE_MOVTQ56(d, d0, bi) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVTQ56)(&d, d0, bi)
+#define AE_MOVFQ56(d, d0, bi) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVFQ56)(&d, d0, bi)
+#define AE_CVTQ56A32S(a0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVTQ56A32S)(a0)
+#define AE_CVT48A32(a0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVT48A32)(a0)
+#define AE_CVT64A32(a0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVT64A32)(a0)
+#define AE_CVTQ48A32S(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVTQ48A32S)(a)
+#define AE_CVTQ56P32S_L(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVTQ56P32S_L)(d0)
+#define AE_CVTQ48P24S_L(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVTQ48P24S_L)(d0)
+#define AE_CVTQ56P32S_H(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVTQ56P32S_H)(d0)
+#define AE_CVTQ48P24S_H(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVTQ48P24S_H)(d0)
+#define AE_CVT64F32_H(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVT64F32_H)(d0)
+#define AE_CVT64F32_L(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVT64F32_L)(d0)
+#define AE_SAT48S(d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SAT48S)(d1)
+#define AE_SATQ48S(d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SATQ48S)(d1)
+#define AE_SATQ56S(d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SATQ56S)(d1)
+#define AE_SAT24S(d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SAT24S)(d1)
+#define AE_TRUNCQ32(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNCQ32)(d0)
+#define AE_MINABS64S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MINABS64S)(d0, d1)
+#define AE_MINABSSQ56S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MINABSSQ56S)(d0, d1)
+#define AE_MAXABS64S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MAXABS64S)(d0, d1)
+#define AE_MAXABSSQ56S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MAXABSSQ56S)(d0, d1)
+#define AE_ROUNDSQ32F48SYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUNDSQ32F48SYM)(d0)
+#define AE_ROUNDSQ32SYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUNDSQ32SYM)(d0)
+#define AE_ROUNDSQ32F48ASYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUNDSQ32F48ASYM)(d0)
+#define AE_ROUNDSQ32ASYM(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUNDSQ32ASYM)(d0)
+#define AE_TRUNCA32Q48(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNCA32Q48)(d0)
+#define AE_TRUNCA32Q64(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNCA32Q64)(d0)
+#define AE_MOVAD32_L(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVAD32_L)(d0)
+#define AE_MOVAP24S_L(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVAP24S_L)(d0)
+#define AE_MOVAD32_H(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVAD32_H)(d0)
+#define AE_MOVAP24S_H(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVAP24S_H)(d0)
+#define AE_MOVAD16_3(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVAD16_3)(d0)
+#define AE_MOVAD16_2(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVAD16_2)(d0)
+#define AE_MOVAD16_1(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVAD16_1)(d0)
+#define AE_MOVAD16_0(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVAD16_0)(d0)
+#define AE_SRA64_32(s, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRA64_32)(s, sa)
+#define AE_PKSR24(d, ps, pos) \
+	CSTUB_(_TIE_xt_hifi2_AE_PKSR24)(&d, ps, pos)
+#define AE_PKSR32(d, ps, pos) \
+	CSTUB_(_TIE_xt_hifi2_AE_PKSR32)(&d, ps, pos)
+#define AE_PKSR16(d, ps, pos) \
+	CSTUB_(_TIE_xt_hifi2_AE_PKSR16)(&d, ps, pos)
+#define AE_TRUNCA16P24S_L(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNCA16P24S_L)(d0)
+#define AE_TRUNCA16P24S_H(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNCA16P24S_H)(d0)
+#define AE_ADDSUB32_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADDSUB32_HL_LH)(d0, d1)
+#define AE_SUBADD32_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUBADD32_HL_LH)(d0, d1)
+#define AE_ADD32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADD32)(d0, d1)
+#define AE_ADDP24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADDP24)(d0, d1)
+#define AE_SUB32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUB32)(d0, d1)
+#define AE_SUBP24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUBP24)(d0, d1)
+#define AE_ADDSUB32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADDSUB32)(d0, d1)
+#define AE_SUBADD32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUBADD32)(d0, d1)
+#define AE_ADD16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADD16)(d0, d1)
+#define AE_SUB16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUB16)(d0, d1)
+#define AE_ADD32_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADD32_HL_LH)(d0, d1)
+#define AE_NEG32(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NEG32)(d0)
+#define AE_NEGP24(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NEGP24)(d0)
+#define AE_ABS32(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ABS32)(d0)
+#define AE_ABSP24(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ABSP24)(d0)
+#define AE_NEG32_L(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NEG32_L)(d0)
+#define AE_ADD24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADD24S)(d0, d1)
+#define AE_ADDSP24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADDSP24S)(d0, d1)
+#define AE_SUB24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUB24S)(d0, d1)
+#define AE_SUBSP24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUBSP24S)(d0, d1)
+#define AE_ADD32S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADD32S)(d0, d1)
+#define AE_SUB32S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUB32S)(d0, d1)
+#define AE_ADDSUB32S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADDSUB32S)(d0, d1)
+#define AE_SUBADD32S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUBADD32S)(d0, d1)
+#define AE_ADD16S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADD16S)(d0, d1)
+#define AE_SUB16S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUB16S)(d0, d1)
+#define AE_ADDSUB32S_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADDSUB32S_HL_LH)(d0, d1)
+#define AE_SUBADD32S_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUBADD32S_HL_LH)(d0, d1)
+#define AE_NEG24S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NEG24S)(d0)
+#define AE_NEGSP24S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NEGSP24S)(d0)
+#define AE_ABS24S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ABS24S)(d0)
+#define AE_ABSSP24S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ABSSP24S)(d0)
+#define AE_NEG32S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NEG32S)(d0)
+#define AE_ABS32S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ABS32S)(d0)
+#define AE_NEG16S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NEG16S)(d0)
+#define AE_ABS16S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ABS16S)(d0)
+#define AE_NEG32S_L(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NEG32S_L)(d0)
+#define AE_CONJ16S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CONJ16S)(d0)
+#define AE_MULC16JS_H(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULC16JS_H)(d0, d1)
+#define AE_MULC16JS_H_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULC16JS_H_S2)(d0, d1)
+#define AE_MULC16JS_L(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULC16JS_L)(d0, d1)
+#define AE_MULC16JS_L_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULC16JS_L_S2)(d0, d1)
+#define AE_MULAC16JS_H(q0, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAC16JS_H)(&q0, d0, d1)
+#define AE_MULAC16JS_H_S2(q0, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAC16JS_H_S2)(&q0, d0, d1)
+#define AE_MULAC16JS_L(q0, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAC16JS_L)(&q0, d0, d1)
+#define AE_MULAC16JS_L_S2(q0, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAC16JS_L_S2)(&q0, d0, d1)
+#define AE_LT16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_LT16)(d0, d1)
+#define AE_LE16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_LE16)(d0, d1)
+#define AE_EQ16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_EQ16)(d0, d1)
+#define AE_LT32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_LT32)(d0, d1)
+#define AE_LTP24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_LTP24S)(d0, d1)
+#define AE_LE32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_LE32)(d0, d1)
+#define AE_LEP24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_LEP24S)(d0, d1)
+#define AE_EQ32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_EQ32)(d0, d1)
+#define AE_EQP24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_EQP24)(d0, d1)
+#define AE_MIN32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MIN32)(d0, d1)
+#define AE_MINP24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MINP24S)(d0, d1)
+#define AE_MINB32(d, d0, d1, bhl) \
+	CSTUB_(_TIE_xt_hifi2_AE_MINB32)(&d, d0, d1, &bhl)
+#define AE_MINBP24S(d, d0, d1, bhl) \
+	CSTUB_(_TIE_xt_hifi2_AE_MINBP24S)(&d, d0, d1, &bhl)
+#define AE_MAX32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MAX32)(d0, d1)
+#define AE_MAXP24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MAXP24S)(d0, d1)
+#define AE_MAXB32(d, d0, d1, bhl) \
+	CSTUB_(_TIE_xt_hifi2_AE_MAXB32)(&d, d0, d1, &bhl)
+#define AE_MAXBP24S(d, d0, d1, bhl) \
+	CSTUB_(_TIE_xt_hifi2_AE_MAXBP24S)(&d, d0, d1, &bhl)
+#define AE_MINMAX32(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MINMAX32)(&d, d0, d1)
+#define AE_MIN16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MIN16)(d0, d1)
+#define AE_MAX16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MAX16)(d0, d1)
+#define AE_ADD64(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADD64)(d0, d1)
+#define AE_SUB64(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUB64)(d0, d1)
+#define AE_ADDQ56(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADDQ56)(d0, d1)
+#define AE_SUBQ56(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUBQ56)(d0, d1)
+#define AE_NEGQ56(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NEGQ56)(d0)
+#define AE_ABSQ56(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ABSQ56)(d0)
+#define AE_NEG64(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NEG64)(d0)
+#define AE_ABS64(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ABS64)(d0)
+#define AE_ADDSQ56S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADDSQ56S)(d0, d1)
+#define AE_SUBSQ56S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUBSQ56S)(d0, d1)
+#define AE_ADD64S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADD64S)(d0, d1)
+#define AE_SUB64S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUB64S)(d0, d1)
+#define AE_NEGSQ56S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NEGSQ56S)(d0)
+#define AE_ABSSQ56S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ABSSQ56S)(d0)
+#define AE_NEG64S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NEG64S)(d0)
+#define AE_ABS64S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ABS64S)(d0)
+#define AE_AND(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_AND)(d0, d1)
+#define AE_AND64(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_AND64)(d0, d1)
+#define AE_AND32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_AND32)(d0, d1)
+#define AE_AND24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_AND24)(d0, d1)
+#define AE_AND16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_AND16)(d0, d1)
+#define AE_ANDP48(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ANDP48)(d0, d1)
+#define AE_ANDQ56(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ANDQ56)(d0, d1)
+#define AE_NAND(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_NAND)(d0, d1)
+#define AE_NAND64(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_NAND64)(d0, d1)
+#define AE_NAND32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_NAND32)(d0, d1)
+#define AE_NAND24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_NAND24)(d0, d1)
+#define AE_NAND16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_NAND16)(d0, d1)
+#define AE_NANDP48(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_NANDP48)(d0, d1)
+#define AE_NANDQ56(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_NANDQ56)(d0, d1)
+#define AE_OR(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_OR)(d0, d1)
+#define AE_OR64(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_OR64)(d0, d1)
+#define AE_OR32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_OR32)(d0, d1)
+#define AE_OR24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_OR24)(d0, d1)
+#define AE_OR16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_OR16)(d0, d1)
+#define AE_ORP48(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ORP48)(d0, d1)
+#define AE_ORQ56(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ORQ56)(d0, d1)
+#define AE_XOR(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_XOR)(d0, d1)
+#define AE_XOR64(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_XOR64)(d0, d1)
+#define AE_XOR32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_XOR32)(d0, d1)
+#define AE_XOR24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_XOR24)(d0, d1)
+#define AE_XOR16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_XOR16)(d0, d1)
+#define AE_XORP48(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_XORP48)(d0, d1)
+#define AE_XORQ56(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_XORQ56)(d0, d1)
+#define AE_SLAI24(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAI24)(d0, sa)
+#define AE_SLLIP24(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLIP24)(d0, sa)
+#define AE_SLLI24(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLI24)(d0, sa)
+#define AE_SRLI24(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLI24)(d0, sa)
+#define AE_SRLIP24(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLIP24)(d0, sa)
+#define AE_SRAI24(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAI24)(d0, sa)
+#define AE_SRAIP24(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAIP24)(d0, sa)
+#define AE_SLAS24(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAS24)(d0)
+#define AE_SLLSP24(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLSP24)(d0)
+#define AE_SRLS24(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLS24)(d0)
+#define AE_SRLSP24(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLSP24)(d0)
+#define AE_SRAS24(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAS24)(d0)
+#define AE_SRASP24(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRASP24)(d0)
+#define AE_SRAI16(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAI16)(d0, sa)
+#define AE_SRAI16R(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAI16R)(d0, sa)
+#define AE_SLAI32(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAI32)(d0, sa)
+#define AE_SLLI32(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLI32)(d0, sa)
+#define AE_SRLI32(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLI32)(d0, sa)
+#define AE_SRAI32(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAI32)(d0, sa)
+#define AE_SRAI32R(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAI32R)(d0, sa)
+#define AE_SLAS32(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAS32)(d0)
+#define AE_SRLS32(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLS32)(d0)
+#define AE_SRAS32(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAS32)(d0)
+#define AE_SLAA32(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAA32)(d0, sa)
+#define AE_SRLA32(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLA32)(d0, sa)
+#define AE_SRAA32(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAA32)(d0, sa)
+#define AE_SRLA16(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLA16)(d0, sa)
+#define AE_SLLI16S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLI16S)(d0, sa)
+#define AE_SLAI16S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAI16S)(d0, sa)
+#define AE_SLAA16S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAA16S)(d0, sa)
+#define AE_SRAA16S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAA16S)(d0, sa)
+#define AE_SRAA16RS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAA16RS)(d0, sa)
+#define AE_SLAI24S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAI24S)(d0, sa)
+#define AE_SLLI24S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLI24S)(d0, sa)
+#define AE_SLLISP24S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLISP24S)(d0, sa)
+#define AE_SLAS24S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAS24S)(d0)
+#define AE_SLLSSP24S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLSSP24S)(d0)
+#define AE_SLLI32S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLI32S)(d0, sa)
+#define AE_SLAI32S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAI32S)(d0, sa)
+#define AE_SLAS32S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAS32S)(d0)
+#define AE_SLAA32S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAA32S)(d0, sa)
+#define AE_SRAA32S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAA32S)(d0, sa)
+#define AE_SRAA32RS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAA32RS)(d0, sa)
+#define AE_SLASQ56(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLASQ56)(d0)
+#define AE_SLLSQ56(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLSQ56)(d0)
+#define AE_SRLSQ56(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLSQ56)(d0)
+#define AE_SRASQ56(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRASQ56)(d0)
+#define AE_SLAAQ56(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAAQ56)(d0, sa)
+#define AE_SLAIQ56(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAIQ56)(d0, sa)
+#define AE_SLLAQ56(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLAQ56)(d0, sa)
+#define AE_SLLIQ56(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLIQ56)(d0, sa)
+#define AE_SRLAQ56(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLAQ56)(d0, sa)
+#define AE_SRLIQ56(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLIQ56)(d0, sa)
+#define AE_SRAAQ56(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAAQ56)(d0, sa)
+#define AE_SLAI64(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAI64)(d0, sa)
+#define AE_SLLI64(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLI64)(d0, sa)
+#define AE_SRLI64(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLI64)(d0, sa)
+#define AE_SRAI64(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAI64)(d0, sa)
+#define AE_SRAIQ56(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAIQ56)(d0, sa)
+#define AE_SLAS64(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAS64)(d0)
+#define AE_SRLS64(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLS64)(d0)
+#define AE_SRAS64(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAS64)(d0)
+#define AE_SLAA64(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAA64)(d0, sa)
+#define AE_SRLA64(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLA64)(d0, sa)
+#define AE_SRAA64(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAA64)(d0, sa)
+#define AE_SLAISQ56S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAISQ56S)(d0, sa)
+#define AE_SLLISQ56S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLISQ56S)(d0, sa)
+#define AE_SLASSQ56S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLASSQ56S)(d0)
+#define AE_SLLSSQ56S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLSSQ56S)(d0)
+#define AE_SLAASQ56S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAASQ56S)(d0, sa)
+#define AE_SLLASQ56S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLASQ56S)(d0, sa)
+#define AE_SLAI64S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAI64S)(d0, sa)
+#define AE_SLLI64S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLI64S)(d0, sa)
+#define AE_SLAS64S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAS64S)(d0)
+#define AE_SLAA64S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAA64S)(d0, sa)
+#define AE_LT64(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_LT64)(d0, d1)
+#define AE_LTQ56S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_LTQ56S)(d0, d1)
+#define AE_LE64(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_LE64)(d0, d1)
+#define AE_LEQ56S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_LEQ56S)(d0, d1)
+#define AE_EQ64(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_EQ64)(d0, d1)
+#define AE_EQQ56(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_EQQ56)(d0, d1)
+#define AE_MAX64(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MAX64)(d0, d1)
+#define AE_MAXQ56S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MAXQ56S)(d0, d1)
+#define AE_MAXB64(d, d0, d1, bo) \
+	CSTUB_(_TIE_xt_hifi2_AE_MAXB64)(&d, d0, d1, &bo)
+#define AE_MAXBQ56S(d, d0, d1, bo) \
+	CSTUB_(_TIE_xt_hifi2_AE_MAXBQ56S)(&d, d0, d1, &bo)
+#define AE_MIN64(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MIN64)(d0, d1)
+#define AE_MINQ56S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MINQ56S)(d0, d1)
+#define AE_MINB64(d, d0, d1, bo) \
+	CSTUB_(_TIE_xt_hifi2_AE_MINB64)(&d, d0, d1, &bo)
+#define AE_MINBQ56S(d, d0, d1, bo) \
+	CSTUB_(_TIE_xt_hifi2_AE_MINBQ56S)(&d, d0, d1, &bo)
+#define AE_NSA64(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NSA64)(d0)
+#define AE_NSAQ56S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NSAQ56S)(d0)
+#define AE_NSAZ16_0(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NSAZ16_0)(d0)
+#define AE_NSAZ32_L(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NSAZ32_L)(d0)
+#define AE_NSA16_0(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NSA16_0)(d0)
+#define AE_NSA32_L(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NSA32_L)(d0)
+#define AE_MULS32F48P16S_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32F48P16S_LL)(d0, d1)
+#define AE_MULFS32P16S_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFS32P16S_LL)(d0, d1)
+#define AE_MULF32S_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32S_LL)(d0, d1)
+#define AE_MULFP24S_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP24S_LL)(d0, d1)
+#define AE_MULF24S_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF24S_LL)(d0, d1)
+#define AE_MUL32_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32_LL)(d0, d1)
+#define AE_MULP24S_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULP24S_LL)(d0, d1)
+#define AE_MUL24_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL24_LL)(d0, d1)
+#define AE_MULS32F48P16S_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32F48P16S_LL_S2)(d0, d1)
+#define AE_MULFS32P16S_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFS32P16S_LL_S2)(d0, d1)
+#define AE_MULF32R_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32R_LL)(d0, d1)
+#define AE_MULS32F48P16S_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32F48P16S_LH)(d0, d1)
+#define AE_MULFS32P16S_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFS32P16S_LH)(d0, d1)
+#define AE_MULS32F48P16S_HL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32F48P16S_HL)(d0, d1)
+#define AE_MULFS32P16S_HL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFS32P16S_HL)(d0, d1)
+#define AE_MULF32S_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32S_LH)(d0, d1)
+#define AE_MULFP24S_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP24S_LH)(d0, d1)
+#define AE_MULF24S_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF24S_LH)(d0, d1)
+#define AE_MULF32S_HL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32S_HL)(d0, d1)
+#define AE_MULFP24S_HL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP24S_HL)(d0, d1)
+#define AE_MULF24S_HL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF24S_HL)(d0, d1)
+#define AE_MUL32_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32_LH)(d0, d1)
+#define AE_MULP24S_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULP24S_LH)(d0, d1)
+#define AE_MUL24_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL24_LH)(d0, d1)
+#define AE_MUL32_HL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32_HL)(d0, d1)
+#define AE_MULP24S_HL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULP24S_HL)(d0, d1)
+#define AE_MUL24_HL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL24_HL)(d0, d1)
+#define AE_MULS32F48P16S_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32F48P16S_LH_S2)(d0, d1)
+#define AE_MULFS32P16S_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFS32P16S_LH_S2)(d0, d1)
+#define AE_MULF32R_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32R_LH)(d0, d1)
+#define AE_MULF32R_HL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32R_HL)(d0, d1)
+#define AE_MULS32F48P16S_HH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32F48P16S_HH)(d0, d1)
+#define AE_MULFS32P16S_HH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFS32P16S_HH)(d0, d1)
+#define AE_MULF32S_HH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32S_HH)(d0, d1)
+#define AE_MULFP24S_HH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP24S_HH)(d0, d1)
+#define AE_MULF24S_HH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF24S_HH)(d0, d1)
+#define AE_MUL32_HH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32_HH)(d0, d1)
+#define AE_MULP24S_HH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULP24S_HH)(d0, d1)
+#define AE_MUL24_HH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL24_HH)(d0, d1)
+#define AE_MULS32F48P16S_HH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32F48P16S_HH_S2)(d0, d1)
+#define AE_MULFS32P16S_HH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFS32P16S_HH_S2)(d0, d1)
+#define AE_MULF32R_HH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32R_HH)(d0, d1)
+#define AE_MULF32R_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32R_LL_S2)(d0, d1)
+#define AE_MULAS32F48P16S_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAS32F48P16S_LL)(&d, d0, d1)
+#define AE_MULAFS32P16S_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFS32P16S_LL)(&d, d0, d1)
+#define AE_MULAF32S_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32S_LL)(&d, d0, d1)
+#define AE_MULAFP24S_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP24S_LL)(&d, d0, d1)
+#define AE_MULAF24S_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF24S_LL)(&d, d0, d1)
+#define AE_MULA32_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32_LL)(&d, d0, d1)
+#define AE_MULAP24S_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAP24S_LL)(&d, d0, d1)
+#define AE_MULA24_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA24_LL)(&d, d0, d1)
+#define AE_MULAS32F48P16S_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAS32F48P16S_LL_S2)(&d, d0, d1)
+#define AE_MULAFS32P16S_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFS32P16S_LL_S2)(&d, d0, d1)
+#define AE_MULAF32R_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32R_LL)(&d, d0, d1)
+#define AE_MULAS32F48P16S_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAS32F48P16S_LH)(&d, d0, d1)
+#define AE_MULAFS32P16S_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFS32P16S_LH)(&d, d0, d1)
+#define AE_MULAS32F48P16S_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAS32F48P16S_HL)(&d, d0, d1)
+#define AE_MULAFS32P16S_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFS32P16S_HL)(&d, d0, d1)
+#define AE_MULAF32S_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32S_LH)(&d, d0, d1)
+#define AE_MULAFP24S_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP24S_LH)(&d, d0, d1)
+#define AE_MULAF24S_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF24S_LH)(&d, d0, d1)
+#define AE_MULAF32S_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32S_HL)(&d, d0, d1)
+#define AE_MULAFP24S_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP24S_HL)(&d, d0, d1)
+#define AE_MULAF24S_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF24S_HL)(&d, d0, d1)
+#define AE_MULA32_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32_LH)(&d, d0, d1)
+#define AE_MULAP24S_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAP24S_LH)(&d, d0, d1)
+#define AE_MULA24_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA24_LH)(&d, d0, d1)
+#define AE_MULA32_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32_HL)(&d, d0, d1)
+#define AE_MULAP24S_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAP24S_HL)(&d, d0, d1)
+#define AE_MULA24_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA24_HL)(&d, d0, d1)
+#define AE_MULAS32F48P16S_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAS32F48P16S_LH_S2)(&d, d0, d1)
+#define AE_MULAFS32P16S_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFS32P16S_LH_S2)(&d, d0, d1)
+#define AE_MULAF32R_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32R_LH)(&d, d0, d1)
+#define AE_MULAF32R_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32R_HL)(&d, d0, d1)
+#define AE_MULAS32F48P16S_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAS32F48P16S_HH)(&d, d0, d1)
+#define AE_MULAFS32P16S_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFS32P16S_HH)(&d, d0, d1)
+#define AE_MULAF32S_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32S_HH)(&d, d0, d1)
+#define AE_MULAFP24S_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP24S_HH)(&d, d0, d1)
+#define AE_MULAF24S_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF24S_HH)(&d, d0, d1)
+#define AE_MULA32_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32_HH)(&d, d0, d1)
+#define AE_MULAP24S_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAP24S_HH)(&d, d0, d1)
+#define AE_MULA24_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA24_HH)(&d, d0, d1)
+#define AE_MULAS32F48P16S_HH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAS32F48P16S_HH_S2)(&d, d0, d1)
+#define AE_MULAFS32P16S_HH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFS32P16S_HH_S2)(&d, d0, d1)
+#define AE_MULAF32R_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32R_HH)(&d, d0, d1)
+#define AE_MULAF32R_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32R_LL_S2)(&d, d0, d1)
+#define AE_MULSS32F48P16S_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSS32F48P16S_LL)(&d, d0, d1)
+#define AE_MULSFS32P16S_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFS32P16S_LL)(&d, d0, d1)
+#define AE_MULSF32S_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32S_LL)(&d, d0, d1)
+#define AE_MULSFP24S_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP24S_LL)(&d, d0, d1)
+#define AE_MULSF24S_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF24S_LL)(&d, d0, d1)
+#define AE_MULS32_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32_LL)(&d, d0, d1)
+#define AE_MULSP24S_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSP24S_LL)(&d, d0, d1)
+#define AE_MULS24_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS24_LL)(&d, d0, d1)
+#define AE_MULSS32F48P16S_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSS32F48P16S_LL_S2)(&d, d0, d1)
+#define AE_MULSFS32P16S_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFS32P16S_LL_S2)(&d, d0, d1)
+#define AE_MULSF32R_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32R_LL)(&d, d0, d1)
+#define AE_MULSS32F48P16S_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSS32F48P16S_LH)(&d, d0, d1)
+#define AE_MULSFS32P16S_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFS32P16S_LH)(&d, d0, d1)
+#define AE_MULSS32F48P16S_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSS32F48P16S_HL)(&d, d0, d1)
+#define AE_MULSFS32P16S_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFS32P16S_HL)(&d, d0, d1)
+#define AE_MULSF32S_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32S_LH)(&d, d0, d1)
+#define AE_MULSFP24S_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP24S_LH)(&d, d0, d1)
+#define AE_MULSF24S_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF24S_LH)(&d, d0, d1)
+#define AE_MULSF32S_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32S_HL)(&d, d0, d1)
+#define AE_MULSFP24S_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP24S_HL)(&d, d0, d1)
+#define AE_MULSF24S_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF24S_HL)(&d, d0, d1)
+#define AE_MULS32_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32_LH)(&d, d0, d1)
+#define AE_MULSP24S_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSP24S_LH)(&d, d0, d1)
+#define AE_MULS24_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS24_LH)(&d, d0, d1)
+#define AE_MULS32_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32_HL)(&d, d0, d1)
+#define AE_MULSP24S_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSP24S_HL)(&d, d0, d1)
+#define AE_MULS24_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS24_HL)(&d, d0, d1)
+#define AE_MULSS32F48P16S_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSS32F48P16S_LH_S2)(&d, d0, d1)
+#define AE_MULSFS32P16S_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFS32P16S_LH_S2)(&d, d0, d1)
+#define AE_MULSF32R_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32R_LH)(&d, d0, d1)
+#define AE_MULSF32R_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32R_HL)(&d, d0, d1)
+#define AE_MULSS32F48P16S_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSS32F48P16S_HH)(&d, d0, d1)
+#define AE_MULSFS32P16S_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFS32P16S_HH)(&d, d0, d1)
+#define AE_MULSF32S_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32S_HH)(&d, d0, d1)
+#define AE_MULSFP24S_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP24S_HH)(&d, d0, d1)
+#define AE_MULSF24S_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF24S_HH)(&d, d0, d1)
+#define AE_MULS32_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32_HH)(&d, d0, d1)
+#define AE_MULSP24S_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSP24S_HH)(&d, d0, d1)
+#define AE_MULS24_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS24_HH)(&d, d0, d1)
+#define AE_MULSS32F48P16S_HH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSS32F48P16S_HH_S2)(&d, d0, d1)
+#define AE_MULSFS32P16S_HH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFS32P16S_HH_S2)(&d, d0, d1)
+#define AE_MULSF32R_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32R_HH)(&d, d0, d1)
+#define AE_MULSF32R_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32R_LL_S2)(&d, d0, d1)
+#define AE_MULF32S_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32S_LL_S2)(d0, d1)
+#define AE_MULFP24S_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP24S_LL_S2)(d0, d1)
+#define AE_MULF24S_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF24S_LL_S2)(d0, d1)
+#define AE_MULAF32S_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32S_LL_S2)(&d, d0, d1)
+#define AE_MULAFP24S_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP24S_LL_S2)(&d, d0, d1)
+#define AE_MULAF24S_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF24S_LL_S2)(&d, d0, d1)
+#define AE_MUL32_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32_LL_S2)(d0, d1)
+#define AE_MULP24S_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULP24S_LL_S2)(d0, d1)
+#define AE_MUL24_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL24_LL_S2)(d0, d1)
+#define AE_MULA32_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32_LL_S2)(&d, d0, d1)
+#define AE_MULAP24S_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAP24S_LL_S2)(&d, d0, d1)
+#define AE_MULA24_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA24_LL_S2)(&d, d0, d1)
+#define AE_MUL32U_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32U_LL)(d0, d1)
+#define AE_MULA32U_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32U_LL)(&d, d0, d1)
+#define AE_MULS32U_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32U_LL)(&d, d0, d1)
+#define AE_MULAFS56P24S_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFS56P24S_LL)(&d, d0, d1)
+#define AE_MULAS56P24S_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAS56P24S_LL)(&d, d0, d1)
+#define AE_MULAFS56P24S_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFS56P24S_LH)(&d, d0, d1)
+#define AE_MULAFS56P24S_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFS56P24S_HL)(&d, d0, d1)
+#define AE_MULAS56P24S_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAS56P24S_LH)(&d, d0, d1)
+#define AE_MULAS56P24S_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAS56P24S_HL)(&d, d0, d1)
+#define AE_MULAFS56P24S_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFS56P24S_HH)(&d, d0, d1)
+#define AE_MULAS56P24S_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAS56P24S_HH)(&d, d0, d1)
+#define AE_MULSFS56P24S_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFS56P24S_LL)(&d, d0, d1)
+#define AE_MULSS56P24S_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSS56P24S_LL)(&d, d0, d1)
+#define AE_MULSFS56P24S_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFS56P24S_LH)(&d, d0, d1)
+#define AE_MULSFS56P24S_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFS56P24S_HL)(&d, d0, d1)
+#define AE_MULSS56P24S_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSS56P24S_LH)(&d, d0, d1)
+#define AE_MULSS56P24S_HL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSS56P24S_HL)(&d, d0, d1)
+#define AE_MULSFS56P24S_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFS56P24S_HH)(&d, d0, d1)
+#define AE_MULSS56P24S_HH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSS56P24S_HH)(&d, d0, d1)
+#define AE_MULF16SS_33(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_33)(d0, d1)
+#define AE_MULF16SS_22(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_22)(d0, d1)
+#define AE_MULF16SS_32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_32)(d0, d1)
+#define AE_MULF16SS_21(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_21)(d0, d1)
+#define AE_MULF16SS_31(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_31)(d0, d1)
+#define AE_MULF16SS_30(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_30)(d0, d1)
+#define AE_MULF16SS_10(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_10)(d0, d1)
+#define AE_MULF16SS_20(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_20)(d0, d1)
+#define AE_MULF16SS_11(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_11)(d0, d1)
+#define AE_MULF16SS_00(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_00)(d0, d1)
+#define AE_MULF16SS_00_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_00_S2)(d0, d1)
+#define AE_MULSF16SS_33(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_33)(&d, d0, d1)
+#define AE_MULSF16SS_22(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_22)(&d, d0, d1)
+#define AE_MULSF16SS_32(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_32)(&d, d0, d1)
+#define AE_MULSF16SS_21(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_21)(&d, d0, d1)
+#define AE_MULSF16SS_31(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_31)(&d, d0, d1)
+#define AE_MULSF16SS_30(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_30)(&d, d0, d1)
+#define AE_MULSF16SS_10(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_10)(&d, d0, d1)
+#define AE_MULSF16SS_20(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_20)(&d, d0, d1)
+#define AE_MULSF16SS_11(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_11)(&d, d0, d1)
+#define AE_MULSF16SS_00(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_00)(&d, d0, d1)
+#define AE_MULSF16SS_00_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF16SS_00_S2)(&d, d0, d1)
+#define AE_MULAF16SS_33(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_33)(&d, d0, d1)
+#define AE_MULAF16SS_22(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_22)(&d, d0, d1)
+#define AE_MULAF16SS_32(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_32)(&d, d0, d1)
+#define AE_MULAF16SS_21(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_21)(&d, d0, d1)
+#define AE_MULAF16SS_31(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_31)(&d, d0, d1)
+#define AE_MULAF16SS_30(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_30)(&d, d0, d1)
+#define AE_MULAF16SS_10(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_10)(&d, d0, d1)
+#define AE_MULAF16SS_20(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_20)(&d, d0, d1)
+#define AE_MULAF16SS_11(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_11)(&d, d0, d1)
+#define AE_MULAF16SS_00(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_00)(&d, d0, d1)
+#define AE_MULAF16SS_00_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_00_S2)(&d, d0, d1)
+#define AE_MULA16S_33(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA16S_33)(&d, d0, d1)
+#define AE_MULS16S_33(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS16S_33)(&d, d0, d1)
+#define AE_MULA16S_22(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA16S_22)(&d, d0, d1)
+#define AE_MULS16S_22(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS16S_22)(&d, d0, d1)
+#define AE_MULA16S_32(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA16S_32)(&d, d0, d1)
+#define AE_MULS16S_32(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS16S_32)(&d, d0, d1)
+#define AE_MULA16S_21(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA16S_21)(&d, d0, d1)
+#define AE_MULS16S_21(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS16S_21)(&d, d0, d1)
+#define AE_MULA16S_31(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA16S_31)(&d, d0, d1)
+#define AE_MULS16S_31(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS16S_31)(&d, d0, d1)
+#define AE_MULA16S_30(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA16S_30)(&d, d0, d1)
+#define AE_MULS16S_30(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS16S_30)(&d, d0, d1)
+#define AE_MULA16S_10(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA16S_10)(&d, d0, d1)
+#define AE_MULS16S_10(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS16S_10)(&d, d0, d1)
+#define AE_MULA16S_20(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA16S_20)(&d, d0, d1)
+#define AE_MULS16S_20(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS16S_20)(&d, d0, d1)
+#define AE_MULA16S_11(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA16S_11)(&d, d0, d1)
+#define AE_MULS16S_11(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS16S_11)(&d, d0, d1)
+#define AE_MULA16S_00(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA16S_00)(&d, d0, d1)
+#define AE_MULS16S_00(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS16S_00)(&d, d0, d1)
+#define AE_MULA16S_00_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA16S_00_S2)(&d, d0, d1)
+#define AE_MULS16S_00_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS16S_00_S2)(&d, d0, d1)
+#define AE_MULAAFD16SS_33_22(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD16SS_33_22)(&d, d0, d1)
+#define AE_MULAAFD16SS_33_22_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD16SS_33_22_S2)(&d, d0, d1)
+#define AE_MULAAFD16SS_13_02(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD16SS_13_02)(&d, d0, d1)
+#define AE_MULAAFD16SS_13_02_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD16SS_13_02_S2)(&d, d0, d1)
+#define AE_MULAAFD16SS_11_00(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD16SS_11_00)(&d, d0, d1)
+#define AE_MULAAFD16SS_11_00_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD16SS_11_00_S2)(&d, d0, d1)
+#define AE_MULSSFD16SS_33_22(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD16SS_33_22)(&d, d0, d1)
+#define AE_MULSSFD16SS_33_22_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD16SS_33_22_S2)(&d, d0, d1)
+#define AE_MULSSFD16SS_13_02(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD16SS_13_02)(&d, d0, d1)
+#define AE_MULSSFD16SS_13_02_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD16SS_13_02_S2)(&d, d0, d1)
+#define AE_MULSSFD16SS_11_00(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD16SS_11_00)(&d, d0, d1)
+#define AE_MULSSFD16SS_11_00_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD16SS_11_00_S2)(&d, d0, d1)
+#define AE_MULZAAFD16SS_33_22(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD16SS_33_22)(d0, d1)
+#define AE_MULZAAFD16SS_33_22_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD16SS_33_22_S2)(d0, d1)
+#define AE_MULZAAFD16SS_13_02(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD16SS_13_02)(d0, d1)
+#define AE_MULZAAFD16SS_13_02_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD16SS_13_02_S2)(d0, d1)
+#define AE_MULZAAFD16SS_11_00(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD16SS_11_00)(d0, d1)
+#define AE_MULZAAFD16SS_11_00_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD16SS_11_00_S2)(d0, d1)
+#define AE_MULZSSFD16SS_33_22(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD16SS_33_22)(d0, d1)
+#define AE_MULZSSFD16SS_33_22_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD16SS_33_22_S2)(d0, d1)
+#define AE_MULZSSFD16SS_13_02(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD16SS_13_02)(d0, d1)
+#define AE_MULZSSFD16SS_13_02_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD16SS_13_02_S2)(d0, d1)
+#define AE_MULZSSFD16SS_11_00(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD16SS_11_00)(d0, d1)
+#define AE_MULZSSFD16SS_11_00_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD16SS_11_00_S2)(d0, d1)
+#define AE_MULF48Q32SP16S_L(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF48Q32SP16S_L)(d0, d1)
+#define AE_MULFQ32SP16S_L(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP16S_L)(d0, d1)
+#define AE_MULF48Q32SP16S_L_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF48Q32SP16S_L_S2)(d0, d1)
+#define AE_MULFQ32SP16S_L_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP16S_L_S2)(d0, d1)
+#define AE_MULF48Q32SP16U_L(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF48Q32SP16U_L)(d0, d1)
+#define AE_MULFQ32SP16U_L(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP16U_L)(d0, d1)
+#define AE_MULF48Q32SP16U_L_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF48Q32SP16U_L_S2)(d0, d1)
+#define AE_MULFQ32SP16U_L_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP16U_L_S2)(d0, d1)
+#define AE_MULQ32SP16S_L(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULQ32SP16S_L)(d0, d1)
+#define AE_MULQ32SP16S_L_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULQ32SP16S_L_S2)(d0, d1)
+#define AE_MULQ32SP16U_L(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULQ32SP16U_L)(d0, d1)
+#define AE_MULQ32SP16U_L_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULQ32SP16U_L_S2)(d0, d1)
+#define AE_MULAF48Q32SP16S_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF48Q32SP16S_L)(&d, d0, d1)
+#define AE_MULAFQ32SP16S_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP16S_L)(&d, d0, d1)
+#define AE_MULAF48Q32SP16S_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF48Q32SP16S_L_S2)(&d, d0, d1)
+#define AE_MULAFQ32SP16S_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP16S_L_S2)(&d, d0, d1)
+#define AE_MULAF48Q32SP16U_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF48Q32SP16U_L)(&d, d0, d1)
+#define AE_MULAFQ32SP16U_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP16U_L)(&d, d0, d1)
+#define AE_MULAF48Q32SP16U_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF48Q32SP16U_L_S2)(&d, d0, d1)
+#define AE_MULAFQ32SP16U_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP16U_L_S2)(&d, d0, d1)
+#define AE_MULAQ32SP16S_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAQ32SP16S_L)(&d, d0, d1)
+#define AE_MULAQ32SP16S_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAQ32SP16S_L_S2)(&d, d0, d1)
+#define AE_MULAQ32SP16U_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAQ32SP16U_L)(&d, d0, d1)
+#define AE_MULAQ32SP16U_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAQ32SP16U_L_S2)(&d, d0, d1)
+#define AE_MULSF48Q32SP16S_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF48Q32SP16S_L)(&d, d0, d1)
+#define AE_MULSFQ32SP16S_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP16S_L)(&d, d0, d1)
+#define AE_MULSF48Q32SP16S_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF48Q32SP16S_L_S2)(&d, d0, d1)
+#define AE_MULSFQ32SP16S_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP16S_L_S2)(&d, d0, d1)
+#define AE_MULSF48Q32SP16U_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF48Q32SP16U_L)(&d, d0, d1)
+#define AE_MULSFQ32SP16U_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP16U_L)(&d, d0, d1)
+#define AE_MULSF48Q32SP16U_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF48Q32SP16U_L_S2)(&d, d0, d1)
+#define AE_MULSFQ32SP16U_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP16U_L_S2)(&d, d0, d1)
+#define AE_MULSQ32SP16S_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSQ32SP16S_L)(&d, d0, d1)
+#define AE_MULSQ32SP16S_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSQ32SP16S_L_S2)(&d, d0, d1)
+#define AE_MULSQ32SP16U_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSQ32SP16U_L)(&d, d0, d1)
+#define AE_MULSQ32SP16U_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSQ32SP16U_L_S2)(&d, d0, d1)
+#define AE_MULFP24X2RA(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP24X2RA)(d0, d1)
+#define AE_MULFP24X2R(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP24X2R)(d0, d1)
+#define AE_MULP24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULP24X2)(d0, d1)
+#define AE_MULFP24X2RA_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP24X2RA_S2)(d0, d1)
+#define AE_MULFP24X2R_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP24X2R_S2)(d0, d1)
+#define AE_MULP24X2_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULP24X2_S2)(d0, d1)
+#define AE_MULAFP24X2RA(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP24X2RA)(&d, d0, d1)
+#define AE_MULAFP24X2R(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP24X2R)(&d, d0, d1)
+#define AE_MULAP24X2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAP24X2)(&d, d0, d1)
+#define AE_MULAFP24X2RA_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP24X2RA_S2)(&d, d0, d1)
+#define AE_MULAFP24X2R_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP24X2R_S2)(&d, d0, d1)
+#define AE_MULAP24X2_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAP24X2_S2)(&d, d0, d1)
+#define AE_MULSFP24X2RA(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP24X2RA)(&d, d0, d1)
+#define AE_MULSFP24X2R(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP24X2R)(&d, d0, d1)
+#define AE_MULSP24X2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSP24X2)(&d, d0, d1)
+#define AE_MULSFP24X2RA_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP24X2RA_S2)(&d, d0, d1)
+#define AE_MULSFP24X2R_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP24X2R_S2)(&d, d0, d1)
+#define AE_MULSP24X2_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSP24X2_S2)(&d, d0, d1)
+#define AE_MULZAAFD24_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD24_HH_LL)(d0, d1)
+#define AE_MULZAAFP24S_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFP24S_HH_LL)(d0, d1)
+#define AE_MULZAAD24_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAD24_HH_LL)(d0, d1)
+#define AE_MULZAAP24S_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAP24S_HH_LL)(d0, d1)
+#define AE_MULZAAFD24_HH_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD24_HH_LL_S2)(d0, d1)
+#define AE_MULZAAFP24S_HH_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFP24S_HH_LL_S2)(d0, d1)
+#define AE_MULZAAD24_HH_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAD24_HH_LL_S2)(d0, d1)
+#define AE_MULZAAP24S_HH_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAP24S_HH_LL_S2)(d0, d1)
+#define AE_MULZAAFD24_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD24_HL_LH)(d0, d1)
+#define AE_MULZAAFP24S_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFP24S_HL_LH)(d0, d1)
+#define AE_MULZAAD24_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAD24_HL_LH)(d0, d1)
+#define AE_MULZAAP24S_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAP24S_HL_LH)(d0, d1)
+#define AE_MULZAAFD24_HL_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD24_HL_LH_S2)(d0, d1)
+#define AE_MULZAAFP24S_HL_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFP24S_HL_LH_S2)(d0, d1)
+#define AE_MULZAAD24_HL_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAD24_HL_LH_S2)(d0, d1)
+#define AE_MULZAAP24S_HL_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAP24S_HL_LH_S2)(d0, d1)
+#define AE_MULZASFD24_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFD24_HH_LL)(d0, d1)
+#define AE_MULZASFP24S_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFP24S_HH_LL)(d0, d1)
+#define AE_MULZASD24_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASD24_HH_LL)(d0, d1)
+#define AE_MULZASP24S_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASP24S_HH_LL)(d0, d1)
+#define AE_MULZASFD24_HH_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFD24_HH_LL_S2)(d0, d1)
+#define AE_MULZASFP24S_HH_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFP24S_HH_LL_S2)(d0, d1)
+#define AE_MULZASD24_HH_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASD24_HH_LL_S2)(d0, d1)
+#define AE_MULZASP24S_HH_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASP24S_HH_LL_S2)(d0, d1)
+#define AE_MULZASFD24_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFD24_HL_LH)(d0, d1)
+#define AE_MULZASFP24S_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFP24S_HL_LH)(d0, d1)
+#define AE_MULZSAF48P24S_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAF48P24S_HL_LH)(d0, d1)
+#define AE_MULZSAFP24S_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFP24S_HL_LH)(d0, d1)
+#define AE_MULZASD24_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASD24_HL_LH)(d0, d1)
+#define AE_MULZASP24S_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASP24S_HL_LH)(d0, d1)
+#define AE_MULZSA64P24S_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSA64P24S_HL_LH)(d0, d1)
+#define AE_MULZSAP24S_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAP24S_HL_LH)(d0, d1)
+#define AE_MULZASFD24_HL_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFD24_HL_LH_S2)(d0, d1)
+#define AE_MULZASFP24S_HL_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFP24S_HL_LH_S2)(d0, d1)
+#define AE_MULZSAF48P24S_HL_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAF48P24S_HL_LH_S2)(d0, d1)
+#define AE_MULZSAFP24S_HL_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFP24S_HL_LH_S2)(d0, d1)
+#define AE_MULZASD24_HL_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASD24_HL_LH_S2)(d0, d1)
+#define AE_MULZASP24S_HL_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASP24S_HL_LH_S2)(d0, d1)
+#define AE_MULZSA64P24S_HL_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSA64P24S_HL_LH_S2)(d0, d1)
+#define AE_MULZSAP24S_HL_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAP24S_HL_LH_S2)(d0, d1)
+#define AE_MULZSAFD24_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD24_HH_LL)(d0, d1)
+#define AE_MULZSAFP24S_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFP24S_HH_LL)(d0, d1)
+#define AE_MULZSAD24_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAD24_HH_LL)(d0, d1)
+#define AE_MULZSAP24S_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAP24S_HH_LL)(d0, d1)
+#define AE_MULZSAFD24_HH_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD24_HH_LL_S2)(d0, d1)
+#define AE_MULZSAFP24S_HH_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFP24S_HH_LL_S2)(d0, d1)
+#define AE_MULZSAD24_HH_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAD24_HH_LL_S2)(d0, d1)
+#define AE_MULZSAP24S_HH_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAP24S_HH_LL_S2)(d0, d1)
+#define AE_MULZSSFD24_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD24_HH_LL)(d0, d1)
+#define AE_MULZSSFP24S_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFP24S_HH_LL)(d0, d1)
+#define AE_MULZSSD24_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSD24_HH_LL)(d0, d1)
+#define AE_MULZSSP24S_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSP24S_HH_LL)(d0, d1)
+#define AE_MULZSSFD24_HH_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD24_HH_LL_S2)(d0, d1)
+#define AE_MULZSSFP24S_HH_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFP24S_HH_LL_S2)(d0, d1)
+#define AE_MULZSSD24_HH_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSD24_HH_LL_S2)(d0, d1)
+#define AE_MULZSSP24S_HH_LL_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSP24S_HH_LL_S2)(d0, d1)
+#define AE_MULZSSFD24_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD24_HL_LH)(d0, d1)
+#define AE_MULZSSFP24S_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFP24S_HL_LH)(d0, d1)
+#define AE_MULZSSD24_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSD24_HL_LH)(d0, d1)
+#define AE_MULZSSP24S_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSP24S_HL_LH)(d0, d1)
+#define AE_MULZSSFD24_HL_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD24_HL_LH_S2)(d0, d1)
+#define AE_MULZSSFP24S_HL_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFP24S_HL_LH_S2)(d0, d1)
+#define AE_MULZSSD24_HL_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSD24_HL_LH_S2)(d0, d1)
+#define AE_MULZSSP24S_HL_LH_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSP24S_HL_LH_S2)(d0, d1)
+#define AE_MULAAFD24_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD24_HH_LL)(&d, d0, d1)
+#define AE_MULAAFP24S_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFP24S_HH_LL)(&d, d0, d1)
+#define AE_MULAAD24_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAD24_HH_LL)(&d, d0, d1)
+#define AE_MULAAP24S_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAP24S_HH_LL)(&d, d0, d1)
+#define AE_MULAAFD24_HH_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD24_HH_LL_S2)(&d, d0, d1)
+#define AE_MULAAFP24S_HH_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFP24S_HH_LL_S2)(&d, d0, d1)
+#define AE_MULAAD24_HH_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAD24_HH_LL_S2)(&d, d0, d1)
+#define AE_MULAAP24S_HH_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAP24S_HH_LL_S2)(&d, d0, d1)
+#define AE_MULAAFD24_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD24_HL_LH)(&d, d0, d1)
+#define AE_MULAAFP24S_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFP24S_HL_LH)(&d, d0, d1)
+#define AE_MULAAD24_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAD24_HL_LH)(&d, d0, d1)
+#define AE_MULAAP24S_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAP24S_HL_LH)(&d, d0, d1)
+#define AE_MULAAFD24_HL_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD24_HL_LH_S2)(&d, d0, d1)
+#define AE_MULAAFP24S_HL_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFP24S_HL_LH_S2)(&d, d0, d1)
+#define AE_MULAAD24_HL_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAD24_HL_LH_S2)(&d, d0, d1)
+#define AE_MULAAP24S_HL_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAP24S_HL_LH_S2)(&d, d0, d1)
+#define AE_MULASFD24_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFD24_HH_LL)(&d, d0, d1)
+#define AE_MULASFP24S_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFP24S_HH_LL)(&d, d0, d1)
+#define AE_MULASD24_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASD24_HH_LL)(&d, d0, d1)
+#define AE_MULASP24S_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASP24S_HH_LL)(&d, d0, d1)
+#define AE_MULASFD24_HH_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFD24_HH_LL_S2)(&d, d0, d1)
+#define AE_MULASFP24S_HH_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFP24S_HH_LL_S2)(&d, d0, d1)
+#define AE_MULASD24_HH_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASD24_HH_LL_S2)(&d, d0, d1)
+#define AE_MULASP24S_HH_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASP24S_HH_LL_S2)(&d, d0, d1)
+#define AE_MULASFD24_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFD24_HL_LH)(&d, d0, d1)
+#define AE_MULASFP24S_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFP24S_HL_LH)(&d, d0, d1)
+#define AE_MULSAF48P24S_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAF48P24S_HL_LH)(&d, d0, d1)
+#define AE_MULSAFP24S_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAFP24S_HL_LH)(&d, d0, d1)
+#define AE_MULASD24_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASD24_HL_LH)(&d, d0, d1)
+#define AE_MULASP24S_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASP24S_HL_LH)(&d, d0, d1)
+#define AE_MULSA64P24S_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSA64P24S_HL_LH)(&d, d0, d1)
+#define AE_MULSAP24S_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAP24S_HL_LH)(&d, d0, d1)
+#define AE_MULASFD24_HL_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFD24_HL_LH_S2)(&d, d0, d1)
+#define AE_MULASFP24S_HL_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFP24S_HL_LH_S2)(&d, d0, d1)
+#define AE_MULSAF48P24S_HL_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAF48P24S_HL_LH_S2)(&d, d0, d1)
+#define AE_MULSAFP24S_HL_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAFP24S_HL_LH_S2)(&d, d0, d1)
+#define AE_MULASD24_HL_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASD24_HL_LH_S2)(&d, d0, d1)
+#define AE_MULASP24S_HL_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASP24S_HL_LH_S2)(&d, d0, d1)
+#define AE_MULSA64P24S_HL_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSA64P24S_HL_LH_S2)(&d, d0, d1)
+#define AE_MULSAP24S_HL_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAP24S_HL_LH_S2)(&d, d0, d1)
+#define AE_MULSAFD24_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAFD24_HH_LL)(&d, d0, d1)
+#define AE_MULSAFP24S_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAFP24S_HH_LL)(&d, d0, d1)
+#define AE_MULSAD24_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAD24_HH_LL)(&d, d0, d1)
+#define AE_MULSAP24S_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAP24S_HH_LL)(&d, d0, d1)
+#define AE_MULSAFD24_HH_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAFD24_HH_LL_S2)(&d, d0, d1)
+#define AE_MULSAFP24S_HH_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAFP24S_HH_LL_S2)(&d, d0, d1)
+#define AE_MULSAD24_HH_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAD24_HH_LL_S2)(&d, d0, d1)
+#define AE_MULSAP24S_HH_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAP24S_HH_LL_S2)(&d, d0, d1)
+#define AE_MULSSFD24_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD24_HH_LL)(&d, d0, d1)
+#define AE_MULSSFP24S_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFP24S_HH_LL)(&d, d0, d1)
+#define AE_MULSSD24_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSD24_HH_LL)(&d, d0, d1)
+#define AE_MULSSP24S_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSP24S_HH_LL)(&d, d0, d1)
+#define AE_MULSSFD24_HH_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD24_HH_LL_S2)(&d, d0, d1)
+#define AE_MULSSFP24S_HH_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFP24S_HH_LL_S2)(&d, d0, d1)
+#define AE_MULSSD24_HH_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSD24_HH_LL_S2)(&d, d0, d1)
+#define AE_MULSSP24S_HH_LL_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSP24S_HH_LL_S2)(&d, d0, d1)
+#define AE_MULSSFD24_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD24_HL_LH)(&d, d0, d1)
+#define AE_MULSSFP24S_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFP24S_HL_LH)(&d, d0, d1)
+#define AE_MULSSD24_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSD24_HL_LH)(&d, d0, d1)
+#define AE_MULSSP24S_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSP24S_HL_LH)(&d, d0, d1)
+#define AE_MULSSFD24_HL_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD24_HL_LH_S2)(&d, d0, d1)
+#define AE_MULSSFP24S_HL_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFP24S_HL_LH_S2)(&d, d0, d1)
+#define AE_MULSSD24_HL_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSD24_HL_LH_S2)(&d, d0, d1)
+#define AE_MULSSP24S_HL_LH_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSP24S_HL_LH_S2)(&d, d0, d1)
+#define AE_MULZAAFD32S_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32S_HH_LL)(d0, d1)
+#define AE_MULZAAFD32RA_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32RA_HH_LL)(d0, d1)
+#define AE_MULZAAFD32R_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32R_HH_LL)(d0, d1)
+#define AE_MULZAAD32_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32_HH_LL)(d0, d1)
+#define AE_MULZAAFD32S_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32S_HL_LH)(d0, d1)
+#define AE_MULZAAFD32RA_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32RA_HL_LH)(d0, d1)
+#define AE_MULZAAFD32R_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32R_HL_LH)(d0, d1)
+#define AE_MULZAAD32_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32_HL_LH)(d0, d1)
+#define AE_MULZASFD32S_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32S_HH_LL)(d0, d1)
+#define AE_MULZASFD32RA_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32RA_HH_LL)(d0, d1)
+#define AE_MULZASFD32R_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32R_HH_LL)(d0, d1)
+#define AE_MULZASD32_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASD32_HH_LL)(d0, d1)
+#define AE_MULZASFD32S_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32S_HL_LH)(d0, d1)
+#define AE_MULZSAFD32S_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32S_HL_LH)(d0, d1)
+#define AE_MULZASFD32RA_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32RA_HL_LH)(d0, d1)
+#define AE_MULZSAFD32RA_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32RA_HL_LH)(d0, d1)
+#define AE_MULZASFD32R_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32R_HL_LH)(d0, d1)
+#define AE_MULZSAFD32R_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32R_HL_LH)(d0, d1)
+#define AE_MULZASD32_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASD32_HL_LH)(d0, d1)
+#define AE_MULZSAD32_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAD32_HL_LH)(d0, d1)
+#define AE_MULZSAFD32S_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32S_HH_LL)(d0, d1)
+#define AE_MULZSAFD32RA_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32RA_HH_LL)(d0, d1)
+#define AE_MULZSAFD32R_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32R_HH_LL)(d0, d1)
+#define AE_MULZSAD32_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAD32_HH_LL)(d0, d1)
+#define AE_MULZSSFD32S_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32S_HH_LL)(d0, d1)
+#define AE_MULZSSFD32RA_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32RA_HH_LL)(d0, d1)
+#define AE_MULZSSFD32R_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32R_HH_LL)(d0, d1)
+#define AE_MULZSSD32_HH_LL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSD32_HH_LL)(d0, d1)
+#define AE_MULZSSFD32S_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32S_HL_LH)(d0, d1)
+#define AE_MULZSSFD32RA_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32RA_HL_LH)(d0, d1)
+#define AE_MULZSSFD32R_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32R_HL_LH)(d0, d1)
+#define AE_MULZSSD32_HL_LH(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSD32_HL_LH)(d0, d1)
+#define AE_MULAAFD32S_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32S_HH_LL)(&d, d0, d1)
+#define AE_MULAAFD32RA_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32RA_HH_LL)(&d, d0, d1)
+#define AE_MULAAFD32R_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32R_HH_LL)(&d, d0, d1)
+#define AE_MULAAD32_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAD32_HH_LL)(&d, d0, d1)
+#define AE_MULAAFD32S_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32S_HL_LH)(&d, d0, d1)
+#define AE_MULAAFD32RA_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32RA_HL_LH)(&d, d0, d1)
+#define AE_MULAAFD32R_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32R_HL_LH)(&d, d0, d1)
+#define AE_MULAAD32_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAD32_HL_LH)(&d, d0, d1)
+#define AE_MULASFD32S_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFD32S_HH_LL)(&d, d0, d1)
+#define AE_MULASFD32RA_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFD32RA_HH_LL)(&d, d0, d1)
+#define AE_MULASFD32R_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFD32R_HH_LL)(&d, d0, d1)
+#define AE_MULASD32_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASD32_HH_LL)(&d, d0, d1)
+#define AE_MULASFD32S_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFD32S_HL_LH)(&d, d0, d1)
+#define AE_MULSAFD32S_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32S_HL_LH)(&d, d0, d1)
+#define AE_MULASFD32RA_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFD32RA_HL_LH)(&d, d0, d1)
+#define AE_MULSAFD32RA_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32RA_HL_LH)(&d, d0, d1)
+#define AE_MULASFD32R_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFD32R_HL_LH)(&d, d0, d1)
+#define AE_MULSAFD32R_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32R_HL_LH)(&d, d0, d1)
+#define AE_MULASD32_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASD32_HL_LH)(&d, d0, d1)
+#define AE_MULSAD32_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAD32_HL_LH)(&d, d0, d1)
+#define AE_MULSAFD32S_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32S_HH_LL)(&d, d0, d1)
+#define AE_MULSAFD32RA_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32RA_HH_LL)(&d, d0, d1)
+#define AE_MULSAFD32R_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32R_HH_LL)(&d, d0, d1)
+#define AE_MULSAD32_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAD32_HH_LL)(&d, d0, d1)
+#define AE_MULSSFD32S_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32S_HH_LL)(&d, d0, d1)
+#define AE_MULSSFD32RA_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32RA_HH_LL)(&d, d0, d1)
+#define AE_MULSSFD32R_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32R_HH_LL)(&d, d0, d1)
+#define AE_MULSSD32_HH_LL(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSD32_HH_LL)(&d, d0, d1)
+#define AE_MULSSFD32S_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32S_HL_LH)(&d, d0, d1)
+#define AE_MULSSFD32RA_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32RA_HL_LH)(&d, d0, d1)
+#define AE_MULSSFD32R_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32R_HL_LH)(&d, d0, d1)
+#define AE_MULSSD32_HL_LH(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSD32_HL_LH)(&d, d0, d1)
+#define AE_MULSRFQ32SP24S_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSRFQ32SP24S_H)(&d, d0, d1)
+#define AE_MULSRFQ32SP24S_H_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSRFQ32SP24S_H_S2)(&d, d0, d1)
+#define AE_MULSRFQ32SP24S_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSRFQ32SP24S_L)(&d, d0, d1)
+#define AE_MULSRFQ32SP24S_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSRFQ32SP24S_L_S2)(&d, d0, d1)
+#define AE_MULARFQ32SP24S_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULARFQ32SP24S_H)(&d, d0, d1)
+#define AE_MULARFQ32SP24S_H_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULARFQ32SP24S_H_S2)(&d, d0, d1)
+#define AE_MULARFQ32SP24S_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULARFQ32SP24S_L)(&d, d0, d1)
+#define AE_MULARFQ32SP24S_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULARFQ32SP24S_L_S2)(&d, d0, d1)
+#define AE_MULRFQ32SP24S_H(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULRFQ32SP24S_H)(d0, d1)
+#define AE_MULRFQ32SP24S_H_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULRFQ32SP24S_H_S2)(d0, d1)
+#define AE_MULRFQ32SP24S_L(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULRFQ32SP24S_L)(d0, d1)
+#define AE_MULRFQ32SP24S_L_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULRFQ32SP24S_L_S2)(d0, d1)
+#define AE_MULSFQ32SP24S_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP24S_H)(&d, d0, d1)
+#define AE_MULSFQ32SP24S_H_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP24S_H_S2)(&d, d0, d1)
+#define AE_MULSFQ32SP24S_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP24S_L)(&d, d0, d1)
+#define AE_MULSFQ32SP24S_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP24S_L_S2)(&d, d0, d1)
+#define AE_MULAFQ32SP24S_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP24S_H)(&d, d0, d1)
+#define AE_MULAFQ32SP24S_H_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP24S_H_S2)(&d, d0, d1)
+#define AE_MULAFQ32SP24S_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP24S_L)(&d, d0, d1)
+#define AE_MULAFQ32SP24S_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP24S_L_S2)(&d, d0, d1)
+#define AE_MULFQ32SP24S_H(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP24S_H)(d0, d1)
+#define AE_MULFQ32SP24S_H_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP24S_H_S2)(d0, d1)
+#define AE_MULFQ32SP24S_L(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP24S_L)(d0, d1)
+#define AE_MULFQ32SP24S_L_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP24S_L_S2)(d0, d1)
+#define AE_MULF32X16_L0(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_L0)(d1, d0)
+#define AE_MUL32X16_L0(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_L0)(d1, d0)
+#define AE_MULF32X16_L0_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_L0_S2)(d1, d0)
+#define AE_MUL32X16_L0_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_L0_S2)(d1, d0)
+#define AE_MULF32X16_L1(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_L1)(d1, d0)
+#define AE_MUL32X16_L1(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_L1)(d1, d0)
+#define AE_MULF32X16_L1_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_L1_S2)(d1, d0)
+#define AE_MUL32X16_L1_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_L1_S2)(d1, d0)
+#define AE_MULF32X16_L2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_L2)(d1, d0)
+#define AE_MUL32X16_L2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_L2)(d1, d0)
+#define AE_MULF32X16_L2_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_L2_S2)(d1, d0)
+#define AE_MUL32X16_L2_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_L2_S2)(d1, d0)
+#define AE_MULF32X16_L3(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_L3)(d1, d0)
+#define AE_MUL32X16_L3(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_L3)(d1, d0)
+#define AE_MULF32X16_L3_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_L3_S2)(d1, d0)
+#define AE_MUL32X16_L3_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_L3_S2)(d1, d0)
+#define AE_MULF32X16_H0(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_H0)(d1, d0)
+#define AE_MUL32X16_H0(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_H0)(d1, d0)
+#define AE_MULF32X16_H0_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_H0_S2)(d1, d0)
+#define AE_MUL32X16_H0_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_H0_S2)(d1, d0)
+#define AE_MULF32X16_H1(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_H1)(d1, d0)
+#define AE_MUL32X16_H1(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_H1)(d1, d0)
+#define AE_MULF32X16_H1_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_H1_S2)(d1, d0)
+#define AE_MUL32X16_H1_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_H1_S2)(d1, d0)
+#define AE_MULF32X16_H2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_H2)(d1, d0)
+#define AE_MUL32X16_H2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_H2)(d1, d0)
+#define AE_MULF32X16_H2_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_H2_S2)(d1, d0)
+#define AE_MUL32X16_H2_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_H2_S2)(d1, d0)
+#define AE_MULF32X16_H3(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_H3)(d1, d0)
+#define AE_MUL32X16_H3(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_H3)(d1, d0)
+#define AE_MULF32X16_H3_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF32X16_H3_S2)(d1, d0)
+#define AE_MUL32X16_H3_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32X16_H3_S2)(d1, d0)
+#define AE_MULAF32X16_L0(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_L0)(&d, d1, d0)
+#define AE_MULA32X16_L0(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_L0)(&d, d1, d0)
+#define AE_MULAF32X16_L0_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_L0_S2)(&d, d1, d0)
+#define AE_MULA32X16_L0_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_L0_S2)(&d, d1, d0)
+#define AE_MULAF32X16_L1(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_L1)(&d, d1, d0)
+#define AE_MULA32X16_L1(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_L1)(&d, d1, d0)
+#define AE_MULAF32X16_L1_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_L1_S2)(&d, d1, d0)
+#define AE_MULA32X16_L1_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_L1_S2)(&d, d1, d0)
+#define AE_MULAF32X16_L2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_L2)(&d, d1, d0)
+#define AE_MULA32X16_L2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_L2)(&d, d1, d0)
+#define AE_MULAF32X16_L2_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_L2_S2)(&d, d1, d0)
+#define AE_MULA32X16_L2_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_L2_S2)(&d, d1, d0)
+#define AE_MULAF32X16_L3(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_L3)(&d, d1, d0)
+#define AE_MULA32X16_L3(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_L3)(&d, d1, d0)
+#define AE_MULAF32X16_L3_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_L3_S2)(&d, d1, d0)
+#define AE_MULA32X16_L3_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_L3_S2)(&d, d1, d0)
+#define AE_MULAF32X16_H0(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_H0)(&d, d1, d0)
+#define AE_MULA32X16_H0(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_H0)(&d, d1, d0)
+#define AE_MULAF32X16_H0_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_H0_S2)(&d, d1, d0)
+#define AE_MULA32X16_H0_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_H0_S2)(&d, d1, d0)
+#define AE_MULAF32X16_H1(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_H1)(&d, d1, d0)
+#define AE_MULA32X16_H1(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_H1)(&d, d1, d0)
+#define AE_MULAF32X16_H1_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_H1_S2)(&d, d1, d0)
+#define AE_MULA32X16_H1_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_H1_S2)(&d, d1, d0)
+#define AE_MULAF32X16_H2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_H2)(&d, d1, d0)
+#define AE_MULA32X16_H2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_H2)(&d, d1, d0)
+#define AE_MULAF32X16_H2_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_H2_S2)(&d, d1, d0)
+#define AE_MULA32X16_H2_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_H2_S2)(&d, d1, d0)
+#define AE_MULAF32X16_H3(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_H3)(&d, d1, d0)
+#define AE_MULA32X16_H3(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_H3)(&d, d1, d0)
+#define AE_MULAF32X16_H3_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF32X16_H3_S2)(&d, d1, d0)
+#define AE_MULA32X16_H3_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32X16_H3_S2)(&d, d1, d0)
+#define AE_MULSF32X16_L0(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_L0)(&d, d1, d0)
+#define AE_MULS32X16_L0(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_L0)(&d, d1, d0)
+#define AE_MULSF32X16_L0_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_L0_S2)(&d, d1, d0)
+#define AE_MULS32X16_L0_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_L0_S2)(&d, d1, d0)
+#define AE_MULSF32X16_L1(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_L1)(&d, d1, d0)
+#define AE_MULS32X16_L1(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_L1)(&d, d1, d0)
+#define AE_MULSF32X16_L1_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_L1_S2)(&d, d1, d0)
+#define AE_MULS32X16_L1_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_L1_S2)(&d, d1, d0)
+#define AE_MULSF32X16_L2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_L2)(&d, d1, d0)
+#define AE_MULS32X16_L2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_L2)(&d, d1, d0)
+#define AE_MULSF32X16_L2_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_L2_S2)(&d, d1, d0)
+#define AE_MULS32X16_L2_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_L2_S2)(&d, d1, d0)
+#define AE_MULSF32X16_L3(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_L3)(&d, d1, d0)
+#define AE_MULS32X16_L3(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_L3)(&d, d1, d0)
+#define AE_MULSF32X16_L3_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_L3_S2)(&d, d1, d0)
+#define AE_MULS32X16_L3_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_L3_S2)(&d, d1, d0)
+#define AE_MULSF32X16_H0(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_H0)(&d, d1, d0)
+#define AE_MULS32X16_H0(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_H0)(&d, d1, d0)
+#define AE_MULSF32X16_H0_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_H0_S2)(&d, d1, d0)
+#define AE_MULS32X16_H0_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_H0_S2)(&d, d1, d0)
+#define AE_MULSF32X16_H1(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_H1)(&d, d1, d0)
+#define AE_MULS32X16_H1(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_H1)(&d, d1, d0)
+#define AE_MULSF32X16_H1_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_H1_S2)(&d, d1, d0)
+#define AE_MULS32X16_H1_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_H1_S2)(&d, d1, d0)
+#define AE_MULSF32X16_H2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_H2)(&d, d1, d0)
+#define AE_MULS32X16_H2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_H2)(&d, d1, d0)
+#define AE_MULSF32X16_H2_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_H2_S2)(&d, d1, d0)
+#define AE_MULS32X16_H2_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_H2_S2)(&d, d1, d0)
+#define AE_MULSF32X16_H3(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_H3)(&d, d1, d0)
+#define AE_MULS32X16_H3(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_H3)(&d, d1, d0)
+#define AE_MULSF32X16_H3_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF32X16_H3_S2)(&d, d1, d0)
+#define AE_MULS32X16_H3_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS32X16_H3_S2)(&d, d1, d0)
+#define AE_MULAAFD32X16_H3_L2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32X16_H3_L2)(&d, d1, d0)
+#define AE_MULAAD32X16_H3_L2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAD32X16_H3_L2)(&d, d1, d0)
+#define AE_MULAAFD32X16_H3_L2_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32X16_H3_L2_S2)(&d, d1, d0)
+#define AE_MULAAD32X16_H3_L2_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAD32X16_H3_L2_S2)(&d, d1, d0)
+#define AE_MULAAFD32X16_H1_L0(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32X16_H1_L0)(&d, d1, d0)
+#define AE_MULAAD32X16_H1_L0(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAD32X16_H1_L0)(&d, d1, d0)
+#define AE_MULAAFD32X16_H1_L0_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32X16_H1_L0_S2)(&d, d1, d0)
+#define AE_MULAAD32X16_H1_L0_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAD32X16_H1_L0_S2)(&d, d1, d0)
+#define AE_MULASFD32X16_H3_L2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFD32X16_H3_L2)(&d, d1, d0)
+#define AE_MULASD32X16_H3_L2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASD32X16_H3_L2)(&d, d1, d0)
+#define AE_MULASFD32X16_H3_L2_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFD32X16_H3_L2_S2)(&d, d1, d0)
+#define AE_MULASD32X16_H3_L2_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASD32X16_H3_L2_S2)(&d, d1, d0)
+#define AE_MULASFD32X16_H1_L0(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFD32X16_H1_L0)(&d, d1, d0)
+#define AE_MULASD32X16_H1_L0(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASD32X16_H1_L0)(&d, d1, d0)
+#define AE_MULASFD32X16_H1_L0_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASFD32X16_H1_L0_S2)(&d, d1, d0)
+#define AE_MULASD32X16_H1_L0_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULASD32X16_H1_L0_S2)(&d, d1, d0)
+#define AE_MULSAFD32X16_H3_L2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32X16_H3_L2)(&d, d1, d0)
+#define AE_MULSAD32X16_H3_L2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAD32X16_H3_L2)(&d, d1, d0)
+#define AE_MULSAFD32X16_H3_L2_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32X16_H3_L2_S2)(&d, d1, d0)
+#define AE_MULSAD32X16_H3_L2_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAD32X16_H3_L2_S2)(&d, d1, d0)
+#define AE_MULSAFD32X16_H1_L0(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32X16_H1_L0)(&d, d1, d0)
+#define AE_MULSAD32X16_H1_L0(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAD32X16_H1_L0)(&d, d1, d0)
+#define AE_MULSAFD32X16_H1_L0_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAFD32X16_H1_L0_S2)(&d, d1, d0)
+#define AE_MULSAD32X16_H1_L0_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSAD32X16_H1_L0_S2)(&d, d1, d0)
+#define AE_MULSSFD32X16_H3_L2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32X16_H3_L2)(&d, d1, d0)
+#define AE_MULSSD32X16_H3_L2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSD32X16_H3_L2)(&d, d1, d0)
+#define AE_MULSSFD32X16_H3_L2_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32X16_H3_L2_S2)(&d, d1, d0)
+#define AE_MULSSD32X16_H3_L2_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSD32X16_H3_L2_S2)(&d, d1, d0)
+#define AE_MULSSFD32X16_H1_L0(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32X16_H1_L0)(&d, d1, d0)
+#define AE_MULSSD32X16_H1_L0(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSD32X16_H1_L0)(&d, d1, d0)
+#define AE_MULSSFD32X16_H1_L0_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSFD32X16_H1_L0_S2)(&d, d1, d0)
+#define AE_MULSSD32X16_H1_L0_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSSD32X16_H1_L0_S2)(&d, d1, d0)
+#define AE_MULZAAFD32X16_H3_L2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32X16_H3_L2)(d1, d0)
+#define AE_MULZAAD32X16_H3_L2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32X16_H3_L2)(d1, d0)
+#define AE_MULZAAFD32X16_H3_L2_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32X16_H3_L2_S2)(d1, d0)
+#define AE_MULZAAD32X16_H3_L2_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32X16_H3_L2_S2)(d1, d0)
+#define AE_MULZAAFD32X16_H1_L0(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32X16_H1_L0)(d1, d0)
+#define AE_MULZAAD32X16_H1_L0(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32X16_H1_L0)(d1, d0)
+#define AE_MULZAAFD32X16_H1_L0_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32X16_H1_L0_S2)(d1, d0)
+#define AE_MULZAAD32X16_H1_L0_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32X16_H1_L0_S2)(d1, d0)
+#define AE_MULZASFD32X16_H3_L2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32X16_H3_L2)(d1, d0)
+#define AE_MULZASD32X16_H3_L2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASD32X16_H3_L2)(d1, d0)
+#define AE_MULZASFD32X16_H3_L2_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32X16_H3_L2_S2)(d1, d0)
+#define AE_MULZASD32X16_H3_L2_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASD32X16_H3_L2_S2)(d1, d0)
+#define AE_MULZASFD32X16_H1_L0(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32X16_H1_L0)(d1, d0)
+#define AE_MULZASD32X16_H1_L0(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASD32X16_H1_L0)(d1, d0)
+#define AE_MULZASFD32X16_H1_L0_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFD32X16_H1_L0_S2)(d1, d0)
+#define AE_MULZASD32X16_H1_L0_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASD32X16_H1_L0_S2)(d1, d0)
+#define AE_MULZSAFD32X16_H3_L2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32X16_H3_L2)(d1, d0)
+#define AE_MULZSAD32X16_H3_L2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAD32X16_H3_L2)(d1, d0)
+#define AE_MULZSAFD32X16_H3_L2_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32X16_H3_L2_S2)(d1, d0)
+#define AE_MULZSAD32X16_H3_L2_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAD32X16_H3_L2_S2)(d1, d0)
+#define AE_MULZSAFD32X16_H1_L0(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32X16_H1_L0)(d1, d0)
+#define AE_MULZSAD32X16_H1_L0(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAD32X16_H1_L0)(d1, d0)
+#define AE_MULZSAFD32X16_H1_L0_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFD32X16_H1_L0_S2)(d1, d0)
+#define AE_MULZSAD32X16_H1_L0_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAD32X16_H1_L0_S2)(d1, d0)
+#define AE_MULZSSFD32X16_H3_L2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32X16_H3_L2)(d1, d0)
+#define AE_MULZSSD32X16_H3_L2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSD32X16_H3_L2)(d1, d0)
+#define AE_MULZSSFD32X16_H3_L2_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32X16_H3_L2_S2)(d1, d0)
+#define AE_MULZSSD32X16_H3_L2_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSD32X16_H3_L2_S2)(d1, d0)
+#define AE_MULZSSFD32X16_H1_L0(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32X16_H1_L0)(d1, d0)
+#define AE_MULZSSD32X16_H1_L0(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSD32X16_H1_L0)(d1, d0)
+#define AE_MULZSSFD32X16_H1_L0_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFD32X16_H1_L0_S2)(d1, d0)
+#define AE_MULZSSD32X16_H1_L0_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSD32X16_H1_L0_S2)(d1, d0)
+#define AE_MULZAAFD32X16_H2_L3(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32X16_H2_L3)(d1, d0)
+#define AE_MULZAAFD32X16_H0_L1(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32X16_H0_L1)(d1, d0)
+#define AE_MULAAFD32X16_H2_L3(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32X16_H2_L3)(&d, d1, d0)
+#define AE_MULAAFD32X16_H0_L1(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32X16_H0_L1)(&d, d1, d0)
+#define AE_MULZAAD32X16_H2_L3(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32X16_H2_L3)(d1, d0)
+#define AE_MULZAAD32X16_H0_L1(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32X16_H0_L1)(d1, d0)
+#define AE_MULAAD32X16_H2_L3(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAD32X16_H2_L3)(&d, d1, d0)
+#define AE_MULAAD32X16_H0_L1(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAD32X16_H0_L1)(&d, d1, d0)
+#define AE_MULZAAFD32X16_H2_L3_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32X16_H2_L3_S2)(d1, d0)
+#define AE_MULZAAFD32X16_H0_L1_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFD32X16_H0_L1_S2)(d1, d0)
+#define AE_MULAAFD32X16_H2_L3_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32X16_H2_L3_S2)(&d, d1, d0)
+#define AE_MULAAFD32X16_H0_L1_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAFD32X16_H0_L1_S2)(&d, d1, d0)
+#define AE_MULZAAD32X16_H2_L3_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32X16_H2_L3_S2)(d1, d0)
+#define AE_MULZAAD32X16_H0_L1_S2(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAD32X16_H0_L1_S2)(d1, d0)
+#define AE_MULAAD32X16_H2_L3_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAD32X16_H2_L3_S2)(&d, d1, d0)
+#define AE_MULAAD32X16_H0_L1_S2(d, d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAD32X16_H0_L1_S2)(&d, d1, d0)
+#define AE_MULP32X16X2_H(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULP32X16X2_H)(d0, d1)
+#define AE_MULFP32X16X2RS_H(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2RS_H)(d0, d1)
+#define AE_MULFP32X16X2RAS_H(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2RAS_H)(d0, d1)
+#define AE_MULFP32X16X2S_H(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2S_H)(d0, d1)
+#define AE_MULFP32X16X2S_H_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2S_H_S2)(d0, d1)
+#define AE_MULFP32X16X2RS_H_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2RS_H_S2)(d0, d1)
+#define AE_MULFP32X16X2RAS_H_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2RAS_H_S2)(d0, d1)
+#define AE_MULP32X16X2_L(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULP32X16X2_L)(d0, d1)
+#define AE_MULFP32X16X2RS_L(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2RS_L)(d0, d1)
+#define AE_MULFP32X16X2RAS_L(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2RAS_L)(d0, d1)
+#define AE_MULFP32X16X2S_L(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2S_L)(d0, d1)
+#define AE_MULFP32X16X2S_L_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2S_L_S2)(d0, d1)
+#define AE_MULFP32X16X2RS_L_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2RS_L_S2)(d0, d1)
+#define AE_MULFP32X16X2RAS_L_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP32X16X2RAS_L_S2)(d0, d1)
+#define AE_MULAP32X16X2_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAP32X16X2_H)(&d, d0, d1)
+#define AE_MULAFP32X16X2RS_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2RS_H)(&d, d0, d1)
+#define AE_MULAFP32X16X2RAS_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2RAS_H)(&d, d0, d1)
+#define AE_MULAFP32X16X2S_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2S_H)(&d, d0, d1)
+#define AE_MULAFP32X16X2S_H_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2S_H_S2)(&d, d0, d1)
+#define AE_MULAFP32X16X2RS_H_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2RS_H_S2)(&d, d0, d1)
+#define AE_MULAFP32X16X2RAS_H_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2RAS_H_S2)(&d, d0, d1)
+#define AE_MULAP32X16X2_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAP32X16X2_L)(&d, d0, d1)
+#define AE_MULAFP32X16X2RS_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2RS_L)(&d, d0, d1)
+#define AE_MULAFP32X16X2RAS_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2RAS_L)(&d, d0, d1)
+#define AE_MULAFP32X16X2S_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2S_L)(&d, d0, d1)
+#define AE_MULAFP32X16X2S_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2S_L_S2)(&d, d0, d1)
+#define AE_MULAFP32X16X2RS_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2RS_L_S2)(&d, d0, d1)
+#define AE_MULAFP32X16X2RAS_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X16X2RAS_L_S2)(&d, d0, d1)
+#define AE_MULSP32X16X2_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSP32X16X2_H)(&d, d0, d1)
+#define AE_MULSFP32X16X2RS_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2RS_H)(&d, d0, d1)
+#define AE_MULSFP32X16X2RAS_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2RAS_H)(&d, d0, d1)
+#define AE_MULSFP32X16X2S_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2S_H)(&d, d0, d1)
+#define AE_MULSFP32X16X2S_H_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2S_H_S2)(&d, d0, d1)
+#define AE_MULSFP32X16X2RS_H_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2RS_H_S2)(&d, d0, d1)
+#define AE_MULSFP32X16X2RAS_H_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2RAS_H_S2)(&d, d0, d1)
+#define AE_MULSP32X16X2_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSP32X16X2_L)(&d, d0, d1)
+#define AE_MULSFP32X16X2RS_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2RS_L)(&d, d0, d1)
+#define AE_MULSFP32X16X2RAS_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2RAS_L)(&d, d0, d1)
+#define AE_MULSFP32X16X2S_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2S_L)(&d, d0, d1)
+#define AE_MULSFP32X16X2S_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2S_L_S2)(&d, d0, d1)
+#define AE_MULSFP32X16X2RS_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2RS_L_S2)(&d, d0, d1)
+#define AE_MULSFP32X16X2RAS_L_S2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X16X2RAS_L_S2)(&d, d0, d1)
+#define AE_MULP32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULP32X2)(d0, d1)
+#define AE_MULFP32X2RS(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP32X2RS)(d0, d1)
+#define AE_MULFP32X2RAS(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP32X2RAS)(d0, d1)
+#define AE_MULFP32X2TS(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP32X2TS)(d0, d1)
+#define AE_MULP32X2T(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULP32X2T)(d0, d1)
+#define AE_MULAP32X2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAP32X2)(&d, d0, d1)
+#define AE_MULAFP32X2RS(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X2RS)(&d, d0, d1)
+#define AE_MULAFP32X2RAS(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X2RAS)(&d, d0, d1)
+#define AE_MULAFP32X2TS(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFP32X2TS)(&d, d0, d1)
+#define AE_MULAP32X2T(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAP32X2T)(&d, d0, d1)
+#define AE_MULSP32X2(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSP32X2)(&d, d0, d1)
+#define AE_MULSFP32X2RS(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X2RS)(&d, d0, d1)
+#define AE_MULSFP32X2RAS(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X2RAS)(&d, d0, d1)
+#define AE_MULSFP32X2TS(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFP32X2TS)(&d, d0, d1)
+#define AE_MULFP16X4S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP16X4S)(d0, d1)
+#define AE_MULFP16X4RAS(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP16X4RAS)(d0, d1)
+#define AE_MULC24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULC24)(d0, d1)
+#define AE_MULFC24RA(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFC24RA)(d0, d1)
+#define AE_MULFCR32RAS(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFCR32RAS)(&d, d0, d1)
+#define AE_MULFCI32RAS(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFCI32RAS)(d0, d1)
+#define AE_MULC32X16_L(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULC32X16_L)(d0, d1)
+#define AE_MULFC32X16RAS_L(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFC32X16RAS_L)(d0, d1)
+#define AE_MULC32X16_H(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULC32X16_H)(d0, d1)
+#define AE_MULFC32X16RAS_H(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFC32X16RAS_H)(d0, d1)
+#define AE_MULAC24(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAC24)(&d, d0, d1)
+#define AE_MULAFC24RA(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFC24RA)(&d, d0, d1)
+#define AE_MULAFCR32RAS(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFCR32RAS)(&d, d0, d1)
+#define AE_MULAFCI32RAS(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFCI32RAS)(&d, d0, d1)
+#define AE_MULAC32X16_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAC32X16_L)(&d, d0, d1)
+#define AE_MULAFC32X16RAS_L(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFC32X16RAS_L)(&d, d0, d1)
+#define AE_MULAC32X16_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAC32X16_H)(&d, d0, d1)
+#define AE_MULAFC32X16RAS_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFC32X16RAS_H)(&d, d0, d1)
+#define AE_MULAFC32RAS(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFC32RAS)(&d, d0, d1)
+#define AE_MULFC32RAS(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFC32RAS)(d0, d1)
+#define AE_MULF16X4SS(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF16X4SS)(&d0, &d1, d2, d3)
+#define AE_MULAF16X4SS(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF16X4SS)(&d0, &d1, d2, d3)
+#define AE_MULSF16X4SS(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF16X4SS)(&d0, &d1, d2, d3)
+#define AE_MULA16X4S(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA16X4S)(&d0, &d1, d2, d3)
+#define AE_MULS16X4S(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS16X4S)(&d0, &d1, d2, d3)
+#define AE_MUL16X4(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL16X4)(&d0, &d1, d2, d3)
+#define AE_MULA16X4(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA16X4)(&d0, &d1, d2, d3)
+#define AE_MULS16X4(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS16X4)(&d0, &d1, d2, d3)
+#define AE_MULFD24X2_FIR_H(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFD24X2_FIR_H)(&q0, &q1, d0, d1, c)
+#define AE_MULFD24X2_FIR_L(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFD24X2_FIR_L)(&q0, &q1, d0, d1, c)
+#define AE_MULFD32X16X2_FIR_HH(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFD32X16X2_FIR_HH)(&q0, &q1, d0, d1, c)
+#define AE_MULFD32X16X2_FIR_HL(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFD32X16X2_FIR_HL)(&q0, &q1, d0, d1, c)
+#define AE_MULFD32X16X2_FIR_LH(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFD32X16X2_FIR_LH)(&q0, &q1, d0, d1, c)
+#define AE_MULFD32X16X2_FIR_LL(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFD32X16X2_FIR_LL)(&q0, &q1, d0, d1, c)
+#define AE_MULAFD24X2_FIR_H(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFD24X2_FIR_H)(&q0, &q1, d0, d1, c)
+#define AE_MULAFD24X2_FIR_L(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFD24X2_FIR_L)(&q0, &q1, d0, d1, c)
+#define AE_MULAFD32X16X2_FIR_HH(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFD32X16X2_FIR_HH)(&q0, &q1, d0, d1, c)
+#define AE_MULAFD32X16X2_FIR_HL(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFD32X16X2_FIR_HL)(&q0, &q1, d0, d1, c)
+#define AE_MULAFD32X16X2_FIR_LH(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFD32X16X2_FIR_LH)(&q0, &q1, d0, d1, c)
+#define AE_MULAFD32X16X2_FIR_LL(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFD32X16X2_FIR_LL)(&q0, &q1, d0, d1, c)
+#define AE_MULC16S_H(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULC16S_H)(d0, d1)
+#define AE_MULC16S_H_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULC16S_H_S2)(d0, d1)
+#define AE_MULC16S_L(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULC16S_L)(d0, d1)
+#define AE_MULC16S_L_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULC16S_L_S2)(d0, d1)
+#define AE_MULAC16S_H(q0, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAC16S_H)(&q0, d0, d1)
+#define AE_MULAC16S_H_S2(q0, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAC16S_H_S2)(&q0, d0, d1)
+#define AE_MULAC16S_L(q0, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAC16S_L)(&q0, d0, d1)
+#define AE_MULAC16S_L_S2(q0, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAC16S_L_S2)(&q0, d0, d1)
+#define AE_MULAFC16RAS(q0, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFC16RAS)(&q0, d0, d1)
+#define AE_MULFC16RAS(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFC16RAS)(d0, d1)
+#define AE_MULZAAAAQ16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAAAQ16)(d0, d1)
+#define AE_MULAAAAQ16(q0, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAAAQ16)(&q0, d0, d1)
+#define AE_MULZAAAAQ16_S2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAAAQ16_S2)(d0, d1)
+#define AE_MULAAAAQ16_S2(q0, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAAAQ16_S2)(&q0, d0, d1)
+#define AE_MUL16JS(v1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL16JS)(v1)
+#define AE_ADDANDSUBRNG16RAS_S1(va, vs) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADDANDSUBRNG16RAS_S1)(&va, &vs)
+#define AE_ADDANDSUBRNG16RAS_S2(va, vs) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADDANDSUBRNG16RAS_S2)(&va, &vs)
+#define AE_MAXABS16S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MAXABS16S)(d0, d1)
+#define AE_MULFQ16X2_FIR_3(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFQ16X2_FIR_3)(&q0, &q1, d0, d1, c)
+#define AE_MULFQ16X2_FIR_2(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFQ16X2_FIR_2)(&q0, &q1, d0, d1, c)
+#define AE_MULFQ16X2_FIR_1(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFQ16X2_FIR_1)(&q0, &q1, d0, d1, c)
+#define AE_MULFQ16X2_FIR_0(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFQ16X2_FIR_0)(&q0, &q1, d0, d1, c)
+#define AE_MULAFQ16X2_FIR_3(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFQ16X2_FIR_3)(&q0, &q1, d0, d1, c)
+#define AE_MULAFQ16X2_FIR_2(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFQ16X2_FIR_2)(&q0, &q1, d0, d1, c)
+#define AE_MULAFQ16X2_FIR_1(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFQ16X2_FIR_1)(&q0, &q1, d0, d1, c)
+#define AE_MULAFQ16X2_FIR_0(q0, q1, d0, d1, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFQ16X2_FIR_0)(&q0, &q1, d0, d1, c)
+#define AE_DIV64D32_H(d, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_DIV64D32_H)(&d, d0)
+#define AE_DIV64D32_L(d, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_DIV64D32_L)(&d, d0)
+#define AE_LB(ba) \
+	CSTUB_(_TIE_xt_hifi2_AE_LB)(ba)
+#define AE_LBI(ba) \
+	CSTUB_(_TIE_xt_hifi2_AE_LBI)(ba)
+#define AE_LBK(a0, ba) \
+	CSTUB_(_TIE_xt_hifi2_AE_LBK)(a0, ba)
+#define AE_LBKI(a0, ba) \
+	CSTUB_(_TIE_xt_hifi2_AE_LBKI)(a0, ba)
+#define AE_LBS(ba) \
+	CSTUB_(_TIE_xt_hifi2_AE_LBS)(ba)
+#define AE_LBSI(ba) \
+	CSTUB_(_TIE_xt_hifi2_AE_LBSI)(ba)
+#define AE_DB(a, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_DB)((const unsigned short **)&(a), count)
+#define AE_DBI(a, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_DBI)((const unsigned short **)&(a), count)
+#define AE_DB_IC(a, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_DB_IC)((const unsigned short **)&(a), count)
+#define AE_DB_XC(a, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_DB_XC)((const unsigned short **)&(a), count)
+#define AE_DBI_IC(a, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_DBI_IC)((const unsigned short **)&(a), count)
+#define AE_DBI_XC(a, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_DBI_XC)((const unsigned short **)&(a), count)
+#define AE_DB_IP(a, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_DB_IP)((const unsigned short **)&(a), count)
+#define AE_DBI_IP(a, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_DBI_IP)((const unsigned short **)&(a), count)
+#define AE_ARDECNORM16(flag, high_low, val) \
+	CSTUB_(_TIE_xt_hifi2_AE_ARDECNORM16)(&flag, &high_low, &val)
+#define AE_LBKI_DBI_IC(a, b, a0, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_LBKI_DBI_IC)((const unsigned short **)&(a), &b, a0, count)
+#define AE_LBKI_DBI_IP(a, b, a0, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_LBKI_DBI_IP)((const unsigned short **)&(a), &b, a0, count)
+#define AE_LBKI_DBI(a, b, a0, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_LBKI_DBI)((const unsigned short **)&(a), &b, a0, count)
+#define AE_LBI_DBI_IC(a, b, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_LBI_DBI_IC)((const unsigned short **)&(a), &b, count)
+#define AE_LBI_DBI_IP(a, b, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_LBI_DBI_IP)((const unsigned short **)&(a), &b, count)
+#define AE_LBI_DBI(a, b, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_LBI_DBI)((const unsigned short **)&(a), &b, count)
+#define AE_LBK_DB_IC(a, b, a0, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_LBK_DB_IC)((const unsigned short **)&(a), &b, a0, count)
+#define AE_LBK_DB_IP(a, b, a0, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_LBK_DB_IP)((const unsigned short **)&(a), &b, a0, count)
+#define AE_LBK_DB(a, b, a0, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_LBK_DB)((const unsigned short **)&(a), &b, a0, count)
+#define AE_LB_DB_IC(a, b, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_LB_DB_IC)((const unsigned short **)&(a), &b, count)
+#define AE_LB_DB_IP(a, b, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_LB_DB_IP)((const unsigned short **)&(a), &b, count)
+#define AE_LB_DB(a, b, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_LB_DB)((const unsigned short **)&(a), &b, count)
+#define AE_SEXT32(d0, bit) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEXT32)(d0, bit)
+#define AE_L16SI_N(ars, i) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16SI_N)(ars, i)
+#define AE_L16UI_N(ars, i) \
+	CSTUB_(_TIE_xt_hifi2_AE_L16UI_N)(ars, i)
+#define AE_S16I_N(art, ars, i) \
+	CSTUB_(_TIE_xt_hifi2_AE_S16I_N)(art, ars, i)
+#define AE_ZEXT16(ars) \
+	CSTUB_(_TIE_xt_hifi2_AE_ZEXT16)(ars)
+#define AE_ZEXT8(ars) \
+	CSTUB_(_TIE_xt_hifi2_AE_ZEXT8)(ars)
+#define AE_CLAMPS16(ars) \
+	CSTUB_(_TIE_xt_hifi2_AE_CLAMPS16)(ars)
+#define ae_p16s_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16s_move)(d0)
+#define ae_p16x2s_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16x2s_move)(d0)
+#define ae_int24_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_move)(d0)
+#define ae_p24s_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_move)(d0)
+#define ae_int16_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_move)(d0)
+#define ae_int16x4_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_move)(d0)
+#define ae_f16_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16_move)(d0)
+#define ae_f16x4_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16x4_move)(d0)
+#define ae_int32_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_move)(d0)
+#define ae_f32_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32_move)(d0)
+#define ae_p24x2s_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_move)(d0)
+#define ae_int24x2_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_move)(d0)
+#define ae_f24_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_move)(d0)
+#define ae_p24f_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24f_move)(d0)
+#define ae_p24x2f_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_move)(d0)
+#define ae_f24x2_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_move)(d0)
+#define ae_int32x2_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_move)(d0)
+#define ae_f32x2_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x2_move)(d0)
+#define ae_q32s_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_q32s_move)(d0)
+#define ae_q56s_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_q56s_move)(d0)
+#define ae_int64_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64_move)(d0)
+#define ae_f64_move(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f64_move)(d0)
+#define ae_p24x2f_rtor_ae_p24x2s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtor_ae_p24x2s)(d0)
+#define ae_p24x2f_rtor_ae_p16x2s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtor_ae_p16x2s)(d0)
+#define ae_p24x2f_rtor_ae_p16s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtor_ae_p16s)(d0)
+#define ae_p24x2f_rtor_ae_p24s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtor_ae_p24s)(d0)
+#define ae_p24x2f_rtor_ae_p24f(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtor_ae_p24f)(d0)
+#define ae_p24x2s_rtor_ae_p24x2f(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtor_ae_p24x2f)(d0)
+#define ae_p24x2s_rtor_ae_p16x2s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtor_ae_p16x2s)(d0)
+#define ae_p24x2s_rtor_ae_p16s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtor_ae_p16s)(d0)
+#define ae_p24x2s_rtor_ae_p24s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtor_ae_p24s)(d0)
+#define ae_p24x2s_rtor_ae_p24f(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtor_ae_p24f)(d0)
+#define ae_p24s_rtor_ae_p24x2f(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_rtor_ae_p24x2f)(d0)
+#define ae_p24s_rtor_ae_p24x2s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_rtor_ae_p24x2s)(d0)
+#define ae_p24f_rtor_ae_p24x2f(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24f_rtor_ae_p24x2f)(d0)
+#define ae_p24f_rtor_ae_p24x2s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24f_rtor_ae_p24x2s)(d0)
+#define ae_q56s_rtor_ae_q32s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_q56s_rtor_ae_q32s)(d0)
+#define AE_CVTP24A16(ai) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVTP24A16)(ai)
+#define AE_CVTP24A16X2(ah, al) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVTP24A16X2)(ah, al)
+#define AE_MOVPA24(ai) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVPA24)(ai)
+#define AE_TRUNCP24Q48(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNCP24Q48)(d0)
+#define AE_TRUNCI32F64S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNCI32F64S)(d0, sa)
+#define AE_TRUNCA32F64S(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNCA32F64S)(d0, sa)
+#define AE_NOTP48(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NOTP48)(d0)
+#define AE_NOT32(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NOT32)(d0)
+#define AE_NOT16(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NOT16)(d0)
+#define AE_NOT24(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NOT24)(d0)
+#define AE_NOTQ56(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NOTQ56)(d0)
+#define AE_NOT64(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NOT64)(d0)
+#define AE_NOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NOT)(d0)
+#define AE_MULF48Q32SP16S_H(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF48Q32SP16S_H)(d0, d1)
+#define AE_MULFQ32SP16S_H(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP16S_H)(d0, d1)
+#define AE_MULF48Q32SP16U_H(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF48Q32SP16U_H)(d0, d1)
+#define AE_MULFQ32SP16U_H(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFQ32SP16U_H)(d0, d1)
+#define AE_MULQ32SP16S_H(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULQ32SP16S_H)(d0, d1)
+#define AE_MULQ32SP16U_H(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULQ32SP16U_H)(d0, d1)
+#define AE_MULAF48Q32SP16S_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF48Q32SP16S_H)(&d, d0, d1)
+#define AE_MULAFQ32SP16S_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP16S_H)(&d, d0, d1)
+#define AE_MULAF48Q32SP16U_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF48Q32SP16U_H)(&d, d0, d1)
+#define AE_MULAFQ32SP16U_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAFQ32SP16U_H)(&d, d0, d1)
+#define AE_MULAQ32SP16S_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAQ32SP16S_H)(&d, d0, d1)
+#define AE_MULAQ32SP16U_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAQ32SP16U_H)(&d, d0, d1)
+#define AE_MULSF48Q32SP16S_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF48Q32SP16S_H)(&d, d0, d1)
+#define AE_MULSFQ32SP16S_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP16S_H)(&d, d0, d1)
+#define AE_MULSF48Q32SP16U_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF48Q32SP16U_H)(&d, d0, d1)
+#define AE_MULSFQ32SP16U_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSFQ32SP16U_H)(&d, d0, d1)
+#define AE_MULSQ32SP16S_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSQ32SP16S_H)(&d, d0, d1)
+#define AE_MULSQ32SP16U_H(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSQ32SP16U_H)(&d, d0, d1)
+#define AE_MULZAAFQ32SP16S_LL(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16S_LL)(d0, d1, d2, d3)
+#define AE_MULZAAFQ32SP16S_LL_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16S_LL_S2)(d0, d1, d2, d3)
+#define AE_MULZAAQ32SP16S_LL(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16S_LL)(d0, d1, d2, d3)
+#define AE_MULZAAQ32SP16S_LL_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16S_LL_S2)(d0, d1, d2, d3)
+#define AE_MULZAAFQ32SP16U_LL(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16U_LL)(d0, d1, d2, d3)
+#define AE_MULZAAFQ32SP16U_LL_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16U_LL_S2)(d0, d1, d2, d3)
+#define AE_MULZAAQ32SP16U_LL(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16U_LL)(d0, d1, d2, d3)
+#define AE_MULZAAQ32SP16U_LL_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16U_LL_S2)(d0, d1, d2, d3)
+#define AE_MULZAAFQ32SP16S_HH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16S_HH)(d0, d1, d2, d3)
+#define AE_MULZAAFQ32SP16S_HH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16S_HH_S2)(d0, d1, d2, d3)
+#define AE_MULZAAQ32SP16S_HH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16S_HH)(d0, d1, d2, d3)
+#define AE_MULZAAQ32SP16S_HH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16S_HH_S2)(d0, d1, d2, d3)
+#define AE_MULZAAFQ32SP16U_HH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16U_HH)(d0, d1, d2, d3)
+#define AE_MULZAAFQ32SP16U_HH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16U_HH_S2)(d0, d1, d2, d3)
+#define AE_MULZAAQ32SP16U_HH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16U_HH)(d0, d1, d2, d3)
+#define AE_MULZAAQ32SP16U_HH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16U_HH_S2)(d0, d1, d2, d3)
+#define AE_MULZAAFQ32SP16S_LH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16S_LH)(d0, d1, d2, d3)
+#define AE_MULZAAFQ32SP16S_LH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16S_LH_S2)(d0, d1, d2, d3)
+#define AE_MULZAAQ32SP16S_LH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16S_LH)(d0, d1, d2, d3)
+#define AE_MULZAAQ32SP16S_LH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16S_LH_S2)(d0, d1, d2, d3)
+#define AE_MULZAAFQ32SP16U_LH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16U_LH)(d0, d1, d2, d3)
+#define AE_MULZAAFQ32SP16U_LH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAFQ32SP16U_LH_S2)(d0, d1, d2, d3)
+#define AE_MULZAAQ32SP16U_LH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16U_LH)(d0, d1, d2, d3)
+#define AE_MULZAAQ32SP16U_LH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZAAQ32SP16U_LH_S2)(d0, d1, d2, d3)
+#define AE_MULZASFQ32SP16S_LL(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16S_LL)(d0, d1, d2, d3)
+#define AE_MULZASFQ32SP16S_LL_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16S_LL_S2)(d0, d1, d2, d3)
+#define AE_MULZASQ32SP16S_LL(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16S_LL)(d0, d1, d2, d3)
+#define AE_MULZASQ32SP16S_LL_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16S_LL_S2)(d0, d1, d2, d3)
+#define AE_MULZASFQ32SP16U_LL(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16U_LL)(d0, d1, d2, d3)
+#define AE_MULZASFQ32SP16U_LL_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16U_LL_S2)(d0, d1, d2, d3)
+#define AE_MULZASQ32SP16U_LL(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16U_LL)(d0, d1, d2, d3)
+#define AE_MULZASQ32SP16U_LL_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16U_LL_S2)(d0, d1, d2, d3)
+#define AE_MULZASFQ32SP16S_HH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16S_HH)(d0, d1, d2, d3)
+#define AE_MULZASFQ32SP16S_HH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16S_HH_S2)(d0, d1, d2, d3)
+#define AE_MULZASQ32SP16S_HH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16S_HH)(d0, d1, d2, d3)
+#define AE_MULZASQ32SP16S_HH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16S_HH_S2)(d0, d1, d2, d3)
+#define AE_MULZASFQ32SP16U_HH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16U_HH)(d0, d1, d2, d3)
+#define AE_MULZASFQ32SP16U_HH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16U_HH_S2)(d0, d1, d2, d3)
+#define AE_MULZASQ32SP16U_HH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16U_HH)(d0, d1, d2, d3)
+#define AE_MULZASQ32SP16U_HH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16U_HH_S2)(d0, d1, d2, d3)
+#define AE_MULZASFQ32SP16S_LH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16S_LH)(d0, d1, d2, d3)
+#define AE_MULZASFQ32SP16S_LH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16S_LH_S2)(d0, d1, d2, d3)
+#define AE_MULZASQ32SP16S_LH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16S_LH)(d0, d1, d2, d3)
+#define AE_MULZASQ32SP16S_LH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16S_LH_S2)(d0, d1, d2, d3)
+#define AE_MULZASFQ32SP16U_LH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16U_LH)(d0, d1, d2, d3)
+#define AE_MULZASFQ32SP16U_LH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASFQ32SP16U_LH_S2)(d0, d1, d2, d3)
+#define AE_MULZASQ32SP16U_LH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16U_LH)(d0, d1, d2, d3)
+#define AE_MULZASQ32SP16U_LH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZASQ32SP16U_LH_S2)(d0, d1, d2, d3)
+#define AE_MULZSAFQ32SP16S_LL(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16S_LL)(d0, d1, d2, d3)
+#define AE_MULZSAFQ32SP16S_LL_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16S_LL_S2)(d0, d1, d2, d3)
+#define AE_MULZSAQ32SP16S_LL(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16S_LL)(d0, d1, d2, d3)
+#define AE_MULZSAQ32SP16S_LL_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16S_LL_S2)(d0, d1, d2, d3)
+#define AE_MULZSAFQ32SP16U_LL(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16U_LL)(d0, d1, d2, d3)
+#define AE_MULZSAFQ32SP16U_LL_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16U_LL_S2)(d0, d1, d2, d3)
+#define AE_MULZSAQ32SP16U_LL(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16U_LL)(d0, d1, d2, d3)
+#define AE_MULZSAQ32SP16U_LL_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16U_LL_S2)(d0, d1, d2, d3)
+#define AE_MULZSAFQ32SP16S_HH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16S_HH)(d0, d1, d2, d3)
+#define AE_MULZSAFQ32SP16S_HH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16S_HH_S2)(d0, d1, d2, d3)
+#define AE_MULZSAQ32SP16S_HH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16S_HH)(d0, d1, d2, d3)
+#define AE_MULZSAQ32SP16S_HH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16S_HH_S2)(d0, d1, d2, d3)
+#define AE_MULZSAFQ32SP16U_HH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16U_HH)(d0, d1, d2, d3)
+#define AE_MULZSAFQ32SP16U_HH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16U_HH_S2)(d0, d1, d2, d3)
+#define AE_MULZSAQ32SP16U_HH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16U_HH)(d0, d1, d2, d3)
+#define AE_MULZSAQ32SP16U_HH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16U_HH_S2)(d0, d1, d2, d3)
+#define AE_MULZSAFQ32SP16S_LH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16S_LH)(d0, d1, d2, d3)
+#define AE_MULZSAFQ32SP16S_LH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16S_LH_S2)(d0, d1, d2, d3)
+#define AE_MULZSAQ32SP16S_LH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16S_LH)(d0, d1, d2, d3)
+#define AE_MULZSAQ32SP16S_LH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16S_LH_S2)(d0, d1, d2, d3)
+#define AE_MULZSAFQ32SP16U_LH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16U_LH)(d0, d1, d2, d3)
+#define AE_MULZSAFQ32SP16U_LH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAFQ32SP16U_LH_S2)(d0, d1, d2, d3)
+#define AE_MULZSAQ32SP16U_LH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16U_LH)(d0, d1, d2, d3)
+#define AE_MULZSAQ32SP16U_LH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSAQ32SP16U_LH_S2)(d0, d1, d2, d3)
+#define AE_MULZSSFQ32SP16S_LL(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16S_LL)(d0, d1, d2, d3)
+#define AE_MULZSSFQ32SP16S_LL_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16S_LL_S2)(d0, d1, d2, d3)
+#define AE_MULZSSQ32SP16S_LL(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16S_LL)(d0, d1, d2, d3)
+#define AE_MULZSSQ32SP16S_LL_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16S_LL_S2)(d0, d1, d2, d3)
+#define AE_MULZSSFQ32SP16U_LL(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16U_LL)(d0, d1, d2, d3)
+#define AE_MULZSSFQ32SP16U_LL_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16U_LL_S2)(d0, d1, d2, d3)
+#define AE_MULZSSQ32SP16U_LL(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16U_LL)(d0, d1, d2, d3)
+#define AE_MULZSSQ32SP16U_LL_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16U_LL_S2)(d0, d1, d2, d3)
+#define AE_MULZSSFQ32SP16S_HH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16S_HH)(d0, d1, d2, d3)
+#define AE_MULZSSFQ32SP16S_HH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16S_HH_S2)(d0, d1, d2, d3)
+#define AE_MULZSSQ32SP16S_HH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16S_HH)(d0, d1, d2, d3)
+#define AE_MULZSSQ32SP16S_HH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16S_HH_S2)(d0, d1, d2, d3)
+#define AE_MULZSSFQ32SP16U_HH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16U_HH)(d0, d1, d2, d3)
+#define AE_MULZSSFQ32SP16U_HH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16U_HH_S2)(d0, d1, d2, d3)
+#define AE_MULZSSQ32SP16U_HH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16U_HH)(d0, d1, d2, d3)
+#define AE_MULZSSQ32SP16U_HH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16U_HH_S2)(d0, d1, d2, d3)
+#define AE_MULZSSFQ32SP16S_LH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16S_LH)(d0, d1, d2, d3)
+#define AE_MULZSSFQ32SP16S_LH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16S_LH_S2)(d0, d1, d2, d3)
+#define AE_MULZSSQ32SP16S_LH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16S_LH)(d0, d1, d2, d3)
+#define AE_MULZSSQ32SP16S_LH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16S_LH_S2)(d0, d1, d2, d3)
+#define AE_MULZSSFQ32SP16U_LH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16U_LH)(d0, d1, d2, d3)
+#define AE_MULZSSFQ32SP16U_LH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSFQ32SP16U_LH_S2)(d0, d1, d2, d3)
+#define AE_MULZSSQ32SP16U_LH(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16U_LH)(d0, d1, d2, d3)
+#define AE_MULZSSQ32SP16U_LH_S2(d0, d1, d2, d3) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULZSSQ32SP16U_LH_S2)(d0, d1, d2, d3)
+#define AE_VLDL16T(done, symbol, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_VLDL16T)(&done, &symbol, a)
+#define AE_VLDL16C(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_VLDL16C)((const unsigned short **)&(a))
+#define AE_VLDL16C_XC(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_VLDL16C_XC)((const unsigned short **)&(a))
+#define AE_VLDL16C_IC(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_VLDL16C_IC)((const unsigned short **)&(a))
+#define AE_VLDL16C_IP(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_VLDL16C_IP)((const unsigned short **)&(a))
+#define AE_VLEL16T(done, symbol, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_VLEL16T)(&done, &symbol, a)
+#define AE_VLES16C(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_VLES16C)((unsigned short **)&(a))
+#define AE_VLES16C_IC(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_VLES16C_IC)((unsigned short **)&(a))
+#define AE_VLES16C_XC(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_VLES16C_XC)((unsigned short **)&(a))
+#define AE_VLES16C_IP(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_VLES16C_IP)((unsigned short **)&(a))
+#define AE_VLDL32T(done, symbol, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_VLDL32T)(&done, &symbol, a)
+#define AE_VLEL32T(done, symbol, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_VLEL32T)(&done, &symbol, a)
+#define AE_SB(a, bits) \
+	CSTUB_(_TIE_xt_hifi2_AE_SB)((unsigned short **)&(a), bits)
+#define AE_SB_IC(a, bits) \
+	CSTUB_(_TIE_xt_hifi2_AE_SB_IC)((unsigned short **)&(a), bits)
+#define AE_SB_XC(a, bits) \
+	CSTUB_(_TIE_xt_hifi2_AE_SB_XC)((unsigned short **)&(a), bits)
+#define AE_SB_IP(a, bits) \
+	CSTUB_(_TIE_xt_hifi2_AE_SB_IP)((unsigned short **)&(a), bits)
+#define AE_SBI(a, bits, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_SBI)((unsigned short **)&(a), bits, count)
+#define AE_SBI_IC(a, bits, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_SBI_IC)((unsigned short **)&(a), bits, count)
+#define AE_SBI_XC(a, bits, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_SBI_XC)((unsigned short **)&(a), bits, count)
+#define AE_SBI_IP(a, bits, count) \
+	CSTUB_(_TIE_xt_hifi2_AE_SBI_IP)((unsigned short **)&(a), bits, count)
+#define AE_SBF(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SBF)((unsigned short **)&(a))
+#define AE_SBF_IC(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SBF_IC)((unsigned short **)&(a))
+#define AE_SBF_XC(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SBF_XC)((unsigned short **)&(a))
+#define AE_SBF_IP(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_SBF_IP)((unsigned short **)&(a))
+#define AE_F16X4_MULF_F16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_MULF_F16X4)(d0, d1)
+#define AE_INT16X4_MUL_INT16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_MUL_INT16X4)(d0, d1)
+#define AE_INT24X2_ADD_INT24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_ADD_INT24X2)(d0, d1)
+#define AE_INT24X2_SUB_INT24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_SUB_INT24X2)(d0, d1)
+#define AE_INT24X2_AND_INT24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_AND_INT24X2)(d0, d1)
+#define AE_INT24X2_XOR_INT24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_XOR_INT24X2)(d0, d1)
+#define AE_INT24X2_OR_INT24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_OR_INT24X2)(d0, d1)
+#define AE_INT24X2_MUL_INT24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_MUL_INT24X2)(d0, d1)
+#define AE_INT24X2_EQ_INT24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_EQ_INT24X2)(d0, d1)
+#define AE_INT24X2_LT_INT24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_LT_INT24X2)(d0, d1)
+#define AE_INT24X2_LE_INT24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_LE_INT24X2)(d0, d1)
+#define AE_INT24X2_GT_INT24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_GT_INT24X2)(d0, d1)
+#define AE_INT24X2_GE_INT24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_GE_INT24X2)(d0, d1)
+#define AE_INT24X2_ADD_INT24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_ADD_INT24)(d0, d1)
+#define AE_INT24X2_SUB_INT24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_SUB_INT24)(d0, d1)
+#define AE_INT24X2_AND_INT24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_AND_INT24)(d0, d1)
+#define AE_INT24X2_XOR_INT24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_XOR_INT24)(d0, d1)
+#define AE_INT24X2_OR_INT24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_OR_INT24)(d0, d1)
+#define AE_INT24X2_NEG(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_NEG)(d0)
+#define AE_INT24X2_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_BNOT)(d0)
+#define AE_INT24X2_SLA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_SLA)(d0, sa)
+#define AE_INT24X2_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_SRA)(d0, sa)
+#define AE_INT24X2_SLAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_SLAI)(d0, sa)
+#define AE_INT24X2_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24X2_SRAI)(d0, sa)
+#define AE_INT24_ADD_INT24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24_ADD_INT24X2)(d0, d1)
+#define AE_INT24_SUB_INT24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24_SUB_INT24X2)(d0, d1)
+#define AE_INT24_AND_INT24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24_AND_INT24X2)(d0, d1)
+#define AE_INT24_XOR_INT24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24_XOR_INT24X2)(d0, d1)
+#define AE_INT24_OR_INT24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24_OR_INT24X2)(d0, d1)
+#define AE_INT24_ADD_INT24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24_ADD_INT24)(d0, d1)
+#define AE_INT24_SUB_INT24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24_SUB_INT24)(d0, d1)
+#define AE_INT24_AND_INT24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24_AND_INT24)(d0, d1)
+#define AE_INT24_XOR_INT24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24_XOR_INT24)(d0, d1)
+#define AE_INT24_OR_INT24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24_OR_INT24)(d0, d1)
+#define AE_INT24_MUL_INT24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24_MUL_INT24)(d0, d1)
+#define AE_INT24_NEG(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24_NEG)(d0)
+#define AE_INT24_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24_BNOT)(d0)
+#define AE_INT24_SLA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24_SLA)(d0, sa)
+#define AE_INT24_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24_SRA)(d0, sa)
+#define AE_INT24_SLAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24_SLAI)(d0, sa)
+#define AE_INT24_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT24_SRAI)(d0, sa)
+#define AE_F24X2_ADDS_F24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_ADDS_F24X2)(d0, d1)
+#define AE_F24X2_SUBS_F24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_SUBS_F24X2)(d0, d1)
+#define AE_F24X2_AND_F24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_AND_F24X2)(d0, d1)
+#define AE_F24X2_XOR_F24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_XOR_F24X2)(d0, d1)
+#define AE_F24X2_OR_F24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_OR_F24X2)(d0, d1)
+#define AE_F24X2_MULF_F24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_MULF_F24X2)(d0, d1)
+#define AE_F24X2_EQ_F24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_EQ_F24X2)(d0, d1)
+#define AE_F24X2_LT_F24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_LT_F24X2)(d0, d1)
+#define AE_F24X2_LE_F24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_LE_F24X2)(d0, d1)
+#define AE_F24X2_GT_F24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_GT_F24X2)(d0, d1)
+#define AE_F24X2_GE_F24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_GE_F24X2)(d0, d1)
+#define AE_F24X2_ADDS_F24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_ADDS_F24)(d0, d1)
+#define AE_F24X2_SUBS_F24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_SUBS_F24)(d0, d1)
+#define AE_F24X2_AND_F24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_AND_F24)(d0, d1)
+#define AE_F24X2_XOR_F24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_XOR_F24)(d0, d1)
+#define AE_F24X2_OR_F24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_OR_F24)(d0, d1)
+#define AE_F24X2_NEGS(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_NEGS)(d0)
+#define AE_F24X2_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_BNOT)(d0)
+#define AE_F24X2_SLA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_SLA)(d0, sa)
+#define AE_F24X2_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_SRA)(d0, sa)
+#define AE_F24X2_SLAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_SLAI)(d0, sa)
+#define AE_F24X2_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24X2_SRAI)(d0, sa)
+#define AE_F24_ADDS_F24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24_ADDS_F24X2)(d0, d1)
+#define AE_F24_SUBS_F24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24_SUBS_F24X2)(d0, d1)
+#define AE_F24_AND_F24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24_AND_F24X2)(d0, d1)
+#define AE_F24_XOR_F24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24_XOR_F24X2)(d0, d1)
+#define AE_F24_OR_F24X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24_OR_F24X2)(d0, d1)
+#define AE_F24_ADDS_F24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24_ADDS_F24)(d0, d1)
+#define AE_F24_SUBS_F24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24_SUBS_F24)(d0, d1)
+#define AE_F24_AND_F24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24_AND_F24)(d0, d1)
+#define AE_F24_XOR_F24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24_XOR_F24)(d0, d1)
+#define AE_F24_OR_F24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24_OR_F24)(d0, d1)
+#define AE_F24_MULF_F24(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24_MULF_F24)(d0, d1)
+#define AE_F24_NEGS(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24_NEGS)(d0)
+#define AE_F24_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24_BNOT)(d0)
+#define AE_F24_SLA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24_SLA)(d0, sa)
+#define AE_F24_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24_SRA)(d0, sa)
+#define AE_F24_SLAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24_SLAI)(d0, sa)
+#define AE_F24_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F24_SRAI)(d0, sa)
+#define AE_INT16X4_ADD_INT16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_ADD_INT16X4)(d0, d1)
+#define AE_INT16X4_SUB_INT16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_SUB_INT16X4)(d0, d1)
+#define AE_INT16X4_AND_INT16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_AND_INT16X4)(d0, d1)
+#define AE_INT16X4_XOR_INT16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_XOR_INT16X4)(d0, d1)
+#define AE_INT16X4_OR_INT16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_OR_INT16X4)(d0, d1)
+#define AE_INT16X4_EQ_INT16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_EQ_INT16X4)(d0, d1)
+#define AE_INT16X4_LT_INT16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_LT_INT16X4)(d0, d1)
+#define AE_INT16X4_LE_INT16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_LE_INT16X4)(d0, d1)
+#define AE_INT16X4_GT_INT16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_GT_INT16X4)(d0, d1)
+#define AE_INT16X4_GE_INT16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_GE_INT16X4)(d0, d1)
+#define AE_INT16X4_ADD_INT16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_ADD_INT16)(d0, d1)
+#define AE_INT16X4_SUB_INT16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_SUB_INT16)(d0, d1)
+#define AE_INT16X4_AND_INT16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_AND_INT16)(d0, d1)
+#define AE_INT16X4_XOR_INT16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_XOR_INT16)(d0, d1)
+#define AE_INT16X4_OR_INT16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_OR_INT16)(d0, d1)
+#define AE_INT16X4_NEG(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_NEG)(d0)
+#define AE_INT16X4_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_BNOT)(d0)
+#define AE_INT16X4_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_SRA)(d0, sa)
+#define AE_INT16X4_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_SRAI)(d0, sa)
+#define AE_INT16_ADD_INT16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16_ADD_INT16X4)(d0, d1)
+#define AE_INT16_SUB_INT16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16_SUB_INT16X4)(d0, d1)
+#define AE_INT16_AND_INT16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16_AND_INT16X4)(d0, d1)
+#define AE_INT16_XOR_INT16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16_XOR_INT16X4)(d0, d1)
+#define AE_INT16_OR_INT16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16_OR_INT16X4)(d0, d1)
+#define AE_INT16_ADD_INT16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16_ADD_INT16)(d0, d1)
+#define AE_INT16_SUB_INT16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16_SUB_INT16)(d0, d1)
+#define AE_INT16_AND_INT16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16_AND_INT16)(d0, d1)
+#define AE_INT16_XOR_INT16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16_XOR_INT16)(d0, d1)
+#define AE_INT16_OR_INT16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16_OR_INT16)(d0, d1)
+#define AE_INT16_NEG(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16_NEG)(d0)
+#define AE_INT16_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16_BNOT)(d0)
+#define AE_INT16_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16_SRA)(d0, sa)
+#define AE_INT16_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16_SRAI)(d0, sa)
+#define AE_F16X4_ADDS_F16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_ADDS_F16X4)(d0, d1)
+#define AE_F16X4_SUBS_F16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_SUBS_F16X4)(d0, d1)
+#define AE_F16X4_AND_F16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_AND_F16X4)(d0, d1)
+#define AE_F16X4_XOR_F16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_XOR_F16X4)(d0, d1)
+#define AE_F16X4_OR_F16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_OR_F16X4)(d0, d1)
+#define AE_F16X4_EQ_F16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_EQ_F16X4)(d0, d1)
+#define AE_F16X4_LT_F16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_LT_F16X4)(d0, d1)
+#define AE_F16X4_LE_F16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_LE_F16X4)(d0, d1)
+#define AE_F16X4_GT_F16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_GT_F16X4)(d0, d1)
+#define AE_F16X4_GE_F16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_GE_F16X4)(d0, d1)
+#define AE_F16X4_ADDS_F16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_ADDS_F16)(d0, d1)
+#define AE_F16X4_SUBS_F16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_SUBS_F16)(d0, d1)
+#define AE_F16X4_AND_F16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_AND_F16)(d0, d1)
+#define AE_F16X4_XOR_F16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_XOR_F16)(d0, d1)
+#define AE_F16X4_OR_F16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_OR_F16)(d0, d1)
+#define AE_F16X4_NEGS(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_NEGS)(d0)
+#define AE_F16X4_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_BNOT)(d0)
+#define AE_F16X4_SLAS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_SLAS)(d0, sa)
+#define AE_F16X4_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_SRA)(d0, sa)
+#define AE_F16X4_SLAIS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_SLAIS)(d0, sa)
+#define AE_F16X4_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_SRAI)(d0, sa)
+#define AE_F16_ADDS_F16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16_ADDS_F16X4)(d0, d1)
+#define AE_F16_SUBS_F16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16_SUBS_F16X4)(d0, d1)
+#define AE_F16_AND_F16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16_AND_F16X4)(d0, d1)
+#define AE_F16_XOR_F16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16_XOR_F16X4)(d0, d1)
+#define AE_F16_OR_F16X4(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16_OR_F16X4)(d0, d1)
+#define AE_F16_ADDS_F16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16_ADDS_F16)(d0, d1)
+#define AE_F16_SUBS_F16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16_SUBS_F16)(d0, d1)
+#define AE_F16_AND_F16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16_AND_F16)(d0, d1)
+#define AE_F16_XOR_F16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16_XOR_F16)(d0, d1)
+#define AE_F16_OR_F16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16_OR_F16)(d0, d1)
+#define AE_F16_NEGS(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16_NEGS)(d0)
+#define AE_F16_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16_BNOT)(d0)
+#define AE_F16_SLAS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16_SLAS)(d0, sa)
+#define AE_F16_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16_SRA)(d0, sa)
+#define AE_F16_SLAIS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16_SLAIS)(d0, sa)
+#define AE_F16_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16_SRAI)(d0, sa)
+#define AE_INT32X2_ADD_INT32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_ADD_INT32X2)(d0, d1)
+#define AE_INT32X2_SUB_INT32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_SUB_INT32X2)(d0, d1)
+#define AE_INT32X2_AND_INT32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_AND_INT32X2)(d0, d1)
+#define AE_INT32X2_XOR_INT32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_XOR_INT32X2)(d0, d1)
+#define AE_INT32X2_OR_INT32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_OR_INT32X2)(d0, d1)
+#define AE_INT32X2_MUL_INT32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_MUL_INT32X2)(d0, d1)
+#define AE_INT32X2_EQ_INT32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_EQ_INT32X2)(d0, d1)
+#define AE_INT32X2_LT_INT32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_LT_INT32X2)(d0, d1)
+#define AE_INT32X2_LE_INT32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_LE_INT32X2)(d0, d1)
+#define AE_INT32X2_GT_INT32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_GT_INT32X2)(d0, d1)
+#define AE_INT32X2_GE_INT32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_GE_INT32X2)(d0, d1)
+#define AE_INT32X2_ADD_INT32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_ADD_INT32)(d0, d1)
+#define AE_INT32X2_SUB_INT32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_SUB_INT32)(d0, d1)
+#define AE_INT32X2_AND_INT32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_AND_INT32)(d0, d1)
+#define AE_INT32X2_XOR_INT32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_XOR_INT32)(d0, d1)
+#define AE_INT32X2_OR_INT32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_OR_INT32)(d0, d1)
+#define AE_INT32X2_NEG(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_NEG)(d0)
+#define AE_INT32X2_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_BNOT)(d0)
+#define AE_INT32X2_SLA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_SLA)(d0, sa)
+#define AE_INT32X2_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_SRA)(d0, sa)
+#define AE_INT32X2_SLAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_SLAI)(d0, sa)
+#define AE_INT32X2_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_SRAI)(d0, sa)
+#define AE_INT32_ADD_INT32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_ADD_INT32X2)(d0, d1)
+#define AE_INT32_SUB_INT32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_SUB_INT32X2)(d0, d1)
+#define AE_INT32_AND_INT32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_AND_INT32X2)(d0, d1)
+#define AE_INT32_XOR_INT32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_XOR_INT32X2)(d0, d1)
+#define AE_INT32_OR_INT32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_OR_INT32X2)(d0, d1)
+#define AE_INT32_ADD_INT32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_ADD_INT32)(d0, d1)
+#define AE_INT32_SUB_INT32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_SUB_INT32)(d0, d1)
+#define AE_INT32_AND_INT32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_AND_INT32)(d0, d1)
+#define AE_INT32_XOR_INT32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_XOR_INT32)(d0, d1)
+#define AE_INT32_OR_INT32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_OR_INT32)(d0, d1)
+#define AE_INT32_MUL_INT32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_MUL_INT32)(d0, d1)
+#define AE_INT32_NEG(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_NEG)(d0)
+#define AE_INT32_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_BNOT)(d0)
+#define AE_INT32_SLA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_SLA)(d0, sa)
+#define AE_INT32_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_SRA)(d0, sa)
+#define AE_INT32_SLAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_SLAI)(d0, sa)
+#define AE_INT32_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_SRAI)(d0, sa)
+#define AE_F32X2_ADDS_F32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_ADDS_F32X2)(d0, d1)
+#define AE_F32X2_SUBS_F32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_SUBS_F32X2)(d0, d1)
+#define AE_F32X2_AND_F32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_AND_F32X2)(d0, d1)
+#define AE_F32X2_XOR_F32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_XOR_F32X2)(d0, d1)
+#define AE_F32X2_OR_F32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_OR_F32X2)(d0, d1)
+#define AE_F32X2_MULF_F32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_MULF_F32X2)(d0, d1)
+#define AE_F32X2_EQ_F32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_EQ_F32X2)(d0, d1)
+#define AE_F32X2_LT_F32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_LT_F32X2)(d0, d1)
+#define AE_F32X2_LE_F32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_LE_F32X2)(d0, d1)
+#define AE_F32X2_GT_F32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_GT_F32X2)(d0, d1)
+#define AE_F32X2_GE_F32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_GE_F32X2)(d0, d1)
+#define AE_F32X2_ADDS_F32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_ADDS_F32)(d0, d1)
+#define AE_F32X2_SUBS_F32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_SUBS_F32)(d0, d1)
+#define AE_F32X2_AND_F32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_AND_F32)(d0, d1)
+#define AE_F32X2_XOR_F32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_XOR_F32)(d0, d1)
+#define AE_F32X2_OR_F32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_OR_F32)(d0, d1)
+#define AE_F32X2_NEGS(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_NEGS)(d0)
+#define AE_F32X2_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_BNOT)(d0)
+#define AE_F32X2_SLAS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_SLAS)(d0, sa)
+#define AE_F32X2_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_SRA)(d0, sa)
+#define AE_F32X2_SLAIS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_SLAIS)(d0, sa)
+#define AE_F32X2_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_SRAI)(d0, sa)
+#define AE_F32_ADDS_F32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_ADDS_F32X2)(d0, d1)
+#define AE_F32_SUBS_F32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_SUBS_F32X2)(d0, d1)
+#define AE_F32_AND_F32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_AND_F32X2)(d0, d1)
+#define AE_F32_XOR_F32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_XOR_F32X2)(d0, d1)
+#define AE_F32_OR_F32X2(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_OR_F32X2)(d0, d1)
+#define AE_F32_ADDS_F32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_ADDS_F32)(d0, d1)
+#define AE_F32_SUBS_F32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_SUBS_F32)(d0, d1)
+#define AE_F32_AND_F32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_AND_F32)(d0, d1)
+#define AE_F32_XOR_F32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_XOR_F32)(d0, d1)
+#define AE_F32_OR_F32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_OR_F32)(d0, d1)
+#define AE_F32_MULF_F32(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_MULF_F32)(d0, d1)
+#define AE_F32_NEGS(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_NEGS)(d0)
+#define AE_F32_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_BNOT)(d0)
+#define AE_F32_SLAS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_SLAS)(d0, sa)
+#define AE_F32_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_SRA)(d0, sa)
+#define AE_F32_SLAIS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_SLAIS)(d0, sa)
+#define AE_F32_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_SRAI)(d0, sa)
+#define AE_INT64_ADD(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT64_ADD)(d0, d1)
+#define AE_INT64_SUB(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT64_SUB)(d0, d1)
+#define AE_INT64_AND(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT64_AND)(d0, d1)
+#define AE_INT64_XOR(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT64_XOR)(d0, d1)
+#define AE_INT64_OR(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT64_OR)(d0, d1)
+#define AE_INT64_NEG(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT64_NEG)(d0)
+#define AE_INT64_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT64_BNOT)(d0)
+#define AE_INT64_SLA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT64_SLA)(d0, sa)
+#define AE_INT64_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT64_SRA)(d0, sa)
+#define AE_INT64_SLAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT64_SLAI)(d0, sa)
+#define AE_INT64_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT64_SRAI)(d0, sa)
+#define AE_INT64_EQ(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT64_EQ)(d0, d1)
+#define AE_INT64_LT(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT64_LT)(d0, d1)
+#define AE_INT64_LE(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT64_LE)(d0, d1)
+#define AE_INT64_GT(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT64_GT)(d0, d1)
+#define AE_INT64_GE(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT64_GE)(d0, d1)
+#define AE_F64_ADDS(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F64_ADDS)(d0, d1)
+#define AE_F64_SUBS(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F64_SUBS)(d0, d1)
+#define AE_F64_AND(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F64_AND)(d0, d1)
+#define AE_F64_XOR(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F64_XOR)(d0, d1)
+#define AE_F64_OR(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F64_OR)(d0, d1)
+#define AE_F64_NEGS(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F64_NEGS)(d0)
+#define AE_F64_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F64_BNOT)(d0)
+#define AE_F64_SLAS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F64_SLAS)(d0, sa)
+#define AE_F64_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F64_SRA)(d0, sa)
+#define AE_F64_SLAIS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F64_SLAIS)(d0, sa)
+#define AE_F64_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_F64_SRAI)(d0, sa)
+#define AE_F64_EQ(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F64_EQ)(d0, d1)
+#define AE_F64_LT(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F64_LT)(d0, d1)
+#define AE_F64_LE(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F64_LE)(d0, d1)
+#define AE_F64_GT(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F64_GT)(d0, d1)
+#define AE_F64_GE(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F64_GE)(d0, d1)
+#define AE_INT32_MUL_INT16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32_MUL_INT16)(d0, d1)
+#define AE_F32_MUL_F16(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32_MUL_F16)(d0, d1)
+#define AE_P24X2S_ADDS_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_ADDS_P24X2S)(d0, d1)
+#define AE_P24X2S_SUBS_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_SUBS_P24X2S)(d0, d1)
+#define AE_P24X2S_AND_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_AND_P24X2S)(d0, d1)
+#define AE_P24X2S_XOR_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_XOR_P24X2S)(d0, d1)
+#define AE_P24X2S_OR_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_OR_P24X2S)(d0, d1)
+#define AE_P24X2S_MULF_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_MULF_P24X2S)(d0, d1)
+#define AE_P24X2S_EQ_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_EQ_P24X2S)(d0, d1)
+#define AE_P24X2S_LT_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_LT_P24X2S)(d0, d1)
+#define AE_P24X2S_LE_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_LE_P24X2S)(d0, d1)
+#define AE_P24X2S_GT_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_GT_P24X2S)(d0, d1)
+#define AE_P24X2S_GE_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_GE_P24X2S)(d0, d1)
+#define AE_P24X2S_ADDS_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_ADDS_P24X2F)(d0, d1)
+#define AE_P24X2S_SUBS_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_SUBS_P24X2F)(d0, d1)
+#define AE_P24X2S_AND_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_AND_P24X2F)(d0, d1)
+#define AE_P24X2S_XOR_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_XOR_P24X2F)(d0, d1)
+#define AE_P24X2S_OR_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_OR_P24X2F)(d0, d1)
+#define AE_P24X2S_MULF_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_MULF_P24X2F)(d0, d1)
+#define AE_P24X2S_EQ_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_EQ_P24X2F)(d0, d1)
+#define AE_P24X2S_LT_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_LT_P24X2F)(d0, d1)
+#define AE_P24X2S_LE_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_LE_P24X2F)(d0, d1)
+#define AE_P24X2S_GT_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_GT_P24X2F)(d0, d1)
+#define AE_P24X2S_GE_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_GE_P24X2F)(d0, d1)
+#define AE_P24X2S_ADDS_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_ADDS_P24S)(d0, d1)
+#define AE_P24X2S_SUBS_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_SUBS_P24S)(d0, d1)
+#define AE_P24X2S_AND_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_AND_P24S)(d0, d1)
+#define AE_P24X2S_XOR_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_XOR_P24S)(d0, d1)
+#define AE_P24X2S_OR_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_OR_P24S)(d0, d1)
+#define AE_P24X2S_ADDS_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_ADDS_P24F)(d0, d1)
+#define AE_P24X2S_SUBS_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_SUBS_P24F)(d0, d1)
+#define AE_P24X2S_AND_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_AND_P24F)(d0, d1)
+#define AE_P24X2S_XOR_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_XOR_P24F)(d0, d1)
+#define AE_P24X2S_OR_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_OR_P24F)(d0, d1)
+#define AE_P24X2S_NEGS(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_NEGS)(d0)
+#define AE_P24X2S_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_BNOT)(d0)
+#define AE_P24X2S_SLAS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_SLAS)(d0, sa)
+#define AE_P24X2S_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_SRA)(d0, sa)
+#define AE_P24X2S_SLAIS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_SLAIS)(d0, sa)
+#define AE_P24X2S_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2S_SRAI)(d0, sa)
+#define AE_P24X2F_ADDS_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_ADDS_P24X2S)(d0, d1)
+#define AE_P24X2F_SUBS_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_SUBS_P24X2S)(d0, d1)
+#define AE_P24X2F_AND_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_AND_P24X2S)(d0, d1)
+#define AE_P24X2F_XOR_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_XOR_P24X2S)(d0, d1)
+#define AE_P24X2F_OR_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_OR_P24X2S)(d0, d1)
+#define AE_P24X2F_MULF_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_MULF_P24X2S)(d0, d1)
+#define AE_P24X2F_EQ_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_EQ_P24X2S)(d0, d1)
+#define AE_P24X2F_LT_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_LT_P24X2S)(d0, d1)
+#define AE_P24X2F_LE_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_LE_P24X2S)(d0, d1)
+#define AE_P24X2F_GT_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_GT_P24X2S)(d0, d1)
+#define AE_P24X2F_GE_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_GE_P24X2S)(d0, d1)
+#define AE_P24X2F_ADDS_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_ADDS_P24X2F)(d0, d1)
+#define AE_P24X2F_SUBS_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_SUBS_P24X2F)(d0, d1)
+#define AE_P24X2F_AND_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_AND_P24X2F)(d0, d1)
+#define AE_P24X2F_XOR_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_XOR_P24X2F)(d0, d1)
+#define AE_P24X2F_OR_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_OR_P24X2F)(d0, d1)
+#define AE_P24X2F_MULF_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_MULF_P24X2F)(d0, d1)
+#define AE_P24X2F_EQ_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_EQ_P24X2F)(d0, d1)
+#define AE_P24X2F_LT_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_LT_P24X2F)(d0, d1)
+#define AE_P24X2F_LE_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_LE_P24X2F)(d0, d1)
+#define AE_P24X2F_GT_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_GT_P24X2F)(d0, d1)
+#define AE_P24X2F_GE_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_GE_P24X2F)(d0, d1)
+#define AE_P24X2F_ADDS_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_ADDS_P24S)(d0, d1)
+#define AE_P24X2F_SUBS_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_SUBS_P24S)(d0, d1)
+#define AE_P24X2F_AND_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_AND_P24S)(d0, d1)
+#define AE_P24X2F_XOR_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_XOR_P24S)(d0, d1)
+#define AE_P24X2F_OR_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_OR_P24S)(d0, d1)
+#define AE_P24X2F_ADDS_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_ADDS_P24F)(d0, d1)
+#define AE_P24X2F_SUBS_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_SUBS_P24F)(d0, d1)
+#define AE_P24X2F_AND_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_AND_P24F)(d0, d1)
+#define AE_P24X2F_XOR_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_XOR_P24F)(d0, d1)
+#define AE_P24X2F_OR_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_OR_P24F)(d0, d1)
+#define AE_P24X2F_NEGS(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_NEGS)(d0)
+#define AE_P24X2F_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_BNOT)(d0)
+#define AE_P24X2F_SLAS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_SLAS)(d0, sa)
+#define AE_P24X2F_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_SRA)(d0, sa)
+#define AE_P24X2F_SLAIS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_SLAIS)(d0, sa)
+#define AE_P24X2F_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24X2F_SRAI)(d0, sa)
+#define AE_P24S_ADDS_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_ADDS_P24X2S)(d0, d1)
+#define AE_P24S_SUBS_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_SUBS_P24X2S)(d0, d1)
+#define AE_P24S_AND_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_AND_P24X2S)(d0, d1)
+#define AE_P24S_XOR_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_XOR_P24X2S)(d0, d1)
+#define AE_P24S_OR_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_OR_P24X2S)(d0, d1)
+#define AE_P24S_ADDS_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_ADDS_P24X2F)(d0, d1)
+#define AE_P24S_SUBS_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_SUBS_P24X2F)(d0, d1)
+#define AE_P24S_AND_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_AND_P24X2F)(d0, d1)
+#define AE_P24S_XOR_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_XOR_P24X2F)(d0, d1)
+#define AE_P24S_OR_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_OR_P24X2F)(d0, d1)
+#define AE_P24S_ADDS_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_ADDS_P24S)(d0, d1)
+#define AE_P24S_SUBS_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_SUBS_P24S)(d0, d1)
+#define AE_P24S_AND_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_AND_P24S)(d0, d1)
+#define AE_P24S_XOR_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_XOR_P24S)(d0, d1)
+#define AE_P24S_OR_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_OR_P24S)(d0, d1)
+#define AE_P24S_MULF_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_MULF_P24S)(d0, d1)
+#define AE_P24S_ADDS_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_ADDS_P24F)(d0, d1)
+#define AE_P24S_SUBS_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_SUBS_P24F)(d0, d1)
+#define AE_P24S_AND_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_AND_P24F)(d0, d1)
+#define AE_P24S_XOR_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_XOR_P24F)(d0, d1)
+#define AE_P24S_OR_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_OR_P24F)(d0, d1)
+#define AE_P24S_MULF_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_MULF_P24F)(d0, d1)
+#define AE_P24S_NEGS(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_NEGS)(d0)
+#define AE_P24S_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_BNOT)(d0)
+#define AE_P24S_SLAS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_SLAS)(d0, sa)
+#define AE_P24S_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_SRA)(d0, sa)
+#define AE_P24S_SLAIS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_SLAIS)(d0, sa)
+#define AE_P24S_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24S_SRAI)(d0, sa)
+#define AE_P24F_ADDS_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_ADDS_P24X2S)(d0, d1)
+#define AE_P24F_SUBS_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_SUBS_P24X2S)(d0, d1)
+#define AE_P24F_AND_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_AND_P24X2S)(d0, d1)
+#define AE_P24F_XOR_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_XOR_P24X2S)(d0, d1)
+#define AE_P24F_OR_P24X2S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_OR_P24X2S)(d0, d1)
+#define AE_P24F_ADDS_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_ADDS_P24X2F)(d0, d1)
+#define AE_P24F_SUBS_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_SUBS_P24X2F)(d0, d1)
+#define AE_P24F_AND_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_AND_P24X2F)(d0, d1)
+#define AE_P24F_XOR_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_XOR_P24X2F)(d0, d1)
+#define AE_P24F_OR_P24X2F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_OR_P24X2F)(d0, d1)
+#define AE_P24F_ADDS_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_ADDS_P24S)(d0, d1)
+#define AE_P24F_SUBS_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_SUBS_P24S)(d0, d1)
+#define AE_P24F_AND_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_AND_P24S)(d0, d1)
+#define AE_P24F_XOR_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_XOR_P24S)(d0, d1)
+#define AE_P24F_OR_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_OR_P24S)(d0, d1)
+#define AE_P24F_MULF_P24S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_MULF_P24S)(d0, d1)
+#define AE_P24F_ADDS_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_ADDS_P24F)(d0, d1)
+#define AE_P24F_SUBS_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_SUBS_P24F)(d0, d1)
+#define AE_P24F_AND_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_AND_P24F)(d0, d1)
+#define AE_P24F_XOR_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_XOR_P24F)(d0, d1)
+#define AE_P24F_OR_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_OR_P24F)(d0, d1)
+#define AE_P24F_MULF_P24F(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_MULF_P24F)(d0, d1)
+#define AE_P24F_NEGS(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_NEGS)(d0)
+#define AE_P24F_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_BNOT)(d0)
+#define AE_P24F_SLAS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_SLAS)(d0, sa)
+#define AE_P24F_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_SRA)(d0, sa)
+#define AE_P24F_SLAIS(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_SLAIS)(d0, sa)
+#define AE_P24F_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_P24F_SRAI)(d0, sa)
+#define AE_Q56S_ADD(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_Q56S_ADD)(d0, d1)
+#define AE_Q56S_SUB(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_Q56S_SUB)(d0, d1)
+#define AE_Q56S_AND(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_Q56S_AND)(d0, d1)
+#define AE_Q56S_XOR(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_Q56S_XOR)(d0, d1)
+#define AE_Q56S_OR(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_Q56S_OR)(d0, d1)
+#define AE_Q56S_NEG(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_Q56S_NEG)(d0)
+#define AE_Q56S_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_Q56S_BNOT)(d0)
+#define AE_Q56S_SLA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_Q56S_SLA)(d0, sa)
+#define AE_Q56S_SRA(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_Q56S_SRA)(d0, sa)
+#define AE_Q56S_SRAI(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_Q56S_SRAI)(d0, sa)
+#define AE_Q56S_EQ(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_Q56S_EQ)(d0, d1)
+#define AE_Q56S_LT(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_Q56S_LT)(d0, d1)
+#define AE_Q56S_LE(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_Q56S_LE)(d0, d1)
+#define AE_Q56S_GT(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_Q56S_GT)(d0, d1)
+#define AE_Q56S_GE(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_Q56S_GE)(d0, d1)
+#define ae_int32x4_loadi(b, c) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_loadi)(b, c)
+#define ae_int32x4_storei(d, b, c) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_storei)(d, b, c)
+#define ae_int32x4_move(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_move)(b)
+#define AE_INT32X2_NOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_NOT)(d0)
+#define ae_f32x4_loadi(b, c) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x4_loadi)(b, c)
+#define ae_f32x4_storei(d, b, c) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x4_storei)(d, b, c)
+#define ae_f32x4_move(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x4_move)(b)
+#define AE_SEL16X4IR(v0, v1, i) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL16X4IR)(v0, v1, i)
+#define AE_SEL32X2IR(v0, v1, i) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEL32X2IR)(v0, v1, i)
+#define AE_SELF32X2IR(v0, v1, i) \
+	CSTUB_(_TIE_xt_hifi2_AE_SELF32X2IR)(v0, v1, i)
+#define AE_INT32X2_AND_rinit(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_AND_rinit)(a)
+#define AE_INT32X2_AND_rvec(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_AND_rvec)(d0, d1)
+#define AE_INT32X2_AND_rfini(d) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_AND_rfini)(d)
+#define AE_INT32X2_OR_rinit(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_OR_rinit)(a)
+#define AE_INT32X2_OR_rvec(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_OR_rvec)(d0, d1)
+#define AE_INT32X2_OR_rfini(d) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_OR_rfini)(d)
+#define AE_INT32X2_XOR_rinit(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_XOR_rinit)(a)
+#define AE_INT32X2_XOR_rvec(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_XOR_rvec)(d0, d1)
+#define AE_INT32X2_XOR_rfini(d) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_XOR_rfini)(d)
+#define AE_INT32X2_RMIN(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_RMIN)(d0)
+#define AE_INT32X2_RMAX(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_RMAX)(d0)
+#define AE_INT32X2_RADD(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_RADD)(d0)
+#define AE_F32X2_RADD(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X2_RADD)(d0)
+#define AE_ABS32S_scalar(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ABS32S_scalar)(d0)
+#define AE_INT32X4_ABS32S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_ABS32S)(d0)
+#define AE_INT32X2_ABS32S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_ABS32S)(d0)
+#define AE_ADD32S_scalar(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADD32S_scalar)(d0, d1)
+#define AE_INT32X4_ADD32S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_ADD32S)(d0, d1)
+#define AE_INT32X2_ADD32S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_ADD32S)(d0, d1)
+#define AE_NEG32S_scalar(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NEG32S_scalar)(d0)
+#define AE_INT32X4_NEG32S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_NEG32S)(d0)
+#define AE_INT32X2_NEG32S(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_NEG32S)(d0)
+#define AE_SUB32S_scalar(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUB32S_scalar)(d0, d1)
+#define AE_INT32X4_SUB32S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_SUB32S)(d0, d1)
+#define AE_INT32X2_SUB32S(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X2_SUB32S)(d0, d1)
+#define AE_SLAA32S_scalar(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAA32S_scalar)(d0, sa)
+#define AE_SLAA32S_vector(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAA32S_vector)(d0, sa)
+#define AE_SRAA32S_scalar(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAA32S_scalar)(d0, sa)
+#define AE_SRAA32S_vector(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAA32S_vector)(d0, sa)
+#define AE_SRAA32RS_scalar(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAA32RS_scalar)(d0, sa)
+#define AE_SRAA32RS_vector(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAA32RS_vector)(d0, sa)
+#define AE_INT16X4_NAND_INT16X4(a, b) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_NAND_INT16X4)(a, b)
+#define AE_ABS16S_scalar(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ABS16S_scalar)(d0)
+#define AE_ABS16S_vector(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ABS16S_vector)(d0)
+#define AE_ADD16S_scalar(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADD16S_scalar)(d0, d1)
+#define AE_ADD16S_vector(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADD16S_vector)(d0, d1)
+#define AE_MULFP16X4S_scalar(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP16X4S_scalar)(d0, d1)
+#define AE_MULFP16X4S_vector(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP16X4S_vector)(d0, d1)
+#define AE_MULFP16X4RAS_scalar(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP16X4RAS_scalar)(d0, d1)
+#define AE_MULFP16X4RAS_vector(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULFP16X4RAS_vector)(d0, d1)
+#define AE_NSAZ16_0_scalar(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NSAZ16_0_scalar)(d0)
+#define AE_SAT16X4_scalar(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SAT16X4_scalar)(d0)
+#define AE_SAT16X4_vector(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_SAT16X4_vector)(d0)
+#define AE_MULF16X4SS_scalar(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF16X4SS_scalar)(d0, d1)
+#define AE_MULF16X4SS_vector(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF16X4SS_vector)(d0, d1)
+#define AE_MUL16X4_vector(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL16X4_vector)(d0, d1)
+#define AE_MULA16X4_vector(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA16X4_vector)(&d, d0, d1)
+#define AE_MULAAR16P16X4S_vector(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAAR16P16X4S_vector)(&d, d0, d1)
+#define AE_MULR16P16X4S_vector(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULR16P16X4S_vector)(d0, d1)
+#define AE_MULAF16X4SS_scalar(ain, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF16X4SS_scalar)(ain, d0, d1)
+#define AE_MULAF16X4SS_vector(pin, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF16X4SS_vector)(pin, d0, d1)
+#define AE_MULSF16X4SS_scalar(ain, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF16X4SS_scalar)(ain, d0, d1)
+#define AE_MULSF16X4SS_vector(pin, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULSF16X4SS_vector)(pin, d0, d1)
+#define AE_RLmac_rinit(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLmac_rinit)(a)
+#define AE_RLmac_rvec(din, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLmac_rvec)(din, d0, d1)
+#define AE_RLmac_rfini(d) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLmac_rfini)(d)
+#define AE_RLmsu_rinit(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLmsu_rinit)(a)
+#define AE_RLmsu_rvec(din, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLmsu_rvec)(din, d0, d1)
+#define AE_RLmsu_rfini(d) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLmsu_rfini)(d)
+#define AE_RLadd_rinit(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLadd_rinit)(a)
+#define AE_RLadd_rvec(din, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLadd_rvec)(din, d0)
+#define AE_RLadd_rfini(d) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLadd_rfini)(d)
+#define AE_RLadd4_rinit(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLadd4_rinit)(a)
+#define AE_RLadd4_rvec(din, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLadd4_rvec)(din, d0)
+#define AE_RLadd4_rfini(d) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLadd4_rfini)(d)
+#define AE_RLsub_rinit(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLsub_rinit)(a)
+#define AE_RLsub_rvec(din, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLsub_rvec)(din, d0)
+#define AE_RLsub_rfini(d) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLsub_rfini)(d)
+#define AE_RLsub4_rinit(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLsub4_rinit)(a)
+#define AE_RLsub4_rvec(din, d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLsub4_rvec)(din, d0)
+#define AE_RLsub4_rfini(d) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLsub4_rfini)(d)
+#define AE_NEG16S_scalar(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NEG16S_scalar)(d0)
+#define AE_NEG16S_vector(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NEG16S_vector)(d0)
+#define AE_ROUND16X4F32SASYM_scalar(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUND16X4F32SASYM_scalar)(d0)
+#define AE_ROUND16X4F32SASYM_vector(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_ROUND16X4F32SASYM_vector)(d0)
+#define AE_SUB16S_scalar(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUB16S_scalar)(d0, d1)
+#define AE_SUB16S_vector(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUB16S_vector)(d0, d1)
+#define AE_SLAA16S_scalar(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAA16S_scalar)(d0, sa)
+#define AE_SLAA16S_vector(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAA16S_vector)(d0, sa)
+#define AE_SRAA16S_scalar(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAA16S_scalar)(d0, sa)
+#define AE_SRAA16S_vector(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAA16S_vector)(d0, sa)
+#define AE_SRAA16RS_scalar(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAA16RS_scalar)(d0, sa)
+#define AE_SRAA16RS_vector(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAA16RS_vector)(d0, sa)
+#define AE_CVT16X4_scalar(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVT16X4_scalar)(d0)
+#define AE_CVT16X4_vector(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVT16X4_vector)(d0)
+#define AE_TRUNC16X4F32_scalar(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNC16X4F32_scalar)(d0)
+#define AE_TRUNC16X4F32_vector(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_TRUNC16X4F32_vector)(d0)
+#define AE_SEXT32X2D16_10_scalar(p) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEXT32X2D16_10_scalar)(p)
+#define AE_SEXT32X2D16_10_vector(p) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEXT32X2D16_10_vector)(p)
+#define AE_CVT32X2F16_10_scalar(p) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVT32X2F16_10_scalar)(p)
+#define AE_CVT32X2F16_10_vector(p) \
+	CSTUB_(_TIE_xt_hifi2_AE_CVT32X2F16_10_vector)(p)
+#define ae_int16x4_rtor_ae_int32x4(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_rtor_ae_int32x4)(b)
+#define ae_int32x4_rtor_ae_int16x4(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_rtor_ae_int16x4)(b)
+#define AE_SRAA16_VECTOR(b, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAA16_VECTOR)(b, sa)
+#define AE_F32X4_RADD(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X4_RADD)(d0)
+#define AE_INT32X4_RADD(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_RADD)(d0)
+#define AE_INT32X4_ADD(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_ADD)(d0, d1)
+#define AE_INT32X4_SUB(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_SUB)(d0, d1)
+#define AE_INT32X4_AND(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_AND)(d0, d1)
+#define AE_INT32X4_OR(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_OR)(d0, d1)
+#define AE_INT32X4_XOR(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_XOR)(d0, d1)
+#define AE_INT32X4_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_BNOT)(d0)
+#define AE_INT32X4_INT16X4_MUL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_INT16X4_MUL)(d0, d1)
+#define AE_INT16X4_INT32X4_MUL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_INT32X4_MUL)(d0, d1)
+#define AE_INT32X4_SRAI32(d0, i) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_SRAI32)(d0, i)
+#define AE_INT32X4_SRAA32(d0, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_SRAA32)(d0, a)
+#define AE_INT32X4_SLAI32(d0, i) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_SLAI32)(d0, i)
+#define AE_INT32X4_SLAA32(d0, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_SLAA32)(d0, a)
+#define AE_INT32X4_NEG32(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_NEG32)(d0)
+#define AE_INT32X4_ABS32(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_ABS32)(d0)
+#define AE_INT32X4_MAX(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_MAX)(d0, d1)
+#define AE_INT32X4_MIN(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT32X4_MIN)(d0, d1)
+#define AE_INT16X4_MIN(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_MIN)(d0, d1)
+#define AE_INT16X4_MAX(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_MAX)(d0, d1)
+#define AE_INT16X4_RMAX(d) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_RMAX)(d)
+#define AE_INT16X4_RMIN(d) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_RMIN)(d)
+#define AE_INT16X4_RADD(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_RADD)(d0)
+#define AE_F32X4_ADD(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X4_ADD)(d0, d1)
+#define AE_F32X4_SUB(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X4_SUB)(d0, d1)
+#define AE_F32X4_NEG32(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X4_NEG32)(d0)
+#define AE_F32X4_F16X4_MUL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X4_F16X4_MUL)(d0, d1)
+#define AE_F16X4_F32X4_MUL(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F16X4_F32X4_MUL)(d0, d1)
+#define AE_F32X4_AND(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X4_AND)(d0, d1)
+#define AE_F32X4_OR(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X4_OR)(d0, d1)
+#define AE_F32X4_XOR(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X4_XOR)(d0, d1)
+#define AE_F32X4_BNOT(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X4_BNOT)(d0)
+#define AE_F32X4_SLAI32S(d0, i) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X4_SLAI32S)(d0, i)
+#define AE_F32X4_SLAA32S(d0, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X4_SLAA32S)(d0, a)
+#define AE_F32X4_SRAI32(d0, i) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X4_SRAI32)(d0, i)
+#define AE_F32X4_SRAA32(d0, a) \
+	CSTUB_(_TIE_xt_hifi2_AE_F32X4_SRAA32)(d0, a)
+#define ae_int16x4_aligning_load_prime(a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_aligning_load_prime)(a)
+#define ae_int16x4_aligning_load_post_update_positive(v, u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_aligning_load_post_update_positive)(&v, &u, (const ae_int16x4 **)&(a))
+#define ae_int16x4_aligning_load_post_update_negative(v, u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_aligning_load_post_update_negative)(&v, &u, (const ae_int16x4 **)&(a))
+#define ae_int16x4_load_post_update_positive(v, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_load_post_update_positive)(&v, (const ae_int16x4 **)&(a), off)
+#define ae_int16x4_load_post_update_negative(v, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_load_post_update_negative)(&v, (const ae_int16x4 **)&(a))
+#define ae_int16x4_aligning_store_prime() \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_aligning_store_prime)()
+#define ae_int16x4_aligning_store_post_update_positive(v, u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_aligning_store_post_update_positive)(v, &u, (ae_int16x4 **)&(a))
+#define ae_int16x4_aligning_store_post_update_negative(v, u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_aligning_store_post_update_negative)(v, &u, (ae_int16x4 **)&(a))
+#define ae_int16x4_store_post_update_positive(v, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_store_post_update_positive)(v, (ae_int16x4 **)&(a), off)
+#define ae_int16x4_store_post_update_negative(v, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_store_post_update_negative)(v, (ae_int16x4 **)&(a))
+#define ae_int16x4_aligning_store_flush_positive(u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_aligning_store_flush_positive)(&u, a)
+#define ae_int16x4_aligning_store_flush_negative(u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_aligning_store_flush_negative)(&u, a)
+#define ae_int32x2_aligning_load_prime(a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_aligning_load_prime)(a)
+#define ae_int32x2_aligning_load_post_update_positive(v, u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_aligning_load_post_update_positive)(&v, &u, (const ae_int32x2 **)&(a))
+#define ae_int32x2_aligning_load_post_update_negative(v, u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_aligning_load_post_update_negative)(&v, &u, (const ae_int32x2 **)&(a))
+#define ae_int32x2_load_post_update_positive(v, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_load_post_update_positive)(&v, (const ae_int32x2 **)&(a), off)
+#define ae_int32x2_load_post_update_negative(v, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_load_post_update_negative)(&v, (const ae_int32x2 **)&(a))
+#define ae_int32x2_aligning_store_prime() \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_aligning_store_prime)()
+#define ae_int32x2_aligning_store_post_update_positive(v, u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_aligning_store_post_update_positive)(v, &u, (ae_int32x2 **)&(a))
+#define ae_int32x2_aligning_store_post_update_negative(v, u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_aligning_store_post_update_negative)(v, &u, (ae_int32x2 **)&(a))
+#define ae_int32x2_store_post_update_positive(v, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_store_post_update_positive)(v, (ae_int32x2 **)&(a), off)
+#define ae_int32x2_store_post_update_negative(v, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_store_post_update_negative)(v, (ae_int32x2 **)&(a))
+#define ae_int32x2_aligning_store_flush_positive(u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_aligning_store_flush_positive)(&u, a)
+#define ae_int32x2_aligning_store_flush_negative(u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_aligning_store_flush_negative)(&u, a)
+#define ae_int32x4_aligning_load_prime(a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_aligning_load_prime)(a)
+#define ae_int32x4_aligning_load_post_update_positive(v, u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_aligning_load_post_update_positive)(&v, &u, (const ae_int32x4 **)&(a))
+#define ae_int32x4_aligning_load_post_update_negative(v, u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_aligning_load_post_update_negative)(&v, &u, (const ae_int32x4 **)&(a))
+#define ae_int32x4_load_post_update_positive(v, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_load_post_update_positive)(&v, (const ae_int32x4 **)&(a), off)
+#define ae_int32x4_load_post_update_negative(v, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_load_post_update_negative)(&v, (const ae_int32x4 **)&(a))
+#define ae_int32x4_aligning_store_prime() \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_aligning_store_prime)()
+#define ae_int32x4_aligning_store_post_update_positive(v, u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_aligning_store_post_update_positive)(v, &u, (ae_int32x4 **)&(a))
+#define ae_int32x4_aligning_store_post_update_negative(v, u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_aligning_store_post_update_negative)(v, &u, (ae_int32x4 **)&(a))
+#define ae_int32x4_store_post_update_positive(v, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_store_post_update_positive)(v, (ae_int32x4 **)&(a), off)
+#define ae_int32x4_store_post_update_negative(v, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_store_post_update_negative)(v, (ae_int32x4 **)&(a))
+#define ae_int32x4_aligning_store_flush_positive(u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_aligning_store_flush_positive)(&u, a)
+#define ae_int32x4_aligning_store_flush_negative(u, a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_aligning_store_flush_negative)(&u, a)
+#define ae_int32x2_vextract_0_p32s(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_vextract_0_p32s)(d)
+#define ae_int32x2_vextract_1_p32s(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_vextract_1_p32s)(d)
+#define ae_int32x2_vpack_p32s(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_vpack_p32s)(d1, d0)
+#define ae_int32x2_vextract_0_ae_int32(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_vextract_0_ae_int32)(d0)
+#define ae_int32x2_vextract_1_ae_int32(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_vextract_1_ae_int32)(d0)
+#define ae_int32x2_vpack_ae_int32(d1, d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_vpack_ae_int32)(d1, d0)
+#define int32_rtor_ae_int64(a) \
+	CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_int64)(a)
+#define int16_rtor_ae_int64(a) \
+	CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_int64)(a)
+#define ae_int32_rtor_ae_int64(a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_ae_int64)(a)
+#define ae_int16_rtor_ae_int64(a) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_ae_int64)(a)
+#define int32_rtor_ae_f64(a) \
+	CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_f64)(a)
+#define int16_rtor_ae_f64(a) \
+	CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_f64)(a)
+#define int64_rtor_ae_f64(a) \
+	CSTUB_(_TIE_xt_hifi2_int64_rtor_ae_f64)(a)
+#define ae_f64_rtor_int64(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_f64_rtor_int64)(d)
+#define int64_rtor_ae_int64(a) \
+	CSTUB_(_TIE_xt_hifi2_int64_rtor_ae_int64)(a)
+#define ae_int64_rtor_int64(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64_rtor_int64)(d)
+#define uint64_rtor_ae_int64(a) \
+	CSTUB_(_TIE_xt_hifi2_uint64_rtor_ae_int64)(a)
+#define ae_int64_rtor_uint64(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64_rtor_uint64)(d)
+#define int32_rtor_ae_int32(a) \
+	CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_int32)(a)
+#define ae_int32_rtor_int32(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_int32)(d)
+#define int32_rtor_ae_f32(a) \
+	CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_f32)(a)
+#define ae_f32_rtor_int32(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32_rtor_int32)(d)
+#define ae_f24_rtor_int32(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_int32)(d)
+#define int32_rtor_ae_f24(a) \
+	CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_f24)(a)
+#define int32_rtor_ae_int24(a) \
+	CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_int24)(a)
+#define ae_int24_rtor_int32(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_int32)(d)
+#define uint32_rtor_ae_int32(a) \
+	CSTUB_(_TIE_xt_hifi2_uint32_rtor_ae_int32)(a)
+#define ae_int32_rtor_uint32(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_uint32)(d)
+#define uint32_rtor_ae_int32u(a) \
+	CSTUB_(_TIE_xt_hifi2_uint32_rtor_ae_int32u)(a)
+#define ae_int32u_rtor_uint32(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32u_rtor_uint32)(d)
+#define int32_rtor_ae_int16(a) \
+	CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_int16)(a)
+#define int32_rtor_ae_int16x4(a) \
+	CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_int16x4)(a)
+#define ae_int16_rtor_int32(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_int32)(d)
+#define int32_rtor_ae_f16(a) \
+	CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_f16)(a)
+#define ae_f16_rtor_int32(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16_rtor_int32)(d)
+#define int16_rtor_ae_int16(a) \
+	CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_int16)(a)
+#define ae_int16_rtor_int16(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_int16)(d)
+#define int16_rtor_ae_f16(a) \
+	CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_f16)(a)
+#define ae_f16_rtor_int16(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16_rtor_int16)(d)
+#define int16_rtor_ae_f32(a) \
+	CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_f32)(a)
+#define int16_rtor_ae_f24(a) \
+	CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_f24)(a)
+#define int16_rtor_ae_int24(a) \
+	CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_int24)(a)
+#define int16_rtor_ae_f32x2(a) \
+	CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_f32x2)(a)
+#define int16_rtor_ae_f24x2(a) \
+	CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_f24x2)(a)
+#define int16_rtor_ae_int24x2(a) \
+	CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_int24x2)(a)
+#define ae_int16u_rtor_uint16(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16u_rtor_uint16)(d)
+#define uint16_rtor_ae_int16u(a) \
+	CSTUB_(_TIE_xt_hifi2_uint16_rtor_ae_int16u)(a)
+#define int32_rtor_ae_int32x2(a) \
+	CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_int32x2)(a)
+#define ae_int32x2_rtor_int32(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtor_int32)(d)
+#define int32_rtor_ae_f32x2(a) \
+	CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_f32x2)(a)
+#define int32_rtor_ae_f24x2(a) \
+	CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_f24x2)(a)
+#define int32_rtor_ae_int24x2(a) \
+	CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_int24x2)(a)
+#define int32_rtor_ae_int32x4(a) \
+	CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_int32x4)(a)
+#define ae_int32x4_rtor_int32(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_rtor_int32)(d)
+#define int32_rtor_ae_f32x4(a) \
+	CSTUB_(_TIE_xt_hifi2_int32_rtor_ae_f32x4)(a)
+#define ae_f32x4_rtor_int32(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x4_rtor_int32)(d)
+#define uint32_rtor_ae_int32x2(a) \
+	CSTUB_(_TIE_xt_hifi2_uint32_rtor_ae_int32x2)(a)
+#define ae_int32x2_rtor_uint32(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtor_uint32)(d)
+#define uint32_rtor_ae_f32x2(a) \
+	CSTUB_(_TIE_xt_hifi2_uint32_rtor_ae_f32x2)(a)
+#define uint32_rtor_ae_f24x2(a) \
+	CSTUB_(_TIE_xt_hifi2_uint32_rtor_ae_f24x2)(a)
+#define uint32_rtor_ae_int24x2(a) \
+	CSTUB_(_TIE_xt_hifi2_uint32_rtor_ae_int24x2)(a)
+#define uint32_rtor_ae_int32x4(a) \
+	CSTUB_(_TIE_xt_hifi2_uint32_rtor_ae_int32x4)(a)
+#define ae_int32x4_rtor_uint32(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_rtor_uint32)(d)
+#define uint32_rtor_ae_f32x4(a) \
+	CSTUB_(_TIE_xt_hifi2_uint32_rtor_ae_f32x4)(a)
+#define ae_f32x4_rtor_uint32(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x4_rtor_uint32)(d)
+#define int16_rtor_ae_int32x2(a) \
+	CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_int32x2)(a)
+#define ae_int32x2_rtor_int16(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtor_int16)(d)
+#define int16_rtor_ae_int32(a) \
+	CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_int32)(a)
+#define ae_int32_rtor_int16(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_int16)(d)
+#define int16_rtor_ae_int16x4(a) \
+	CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_int16x4)(a)
+#define ae_int16x4_rtor_int16(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_rtor_int16)(d)
+#define int16_rtor_ae_f16x4(a) \
+	CSTUB_(_TIE_xt_hifi2_int16_rtor_ae_f16x4)(a)
+#define ae_f16x4_rtor_int16(d) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16x4_rtor_int16)(d)
+#define ae_int16_rtor_ae_int16u(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_ae_int16u)(b)
+#define ae_int16u_rtor_ae_int16(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16u_rtor_ae_int16)(b)
+#define ae_int16u_rtor_ae_int32u(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16u_rtor_ae_int32u)(b)
+#define ae_int32u_rtor_ae_int16u(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32u_rtor_ae_int16u)(b)
+#define ae_int16u_rtor_ae_int32(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16u_rtor_ae_int32)(b)
+#define ae_int32_rtor_ae_int16u(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_ae_int16u)(b)
+#define ae_int16_rtor_ae_int32u(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_ae_int32u)(b)
+#define ae_int32u_rtor_ae_int16(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32u_rtor_ae_int16)(b)
+#define ae_int32u_rtor_ae_int32(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32u_rtor_ae_int32)(b)
+#define ae_int32_rtor_ae_int32u(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_ae_int32u)(b)
+#define uint16_rtor_ae_int32(a) \
+	CSTUB_(_TIE_xt_hifi2_uint16_rtor_ae_int32)(a)
+#define uint16_rtor_ae_int32x2(a) \
+	CSTUB_(_TIE_xt_hifi2_uint16_rtor_ae_int32x2)(a)
+#define uint8_rtor_ae_int32(a) \
+	CSTUB_(_TIE_xt_hifi2_uint8_rtor_ae_int32)(a)
+#define int8_rtor_ae_int32(a) \
+	CSTUB_(_TIE_xt_hifi2_int8_rtor_ae_int32)(a)
+#define uint8_rtor_ae_int32x2(a) \
+	CSTUB_(_TIE_xt_hifi2_uint8_rtor_ae_int32x2)(a)
+#define int8_rtor_ae_int32x2(a) \
+	CSTUB_(_TIE_xt_hifi2_int8_rtor_ae_int32x2)(a)
+#define ae_int24x2_rtor_ae_f24(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_f24)(b)
+#define ae_f24x2_rtor_ae_int24(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_int24)(b)
+#define ae_int24_rtor_ae_f24x2(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_ae_f24x2)(b)
+#define ae_f24_rtor_ae_int24x2(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_ae_int24x2)(b)
+#define ae_int32x2_rtor_ae_f32(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtor_ae_f32)(b)
+#define ae_f32x2_rtor_ae_int32(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x2_rtor_ae_int32)(b)
+#define ae_int32_rtor_ae_f32x2(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_ae_f32x2)(b)
+#define ae_f32_rtor_ae_int32x2(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32_rtor_ae_int32x2)(b)
+#define ae_int24x2_rtor_ae_f32(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_f32)(b)
+#define ae_f24x2_rtor_ae_int32(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_int32)(b)
+#define ae_int24_rtor_ae_f32x2(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_ae_f32x2)(b)
+#define ae_f24_rtor_ae_int32x2(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_ae_int32x2)(b)
+#define ae_f24_rtor_ae_f32x2(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_ae_f32x2)(b)
+#define ae_int24_rtor_ae_int32x2(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_ae_int32x2)(b)
+#define int64_mtor_ae_int64(a, i) \
+	CSTUB_(_TIE_xt_hifi2_int64_mtor_ae_int64)(a, i)
+#define ae_int64_rtom_int64(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64_rtom_int64)(d, a, i)
+#define uint64_mtor_ae_int64(a, i) \
+	CSTUB_(_TIE_xt_hifi2_uint64_mtor_ae_int64)(a, i)
+#define ae_int64_rtom_uint64(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64_rtom_uint64)(d, a, i)
+#define int32_mtor_ae_int32(a, i) \
+	CSTUB_(_TIE_xt_hifi2_int32_mtor_ae_int32)(a, i)
+#define ae_int32_rtom_int32(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_rtom_int32)(d, a, i)
+#define uint32_mtor_ae_int32u(a, i) \
+	CSTUB_(_TIE_xt_hifi2_uint32_mtor_ae_int32u)(a, i)
+#define ae_int32u_rtom_uint32(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32u_rtom_uint32)(d, a, i)
+#define int16_mtor_ae_int16(a, i) \
+	CSTUB_(_TIE_xt_hifi2_int16_mtor_ae_int16)(a, i)
+#define ae_int16_rtom_int16(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_rtom_int16)(d, a, i)
+#define uint16_mtor_ae_int16u(a, i) \
+	CSTUB_(_TIE_xt_hifi2_uint16_mtor_ae_int16u)(a, i)
+#define ae_int16u_rtom_uint16(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16u_rtom_uint16)(d, a, i)
+#define int32_mtor_ae_int32x2(a, i) \
+	CSTUB_(_TIE_xt_hifi2_int32_mtor_ae_int32x2)(a, i)
+#define ae_int32x2_rtom_int32(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtom_int32)(d, a, i)
+#define ae_int32x2_rtom_ae_int32(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtom_ae_int32)(d, a, i)
+#define int32_mtor_ae_int32x4(a, i) \
+	CSTUB_(_TIE_xt_hifi2_int32_mtor_ae_int32x4)(a, i)
+#define ae_int32x4_rtom_int32(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x4_rtom_int32)(d, a, i)
+#define int32_mtor_ae_f32x4(a, i) \
+	CSTUB_(_TIE_xt_hifi2_int32_mtor_ae_f32x4)(a, i)
+#define ae_f32x4_rtom_int32(d, a, i) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x4_rtom_int32)(d, a, i)
+#define ae_p24s_rtor_ae_int24x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_rtor_ae_int24x2)(d0)
+#define ae_int24x2_rtor_ae_p24s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_p24s)(d0)
+#define ae_p24s_rtor_ae_f24x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24s_rtor_ae_f24x2)(d0)
+#define ae_f24x2_rtor_ae_p24s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_p24s)(d0)
+#define ae_p24f_rtor_ae_int24x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24f_rtor_ae_int24x2)(d0)
+#define ae_int24x2_rtor_ae_p24f(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_p24f)(d0)
+#define ae_p24f_rtor_ae_f24x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24f_rtor_ae_f24x2)(d0)
+#define ae_f24x2_rtor_ae_p24f(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_p24f)(d0)
+#define ae_p24x2s_rtor_ae_int24x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtor_ae_int24x2)(d0)
+#define ae_int24x2_rtor_ae_p24x2s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_p24x2s)(d0)
+#define ae_p24x2s_rtor_ae_f24x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2s_rtor_ae_f24x2)(d0)
+#define ae_f24x2_rtor_ae_p24x2s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_p24x2s)(d0)
+#define ae_p24x2f_rtor_ae_int24x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtor_ae_int24x2)(d0)
+#define ae_int24x2_rtor_ae_p24x2f(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_p24x2f)(d0)
+#define ae_p24x2f_rtor_ae_f24x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p24x2f_rtor_ae_f24x2)(d0)
+#define ae_f24x2_rtor_ae_p24x2f(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_p24x2f)(d0)
+#define ae_p16s_rtor_ae_int24x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16s_rtor_ae_int24x2)(d0)
+#define ae_int24x2_rtor_ae_p16s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_p16s)(d0)
+#define ae_p16s_rtor_ae_f24x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16s_rtor_ae_f24x2)(d0)
+#define ae_f24x2_rtor_ae_p16s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_p16s)(d0)
+#define ae_p16x2s_rtor_ae_int24x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16x2s_rtor_ae_int24x2)(d0)
+#define ae_int24x2_rtor_ae_p16x2s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_p16x2s)(d0)
+#define ae_p16x2s_rtor_ae_f24x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_p16x2s_rtor_ae_f24x2)(d0)
+#define ae_f24x2_rtor_ae_p16x2s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_p16x2s)(d0)
+#define ae_q56s_rtor_ae_int64(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_q56s_rtor_ae_int64)(d0)
+#define ae_int64_rtor_ae_q56s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64_rtor_ae_q56s)(d0)
+#define ae_q56s_rtor_ae_f64(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_q56s_rtor_ae_f64)(d0)
+#define ae_f64_rtor_ae_q56s(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f64_rtor_ae_q56s)(d0)
+#define ae_f32_rtor_ae_int32(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32_rtor_ae_int32)(d0)
+#define ae_int32_rtor_ae_f32(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_ae_f32)(d0)
+#define ae_f32x2_rtor_ae_int32x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x2_rtor_ae_int32x2)(d0)
+#define ae_int32x2_rtor_ae_f32x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtor_ae_f32x2)(d0)
+#define ae_f24_rtor_ae_int24(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_ae_int24)(d0)
+#define ae_int24_rtor_ae_f24(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_ae_f24)(d0)
+#define ae_f24x2_rtor_ae_int24x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_int24x2)(d0)
+#define ae_int24x2_rtor_ae_f24x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_f24x2)(d0)
+#define ae_f64_rtor_ae_int64(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f64_rtor_ae_int64)(d0)
+#define ae_int64_rtor_ae_f64(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64_rtor_ae_f64)(d0)
+#define ae_f16_rtor_ae_int16(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16_rtor_ae_int16)(d0)
+#define ae_int16_rtor_ae_f16(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_ae_f16)(d0)
+#define ae_f16x4_rtor_ae_int16x4(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16x4_rtor_ae_int16x4)(d0)
+#define ae_int16x4_rtor_ae_f16x4(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_rtor_ae_f16x4)(d0)
+#define ae_f24_rtor_ae_f32(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_ae_f32)(d0)
+#define ae_f24x2_rtor_ae_f32x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_f32x2)(d0)
+#define ae_int24_rtor_ae_int32(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_ae_int32)(d0)
+#define ae_int24x2_rtor_ae_int32x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_int32x2)(d0)
+#define ae_f24_rtor_ae_int32(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_ae_int32)(d0)
+#define ae_f24x2_rtor_ae_int32x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_int32x2)(d0)
+#define ae_int24_rtor_ae_f32(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_ae_f32)(d0)
+#define ae_int24x2_rtor_ae_f32x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_f32x2)(d0)
+#define ae_f32_rtor_ae_f32x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32_rtor_ae_f32x2)(d0)
+#define ae_f32x2_rtor_ae_f32(d01) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32x2_rtor_ae_f32)(d01)
+#define ae_int32_rtor_ae_int32x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_ae_int32x2)(d0)
+#define ae_int32x2_rtor_ae_int32(d01) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtor_ae_int32)(d01)
+#define ae_int32u_rtor_ae_int32x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32u_rtor_ae_int32x2)(d0)
+#define ae_int32x2_rtor_ae_int32u(d01) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtor_ae_int32u)(d01)
+#define ae_f24_rtor_ae_f24x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_ae_f24x2)(d0)
+#define ae_f24x2_rtor_ae_f24(d01) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24x2_rtor_ae_f24)(d01)
+#define ae_int24_rtor_ae_int24x2(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_ae_int24x2)(d0)
+#define ae_int24x2_rtor_ae_int24(d01) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24x2_rtor_ae_int24)(d01)
+#define ae_int16_rtor_ae_int16x4(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_ae_int16x4)(d0)
+#define ae_f16_rtor_ae_f16x4(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16_rtor_ae_f16x4)(d0)
+#define ae_f16_rtor_ae_int16x4(d0) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16_rtor_ae_int16x4)(d0)
+#define ae_int16x4_rtom_ae_int16(v, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_rtom_ae_int16)(v, a, off)
+#define ae_f16x4_rtom_ae_f16(v, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16x4_rtom_ae_f16)(v, a, off)
+#define ae_int16x4_rtom_ae_f16(v, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16x4_rtom_ae_f16)(v, a, off)
+#define ae_f16x4_rtom_ae_int16(v, a, off) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16x4_rtom_ae_int16)(v, a, off)
+#define ae_int32_rtor_ae_int32x4(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_ae_int32x4)(b)
+#define ae_f32_rtor_ae_f32x4(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32_rtor_ae_f32x4)(b)
+#define ae_int16_rtor_ae_int32(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_ae_int32)(b)
+#define ae_int32_rtor_ae_int16(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32_rtor_ae_int16)(b)
+#define ae_f16_rtor_ae_f32(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16_rtor_ae_f32)(b)
+#define ae_f32_rtor_ae_f16(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_f32_rtor_ae_f16)(b)
+#define ae_int16_rtor_ae_int24(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16_rtor_ae_int24)(b)
+#define ae_int24_rtor_ae_int16(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int24_rtor_ae_int16)(b)
+#define ae_f16_rtor_ae_f24(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_f16_rtor_ae_f24)(b)
+#define ae_f24_rtor_ae_f16(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_f24_rtor_ae_f16)(b)
+#define AE_MOVINT16X4_FROMINT16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMINT16)(i)
+#define AE_MOVINT24_FROMINT16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMINT16)(i)
+#define AE_MOVINT24X2_FROMINT16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMINT16)(i)
+#define AE_MOVINT32_FROMINT16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMINT16)(i)
+#define AE_MOVINT32X2_FROMINT16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMINT16)(i)
+#define AE_MOVINT64_FROMINT16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMINT16)(i)
+#define AE_MOVF16_FROMINT16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMINT16)(i)
+#define AE_MOVF16X4_FROMINT16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMINT16)(i)
+#define AE_MOVF24_FROMINT16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMINT16)(i)
+#define AE_MOVF24X2_FROMINT16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMINT16)(i)
+#define AE_MOVF32_FROMINT16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMINT16)(i)
+#define AE_MOVF32X2_FROMINT16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMINT16)(i)
+#define AE_MOVF64_FROMINT16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMINT16)(i)
+#define AE_MOVINT16_FROMINT16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMINT16X4)(i)
+#define AE_MOVINT24_FROMINT16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMINT16X4)(i)
+#define AE_MOVINT24X2_FROMINT16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMINT16X4)(i)
+#define AE_MOVINT32_FROMINT16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMINT16X4)(i)
+#define AE_MOVINT32X2_FROMINT16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMINT16X4)(i)
+#define AE_MOVINT64_FROMINT16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMINT16X4)(i)
+#define AE_MOVF16_FROMINT16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMINT16X4)(i)
+#define AE_MOVF16X4_FROMINT16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMINT16X4)(i)
+#define AE_MOVF24_FROMINT16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMINT16X4)(i)
+#define AE_MOVF24X2_FROMINT16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMINT16X4)(i)
+#define AE_MOVF32_FROMINT16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMINT16X4)(i)
+#define AE_MOVF32X2_FROMINT16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMINT16X4)(i)
+#define AE_MOVF64_FROMINT16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMINT16X4)(i)
+#define AE_MOVINT16_FROMINT24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMINT24)(i)
+#define AE_MOVINT16X4_FROMINT24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMINT24)(i)
+#define AE_MOVINT24X2_FROMINT24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMINT24)(i)
+#define AE_MOVINT32_FROMINT24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMINT24)(i)
+#define AE_MOVINT32X2_FROMINT24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMINT24)(i)
+#define AE_MOVINT64_FROMINT24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMINT24)(i)
+#define AE_MOVF16_FROMINT24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMINT24)(i)
+#define AE_MOVF16X4_FROMINT24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMINT24)(i)
+#define AE_MOVF24_FROMINT24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMINT24)(i)
+#define AE_MOVF24X2_FROMINT24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMINT24)(i)
+#define AE_MOVF32_FROMINT24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMINT24)(i)
+#define AE_MOVF32X2_FROMINT24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMINT24)(i)
+#define AE_MOVF64_FROMINT24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMINT24)(i)
+#define AE_MOVINT16_FROMINT24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMINT24X2)(i)
+#define AE_MOVINT16X4_FROMINT24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMINT24X2)(i)
+#define AE_MOVINT24_FROMINT24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMINT24X2)(i)
+#define AE_MOVINT32_FROMINT24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMINT24X2)(i)
+#define AE_MOVINT32X2_FROMINT24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMINT24X2)(i)
+#define AE_MOVINT64_FROMINT24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMINT24X2)(i)
+#define AE_MOVF16_FROMINT24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMINT24X2)(i)
+#define AE_MOVF16X4_FROMINT24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMINT24X2)(i)
+#define AE_MOVF24_FROMINT24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMINT24X2)(i)
+#define AE_MOVF24X2_FROMINT24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMINT24X2)(i)
+#define AE_MOVF32_FROMINT24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMINT24X2)(i)
+#define AE_MOVF32X2_FROMINT24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMINT24X2)(i)
+#define AE_MOVF64_FROMINT24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMINT24X2)(i)
+#define AE_MOVINT16_FROMINT32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMINT32)(i)
+#define AE_MOVINT16X4_FROMINT32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMINT32)(i)
+#define AE_MOVINT24_FROMINT32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMINT32)(i)
+#define AE_MOVINT24X2_FROMINT32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMINT32)(i)
+#define AE_MOVINT32X2_FROMINT32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMINT32)(i)
+#define AE_MOVINT64_FROMINT32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMINT32)(i)
+#define AE_MOVF16_FROMINT32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMINT32)(i)
+#define AE_MOVF16X4_FROMINT32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMINT32)(i)
+#define AE_MOVF24_FROMINT32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMINT32)(i)
+#define AE_MOVF24X2_FROMINT32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMINT32)(i)
+#define AE_MOVF32_FROMINT32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMINT32)(i)
+#define AE_MOVF32X2_FROMINT32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMINT32)(i)
+#define AE_MOVF64_FROMINT32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMINT32)(i)
+#define AE_MOVINT16_FROMINT32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMINT32X2)(i)
+#define AE_MOVINT16X4_FROMINT32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMINT32X2)(i)
+#define AE_MOVINT24_FROMINT32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMINT32X2)(i)
+#define AE_MOVINT24X2_FROMINT32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMINT32X2)(i)
+#define AE_MOVINT32_FROMINT32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMINT32X2)(i)
+#define AE_MOVINT64_FROMINT32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMINT32X2)(i)
+#define AE_MOVF16_FROMINT32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMINT32X2)(i)
+#define AE_MOVF16X4_FROMINT32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMINT32X2)(i)
+#define AE_MOVF24_FROMINT32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMINT32X2)(i)
+#define AE_MOVF24X2_FROMINT32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMINT32X2)(i)
+#define AE_MOVF32_FROMINT32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMINT32X2)(i)
+#define AE_MOVF32X2_FROMINT32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMINT32X2)(i)
+#define AE_MOVF64_FROMINT32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMINT32X2)(i)
+#define AE_MOVINT16_FROMINT64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMINT64)(i)
+#define AE_MOVINT16X4_FROMINT64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMINT64)(i)
+#define AE_MOVINT24_FROMINT64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMINT64)(i)
+#define AE_MOVINT24X2_FROMINT64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMINT64)(i)
+#define AE_MOVINT32_FROMINT64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMINT64)(i)
+#define AE_MOVINT32X2_FROMINT64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMINT64)(i)
+#define AE_MOVF16_FROMINT64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMINT64)(i)
+#define AE_MOVF16X4_FROMINT64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMINT64)(i)
+#define AE_MOVF24_FROMINT64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMINT64)(i)
+#define AE_MOVF24X2_FROMINT64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMINT64)(i)
+#define AE_MOVF32_FROMINT64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMINT64)(i)
+#define AE_MOVF32X2_FROMINT64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMINT64)(i)
+#define AE_MOVF64_FROMINT64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMINT64)(i)
+#define AE_MOVINT16_FROMF16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMF16)(i)
+#define AE_MOVINT16X4_FROMF16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMF16)(i)
+#define AE_MOVINT24_FROMF16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMF16)(i)
+#define AE_MOVINT24X2_FROMF16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMF16)(i)
+#define AE_MOVINT32_FROMF16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMF16)(i)
+#define AE_MOVINT32X2_FROMF16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMF16)(i)
+#define AE_MOVINT64_FROMF16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMF16)(i)
+#define AE_MOVF16X4_FROMF16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMF16)(i)
+#define AE_MOVF24_FROMF16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMF16)(i)
+#define AE_MOVF24X2_FROMF16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMF16)(i)
+#define AE_MOVF32_FROMF16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMF16)(i)
+#define AE_MOVF32X2_FROMF16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMF16)(i)
+#define AE_MOVF64_FROMF16(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMF16)(i)
+#define AE_MOVINT16_FROMF16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMF16X4)(i)
+#define AE_MOVINT16X4_FROMF16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMF16X4)(i)
+#define AE_MOVINT24_FROMF16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMF16X4)(i)
+#define AE_MOVINT24X2_FROMF16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMF16X4)(i)
+#define AE_MOVINT32_FROMF16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMF16X4)(i)
+#define AE_MOVINT32X2_FROMF16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMF16X4)(i)
+#define AE_MOVINT64_FROMF16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMF16X4)(i)
+#define AE_MOVF16_FROMF16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMF16X4)(i)
+#define AE_MOVF24_FROMF16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMF16X4)(i)
+#define AE_MOVF24X2_FROMF16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMF16X4)(i)
+#define AE_MOVF32_FROMF16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMF16X4)(i)
+#define AE_MOVF32X2_FROMF16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMF16X4)(i)
+#define AE_MOVF64_FROMF16X4(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMF16X4)(i)
+#define AE_MOVINT16_FROMF24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMF24)(i)
+#define AE_MOVINT16X4_FROMF24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMF24)(i)
+#define AE_MOVINT24_FROMF24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMF24)(i)
+#define AE_MOVINT24X2_FROMF24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMF24)(i)
+#define AE_MOVINT32_FROMF24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMF24)(i)
+#define AE_MOVINT32X2_FROMF24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMF24)(i)
+#define AE_MOVINT64_FROMF24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMF24)(i)
+#define AE_MOVF16_FROMF24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMF24)(i)
+#define AE_MOVF16X4_FROMF24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMF24)(i)
+#define AE_MOVF24X2_FROMF24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMF24)(i)
+#define AE_MOVF32_FROMF24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMF24)(i)
+#define AE_MOVF32X2_FROMF24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMF24)(i)
+#define AE_MOVF64_FROMF24(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMF24)(i)
+#define AE_MOVINT16_FROMF24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMF24X2)(i)
+#define AE_MOVINT16X4_FROMF24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMF24X2)(i)
+#define AE_MOVINT24_FROMF24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMF24X2)(i)
+#define AE_MOVINT24X2_FROMF24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMF24X2)(i)
+#define AE_MOVINT32_FROMF24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMF24X2)(i)
+#define AE_MOVINT32X2_FROMF24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMF24X2)(i)
+#define AE_MOVINT64_FROMF24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMF24X2)(i)
+#define AE_MOVF16_FROMF24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMF24X2)(i)
+#define AE_MOVF16X4_FROMF24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMF24X2)(i)
+#define AE_MOVF24_FROMF24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMF24X2)(i)
+#define AE_MOVF32_FROMF24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMF24X2)(i)
+#define AE_MOVF32X2_FROMF24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMF24X2)(i)
+#define AE_MOVF64_FROMF24X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMF24X2)(i)
+#define AE_MOVINT16_FROMF32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMF32)(i)
+#define AE_MOVINT16X4_FROMF32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMF32)(i)
+#define AE_MOVINT24_FROMF32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMF32)(i)
+#define AE_MOVINT24X2_FROMF32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMF32)(i)
+#define AE_MOVINT32_FROMF32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMF32)(i)
+#define AE_MOVINT32X2_FROMF32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMF32)(i)
+#define AE_MOVINT64_FROMF32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMF32)(i)
+#define AE_MOVF16_FROMF32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMF32)(i)
+#define AE_MOVF16X4_FROMF32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMF32)(i)
+#define AE_MOVF24_FROMF32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMF32)(i)
+#define AE_MOVF24X2_FROMF32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMF32)(i)
+#define AE_MOVF32X2_FROMF32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMF32)(i)
+#define AE_MOVF64_FROMF32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMF32)(i)
+#define AE_MOVINT16_FROMF32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMF32X2)(i)
+#define AE_MOVINT16X4_FROMF32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMF32X2)(i)
+#define AE_MOVINT24_FROMF32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMF32X2)(i)
+#define AE_MOVINT24X2_FROMF32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMF32X2)(i)
+#define AE_MOVINT32_FROMF32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMF32X2)(i)
+#define AE_MOVINT32X2_FROMF32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMF32X2)(i)
+#define AE_MOVINT64_FROMF32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMF32X2)(i)
+#define AE_MOVF16_FROMF32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMF32X2)(i)
+#define AE_MOVF16X4_FROMF32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMF32X2)(i)
+#define AE_MOVF24_FROMF32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMF32X2)(i)
+#define AE_MOVF24X2_FROMF32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMF32X2)(i)
+#define AE_MOVF32_FROMF32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMF32X2)(i)
+#define AE_MOVF64_FROMF32X2(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF64_FROMF32X2)(i)
+#define AE_MOVINT16_FROMF64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16_FROMF64)(i)
+#define AE_MOVINT16X4_FROMF64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT16X4_FROMF64)(i)
+#define AE_MOVINT24_FROMF64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24_FROMF64)(i)
+#define AE_MOVINT24X2_FROMF64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT24X2_FROMF64)(i)
+#define AE_MOVINT32_FROMF64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32_FROMF64)(i)
+#define AE_MOVINT32X2_FROMF64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT32X2_FROMF64)(i)
+#define AE_MOVINT64_FROMF64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVINT64_FROMF64)(i)
+#define AE_MOVF16_FROMF64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16_FROMF64)(i)
+#define AE_MOVF16X4_FROMF64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF16X4_FROMF64)(i)
+#define AE_MOVF24_FROMF64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24_FROMF64)(i)
+#define AE_MOVF24X2_FROMF64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF24X2_FROMF64)(i)
+#define AE_MOVF32_FROMF64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32_FROMF64)(i)
+#define AE_MOVF32X2_FROMF64(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF32X2_FROMF64)(i)
+#define ae_int32u_loadi(base, c) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32u_loadi)(base, c)
+#define ae_int32u_storei(a, base, c) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32u_storei)(a, base, c)
+#define ae_int32u_move(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32u_move)(b)
+#define ae_int16u_loadi(base, c) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16u_loadi)(base, c)
+#define ae_int16u_storei(a, base, c) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16u_storei)(a, base, c)
+#define ae_int16u_move(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int16u_move)(b)
+#define AE_ABS_32(b) \
+	CSTUB_(_TIE_xt_hifi2_AE_ABS_32)(b)
+#define AE_MOV_32(b) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOV_32)(b)
+#define AE_NEG_32(b) \
+	CSTUB_(_TIE_xt_hifi2_AE_NEG_32)(b)
+#define AE_ADD_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADD_32)(b, c)
+#define AE_ADDI_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADDI_32)(b, c)
+#define AE_ADDMI_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADDMI_32)(b, c)
+#define AE_ADDX2_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADDX2_32)(b, c)
+#define AE_ADDX4_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADDX4_32)(b, c)
+#define AE_ADDX8_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADDX8_32)(b, c)
+#define AE_SUBX2_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUBX2_32)(b, c)
+#define AE_SUBX4_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUBX4_32)(b, c)
+#define AE_SUBX8_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUBX8_32)(b, c)
+#define AE_SUB_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUB_32)(b, c)
+#define AE_SEXT_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEXT_32)(b, c)
+#define AE_SRAI_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAI_32)(b, c)
+#define AE_SRLI_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLI_32)(b, c)
+#define AE_SLLI_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLLI_32)(b, c)
+#define AE_L_32(base, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_L_32)(base, c)
+#define AE_S_32(a, base, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_S_32)(a, base, c)
+#define AE_L_16(base, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_L_16)(base, c)
+#define AE_MAX_32_signed(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MAX_32_signed)(b, c)
+#define AE_MIN_32_signed(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MIN_32_signed)(b, c)
+#define AE_AND_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_AND_32)(b, c)
+#define AE_MULAF16SS_00_scalar(a, b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_00_scalar)(&a, b, c)
+#define AE_MULAF16SS_30_scalar(a, b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULAF16SS_30_scalar)(&a, b, c)
+#define AE_MULF16SS_30_scalar(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULF16SS_30_scalar)(b, c)
+#define AE_OR_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_OR_32)(b, c)
+#define AE_XOR_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_XOR_32)(b, c)
+#define AE_NAND_32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_NAND_32)(b, c)
+#define AE_MOVLTZ_32(a, b, test_value) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVLTZ_32)(&a, b, test_value)
+#define AE_MOVGEZ_32(a, b, test_value) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVGEZ_32)(&a, b, test_value)
+#define AE_MOVEQZ_32(a, b, test_value) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVEQZ_32)(&a, b, test_value)
+#define AE_MOVNEZ_32(a, b, test_value) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVNEZ_32)(&a, b, test_value)
+#define AE_MOVT_32(a, b, cond) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVT_32)(&a, b, cond)
+#define AE_MOVI_32(i) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVI_32)(i)
+#define AE_MOVT_32_unsigned(a, b, cond) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVT_32_unsigned)(&a, b, cond)
+#define AE_MOVF_32(a, b, cond) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF_32)(&a, b, cond)
+#define AE_MOVF_32_unsigned(a, b, cond) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVF_32_unsigned)(&a, b, cond)
+#define AE_S_16(a, base, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_S_16)(a, base, c)
+#define AE_MUL16S(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL16S)(b, c)
+#define AE_L_16U(base, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_L_16U)(base, c)
+#define AE_MUL32(b, c) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32)(b, c)
+#define xtbool_join_xtbool2(src0, src1) \
+	CSTUB_(_TIE_xt_hifi2_xtbool_join_xtbool2)(src0, src1)
+#define xtbool_join_xtbool4(src0, src1, src2, src3) \
+	CSTUB_(_TIE_xt_hifi2_xtbool_join_xtbool4)(src0, src1, src2, src3)
+#define xtbool2_extract_0(src) \
+	CSTUB_(_TIE_xt_hifi2_xtbool2_extract_0)(src)
+#define xtbool2_extract_1(src) \
+	CSTUB_(_TIE_xt_hifi2_xtbool2_extract_1)(src)
+#define xtbool4_extract_0(src) \
+	CSTUB_(_TIE_xt_hifi2_xtbool4_extract_0)(src)
+#define xtbool4_extract_1(src) \
+	CSTUB_(_TIE_xt_hifi2_xtbool4_extract_1)(src)
+#define xtbool4_extract_2(src) \
+	CSTUB_(_TIE_xt_hifi2_xtbool4_extract_2)(src)
+#define xtbool4_extract_3(src) \
+	CSTUB_(_TIE_xt_hifi2_xtbool4_extract_3)(src)
+#define ae_int64x2_loadi(b, c) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64x2_loadi)(b, c)
+#define ae_int64x2_storei(d, b, c) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64x2_storei)(d, b, c)
+#define ae_int64x2_move(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64x2_move)(b)
+#define AE_SLAA64X2_vector(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAA64X2_vector)(d0, sa)
+#define AE_SLAI64X2_vector(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SLAI64X2_vector)(d0, sa)
+#define AE_SRAA64X2_vector(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAA64X2_vector)(d0, sa)
+#define AE_SRAI64X2_vector(d0, sa) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRAI64X2_vector)(d0, sa)
+#define AE_NEG64X2_vector(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_NEG64X2_vector)(d0)
+#define AE_ADD64X2_vector(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADD64X2_vector)(d0, d1)
+#define AE_SUB64X2_vector(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_SUB64X2_vector)(d0, d1)
+#define AE_MULA32X2_vector(d, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA32X2_vector)(&d, d0, d1)
+#define AE_MUL32X2_vector(d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_MUL32X2_vector)(d0, d1)
+#define ae_int32x2_rtor_ae_int64x2(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int32x2_rtor_ae_int64x2)(b)
+#define AE_INT64X2_RADD(d0) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT64X2_RADD)(d0)
+#define AE_INT16X4_RMADD_INT16X4_vector(ain, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_RMADD_INT16X4_vector)(ain, d0, d1)
+#define AE_INT16X4_RMADD_INT16X4_scalar(ain, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_INT16X4_RMADD_INT16X4_scalar)(ain, d0, d1)
+#define ae_int64x4_loadi(b, c) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64x4_loadi)(b, c)
+#define ae_int64x4_storei(d, b, c) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64x4_storei)(d, b, c)
+#define ae_int64x4_move(b) \
+	CSTUB_(_TIE_xt_hifi2_ae_int64x4_move)(b)
+#define AE_SRLA32_vector(var1, var2) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLA32_vector)(var1, var2)
+#define AE_SRLA32_scalar(var1, var2) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLA32_scalar)(var1, var2)
+#define AE_SRLA16_vector(var1, var2) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLA16_vector)(var1, var2)
+#define AE_SRLA16_scalar(var1, var2) \
+	CSTUB_(_TIE_xt_hifi2_AE_SRLA16_scalar)(var1, var2)
+#define AE_MULA16S_scalar(ain, var1, var2) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA16S_scalar)(ain, var1, var2)
+#define AE_MULA16S_vector(ain, var1, var2) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULA16S_vector)(ain, var1, var2)
+#define AE_MULS16S_scalar(ain, var1, var2) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS16S_scalar)(ain, var1, var2)
+#define AE_MULS16S_vector(ain, var1, var2) \
+	CSTUB_(_TIE_xt_hifi2_AE_MULS16S_vector)(ain, var1, var2)
+#define AE_RLmula0_rinit(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLmula0_rinit)(a)
+#define AE_RLmula0_rvec(din, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLmula0_rvec)(din, d0, d1)
+#define AE_RLmula0_rfini(d) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLmula0_rfini)(d)
+#define AE_RLmuls0_rinit(a) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLmuls0_rinit)(a)
+#define AE_RLmuls0_rvec(din, d0, d1) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLmuls0_rvec)(din, d0, d1)
+#define AE_RLmuls0_rfini(d) \
+	CSTUB_(_TIE_xt_hifi2_AE_RLmuls0_rfini)(d)
+#define XT_xtfloat_loadi(a, off) \
+	CSTUB_(_TIE_xt_FP_xtfloat_loadi)(a, off)
+#define XT_xtfloat_loadx(a, off) \
+	CSTUB_(_TIE_xt_FP_xtfloat_loadx)(a, off)
+#define XT_xtfloat_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xtfloat_loadxp)(&d, (const xtfloat **)&(a), off)
+#define XT_xtfloat_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xtfloat_loadip)(&d, (const xtfloat **)&(a), off)
+#define XT_xtfloat_storei(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xtfloat_storei)(d, a, off)
+#define XT_xtfloat_storex(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xtfloat_storex)(d, a, off)
+#define XT_xtfloat_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xtfloat_storexp)(d, (xtfloat **)&(a), off)
+#define XT_xtfloat_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xtfloat_storeip)(d, (xtfloat **)&(a), off)
+#define XT_xtfloat_move(d0) \
+	CSTUB_(_TIE_xt_FP_xtfloat_move)(d0)
+#define XT_xtfloat_rtor_xtfloatx2(d0) \
+	CSTUB_(_TIE_xt_FP_xtfloat_rtor_xtfloatx2)(d0)
+#define XT_ZERO_S() \
+	CSTUB_(_TIE_xt_FP_ZERO_S)()
+#define XT_ae_int32x2_rtor_xtfloatx2(i) \
+	CSTUB_(_TIE_xt_FP_ae_int32x2_rtor_xtfloatx2)(i)
+#define XT_xtfloatx2_rtor_ae_int32x2(i) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_rtor_ae_int32x2)(i)
+#define XT_AE_SELSX2IR(v0, v1, i) \
+	CSTUB_(_TIE_xt_FP_AE_SELSX2IR)(v0, v1, i)
+#define XT_SEL32_LH_SX2(d0, d1) \
+	CSTUB_(_TIE_xt_FP_SEL32_LH_SX2)(d0, d1)
+#define XT_SEL32_HL_SX2(d0, d1) \
+	CSTUB_(_TIE_xt_FP_SEL32_HL_SX2)(d0, d1)
+#define XT_SEL32_HH_SX2(d0, d1) \
+	CSTUB_(_TIE_xt_FP_SEL32_HH_SX2)(d0, d1)
+#define XT_SEL32_LL_SX2(d0, d1) \
+	CSTUB_(_TIE_xt_FP_SEL32_LL_SX2)(d0, d1)
+#define XT_LOW_S(d01) \
+	CSTUB_(_TIE_xt_FP_LOW_S)(d01)
+#define XT_HIGH_S(d01) \
+	CSTUB_(_TIE_xt_FP_HIGH_S)(d01)
+#define XT_xtfloatx2_rtor_xtfloat(d01) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_rtor_xtfloat)(d01)
+#define XT_xtfloatx2_loadi(a, off) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_loadi)(a, off)
+#define XT_xtfloatx2_loadx(a, off) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_loadx)(a, off)
+#define XT_xtfloatx2_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_loadxp)(&d, (const xtfloatx2 **)&(a), off)
+#define XT_xtfloatx2_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_loadip)(&d, (const xtfloatx2 **)&(a), off)
+#define XT_xtfloatx2_loadrip(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_loadrip)(&d, (const xtfloatx2 **)&(a), off)
+#define XT_xtfloatx2_storei(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_storei)(d, a, off)
+#define XT_xtfloatx2_storex(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_storex)(d, a, off)
+#define XT_xtfloatx2_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_storexp)(d, (xtfloatx2 **)&(a), off)
+#define XT_xtfloatx2_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_storeip)(d, (xtfloatx2 **)&(a), off)
+#define XT_xtfloatx2_move(d0) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_move)(d0)
+#define XT_ZERO_SX2() \
+	CSTUB_(_TIE_xt_FP_ZERO_SX2)()
+#define XT_xthalfx4_loadi(a, off) \
+	CSTUB_(_TIE_xt_FP_xthalfx4_loadi)(a, off)
+#define XT_xthalfx4_loadx(a, off) \
+	CSTUB_(_TIE_xt_FP_xthalfx4_loadx)(a, off)
+#define XT_xthalfx4_loadxp(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xthalfx4_loadxp)(&d, (const xthalfx4 **)&(a), off)
+#define XT_xthalfx4_loadip(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xthalfx4_loadip)(&d, (const xthalfx4 **)&(a), off)
+#define XT_xthalfx4_storei(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xthalfx4_storei)(d, a, off)
+#define XT_xthalfx4_storex(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xthalfx4_storex)(d, a, off)
+#define XT_xthalfx4_storexp(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xthalfx4_storexp)(d, (xthalfx4 **)&(a), off)
+#define XT_xthalfx4_storeip(d, a, off) \
+	CSTUB_(_TIE_xt_FP_xthalfx4_storeip)(d, (xthalfx4 **)&(a), off)
+#define XT_xthalfx4_move(d0) \
+	CSTUB_(_TIE_xt_FP_xthalfx4_move)(d0)
+#define XT_ZERO_HX4() \
+	CSTUB_(_TIE_xt_FP_ZERO_HX4)()
+#define XT_LASX2PP(a) \
+	CSTUB_(_TIE_xt_FP_LASX2PP)(a)
+#define XT_LASX2POSPC(u, a) \
+	CSTUB_(_TIE_xt_FP_LASX2POSPC)(&u, (const xtfloatx2 **)&(a))
+#define XT_LASX2NEGPC(u, a) \
+	CSTUB_(_TIE_xt_FP_LASX2NEGPC)(&u, (const xtfloatx2 **)&(a))
+#define XT_LASX2IP(v, u, a) \
+	CSTUB_(_TIE_xt_FP_LASX2IP)(&v, &u, (const xtfloatx2 **)&(a))
+#define XT_LASX2IC(v, u, a) \
+	CSTUB_(_TIE_xt_FP_LASX2IC)(&v, &u, (const xtfloatx2 **)&(a))
+#define XT_LASX2RIC(v, u, a) \
+	CSTUB_(_TIE_xt_FP_LASX2RIC)(&v, &u, (const xtfloatx2 **)&(a))
+#define XT_LASX2RIP(v, u, a) \
+	CSTUB_(_TIE_xt_FP_LASX2RIP)(&v, &u, (const xtfloatx2 **)&(a))
+#define XT_SASX2IP(v, u, a) \
+	CSTUB_(_TIE_xt_FP_SASX2IP)(v, &u, (xtfloatx2 **)&(a))
+#define XT_SASX2IC(v, u, a) \
+	CSTUB_(_TIE_xt_FP_SASX2IC)(v, &u, (xtfloatx2 **)&(a))
+#define XT_SASX2RIC(v, u, a) \
+	CSTUB_(_TIE_xt_FP_SASX2RIC)(v, &u, (xtfloatx2 **)&(a))
+#define XT_SASX2RIP(v, u, a) \
+	CSTUB_(_TIE_xt_FP_SASX2RIP)(v, &u, (xtfloatx2 **)&(a))
+#define XT_SASX2POSFP(u, a) \
+	CSTUB_(_TIE_xt_FP_SASX2POSFP)(&u, a)
+#define XT_SASX2NEGFP(u, a) \
+	CSTUB_(_TIE_xt_FP_SASX2NEGFP)(&u, a)
+#define XT_xtfloatx2_aligning_store_prime() \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_aligning_store_prime)()
+#define XT_xtfloatx2_load_post_update_negative(v, a) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_load_post_update_negative)(&v, (const xtfloatx2 **)&(a))
+#define XT_xtfloatx2_store_post_update_negative(v, a) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_store_post_update_negative)(v, (xtfloatx2 **)&(a))
+#define XT_LSI(a, off) \
+	CSTUB_(_TIE_xt_FP_LSI)(a, off)
+#define XT_LSX(a, off) \
+	CSTUB_(_TIE_xt_FP_LSX)(a, off)
+#define XT_LSXP(d, a, off) \
+	CSTUB_(_TIE_xt_FP_LSXP)(&d, (const xtfloat **)&(a), off)
+#define XT_LSXC(d, a, off) \
+	CSTUB_(_TIE_xt_FP_LSXC)(&d, (const xtfloat **)&(a), off)
+#define XT_LSIP(d, a, off) \
+	CSTUB_(_TIE_xt_FP_LSIP)(&d, (const xtfloat **)&(a), off)
+#define XT_SSI(d, a, off) \
+	CSTUB_(_TIE_xt_FP_SSI)(d, a, off)
+#define XT_SSX(d, a, off) \
+	CSTUB_(_TIE_xt_FP_SSX)(d, a, off)
+#define XT_SSXP(d, a, off) \
+	CSTUB_(_TIE_xt_FP_SSXP)(d, (xtfloat **)&(a), off)
+#define XT_SSXC(d, a, off) \
+	CSTUB_(_TIE_xt_FP_SSXC)(d, (xtfloat **)&(a), off)
+#define XT_SSIP(d, a, off) \
+	CSTUB_(_TIE_xt_FP_SSIP)(d, (xtfloat **)&(a), off)
+#define XT_LSX2I(a, off) \
+	CSTUB_(_TIE_xt_FP_LSX2I)(a, off)
+#define XT_LSX2X(a, off) \
+	CSTUB_(_TIE_xt_FP_LSX2X)(a, off)
+#define XT_LSX2XP(d, a, off) \
+	CSTUB_(_TIE_xt_FP_LSX2XP)(&d, (const xtfloatx2 **)&(a), off)
+#define XT_LSX2XC(d, a, off) \
+	CSTUB_(_TIE_xt_FP_LSX2XC)(&d, (const xtfloatx2 **)&(a), off)
+#define XT_LSX2RIC(d, a) \
+	CSTUB_(_TIE_xt_FP_LSX2RIC)(&d, (const xtfloatx2 **)&(a))
+#define XT_LSX2IP(d, a, off) \
+	CSTUB_(_TIE_xt_FP_LSX2IP)(&d, (const xtfloatx2 **)&(a), off)
+#define XT_LSX2RIP(d, a, off) \
+	CSTUB_(_TIE_xt_FP_LSX2RIP)(&d, (const xtfloatx2 **)&(a), off)
+#define XT_LSX2RI(a, off) \
+	CSTUB_(_TIE_xt_FP_LSX2RI)(a, off)
+#define XT_SSX2I(d, a, off) \
+	CSTUB_(_TIE_xt_FP_SSX2I)(d, a, off)
+#define XT_SSX2RI(d, a, off) \
+	CSTUB_(_TIE_xt_FP_SSX2RI)(d, a, off)
+#define XT_SSX2X(d, a, off) \
+	CSTUB_(_TIE_xt_FP_SSX2X)(d, a, off)
+#define XT_SSX2XP(d, a, off) \
+	CSTUB_(_TIE_xt_FP_SSX2XP)(d, (xtfloatx2 **)&(a), off)
+#define XT_SSX2XC(d, a, off) \
+	CSTUB_(_TIE_xt_FP_SSX2XC)(d, (xtfloatx2 **)&(a), off)
+#define XT_SSX2RIC(d, a) \
+	CSTUB_(_TIE_xt_FP_SSX2RIC)(d, (xtfloatx2 **)&(a))
+#define XT_SSX2IP(d, a, off) \
+	CSTUB_(_TIE_xt_FP_SSX2IP)(d, (xtfloatx2 **)&(a), off)
+#define XT_SSX2RIP(d, a, off) \
+	CSTUB_(_TIE_xt_FP_SSX2RIP)(d, (xtfloatx2 **)&(a), off)
+#define XT_LFCR_FSR(a, b) \
+	CSTUB_(_TIE_xt_FP_LFCR_FSR)(a, b)
+#define XT_SFCR_FSR(a, b) \
+	CSTUB_(_TIE_xt_FP_SFCR_FSR)(a, b)
+#define XT_MOV_S(s) \
+	CSTUB_(_TIE_xt_FP_MOV_S)(s)
+#define XT_MOV_SX2(s) \
+	CSTUB_(_TIE_xt_FP_MOV_SX2)(s)
+#define XT_MOVF_S(r, s, t) \
+	CSTUB_(_TIE_xt_FP_MOVF_S)(&r, s, t)
+#define XT_MOVT_S(r, s, t) \
+	CSTUB_(_TIE_xt_FP_MOVT_S)(&r, s, t)
+#define XT_MOVF_SX2(r, s, t) \
+	CSTUB_(_TIE_xt_FP_MOVF_SX2)(&r, s, t)
+#define XT_MOVT_SX2(r, s, t) \
+	CSTUB_(_TIE_xt_FP_MOVT_SX2)(&r, s, t)
+#define XT_MOVEQZ_S(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MOVEQZ_S)(&a, b, c)
+#define XT_MOVEQZ_SX2(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MOVEQZ_SX2)(&a, b, c)
+#define XT_MOVNEZ_S(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MOVNEZ_S)(&a, b, c)
+#define XT_MOVNEZ_SX2(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MOVNEZ_SX2)(&a, b, c)
+#define XT_MOVGEZ_S(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MOVGEZ_S)(&a, b, c)
+#define XT_MOVGEZ_SX2(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MOVGEZ_SX2)(&a, b, c)
+#define XT_MOVLTZ_S(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MOVLTZ_S)(&a, b, c)
+#define XT_MOVLTZ_SX2(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MOVLTZ_SX2)(&a, b, c)
+#define XT_TRUNC_S(s, t) \
+	CSTUB_(_TIE_xt_FP_TRUNC_S)(s, t)
+#define XT_UTRUNC_S(s, t) \
+	CSTUB_(_TIE_xt_FP_UTRUNC_S)(s, t)
+#define XT_TRUNC_SX2(s, t) \
+	CSTUB_(_TIE_xt_FP_TRUNC_SX2)(s, t)
+#define XT_UTRUNC_SX2(s, t) \
+	CSTUB_(_TIE_xt_FP_UTRUNC_SX2)(s, t)
+#define XT_FICEIL_S(b) \
+	CSTUB_(_TIE_xt_FP_FICEIL_S)(b)
+#define XT_FICEIL_SX2(b) \
+	CSTUB_(_TIE_xt_FP_FICEIL_SX2)(b)
+#define XT_FIFLOOR_S(b) \
+	CSTUB_(_TIE_xt_FP_FIFLOOR_S)(b)
+#define XT_FIFLOOR_SX2(b) \
+	CSTUB_(_TIE_xt_FP_FIFLOOR_SX2)(b)
+#define XT_FIROUND_S(b) \
+	CSTUB_(_TIE_xt_FP_FIROUND_S)(b)
+#define XT_FIROUND_SX2(b) \
+	CSTUB_(_TIE_xt_FP_FIROUND_SX2)(b)
+#define XT_FITRUNC_S(b) \
+	CSTUB_(_TIE_xt_FP_FITRUNC_S)(b)
+#define XT_FITRUNC_SX2(b) \
+	CSTUB_(_TIE_xt_FP_FITRUNC_SX2)(b)
+#define XT_FIRINT_S(b) \
+	CSTUB_(_TIE_xt_FP_FIRINT_S)(b)
+#define XT_FIRINT_SX2(b) \
+	CSTUB_(_TIE_xt_FP_FIRINT_SX2)(b)
+#define XT_CVTSF16_L(b) \
+	CSTUB_(_TIE_xt_FP_CVTSF16_L)(b)
+#define XT_CVTSF16_H(b) \
+	CSTUB_(_TIE_xt_FP_CVTSF16_H)(b)
+#define XT_CVTF16S_L(b) \
+	CSTUB_(_TIE_xt_FP_CVTF16S_L)(b)
+#define XT_CVTF16S_H(a, b) \
+	CSTUB_(_TIE_xt_FP_CVTF16S_H)(&a, b)
+#define XT_RFR(vs) \
+	CSTUB_(_TIE_xt_FP_RFR)(vs)
+#define XT_RUR_FCR() \
+	CSTUB_(_TIE_xt_FP_RUR_FCR)()
+#define XT_RUR_FSR() \
+	CSTUB_(_TIE_xt_FP_RUR_FSR)()
+#define XT_WFR(vs) \
+	CSTUB_(_TIE_xt_FP_WFR)(vs)
+#define XT_WUR_FCR(v) \
+	CSTUB_(_TIE_xt_FP_WUR_FCR)(v)
+#define XT_WUR_FSR(v) \
+	CSTUB_(_TIE_xt_FP_WUR_FSR)(v)
+#define XT_ABS_S(b) \
+	CSTUB_(_TIE_xt_FP_ABS_S)(b)
+#define XT_ABS_SX2(b) \
+	CSTUB_(_TIE_xt_FP_ABS_SX2)(b)
+#define XT_MUL_S(b, c) \
+	CSTUB_(_TIE_xt_FP_MUL_S)(b, c)
+#define XT_MUL_SX2(b, c) \
+	CSTUB_(_TIE_xt_FP_MUL_SX2)(b, c)
+#define XT_MADD_S(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MADD_S)(&a, b, c)
+#define XT_MADD_SX2(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MADD_SX2)(&a, b, c)
+#define XT_MSUB_S(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MSUB_S)(&a, b, c)
+#define XT_MSUB_SX2(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MSUB_SX2)(&a, b, c)
+#define XT_MSUBN_S(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MSUBN_S)(&a, b, c)
+#define XT_MSUBN_SX2(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MSUBN_SX2)(&a, b, c)
+#define XT_MADDN_S(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MADDN_S)(&a, b, c)
+#define XT_MADDN_SX2(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MADDN_SX2)(&a, b, c)
+#define XT_ADD_S(b, c) \
+	CSTUB_(_TIE_xt_FP_ADD_S)(b, c)
+#define XT_ADD_SX2(b, c) \
+	CSTUB_(_TIE_xt_FP_ADD_SX2)(b, c)
+#define XT_RADD_SX2(s) \
+	CSTUB_(_TIE_xt_FP_RADD_SX2)(s)
+#define XT_SUB_S(b, c) \
+	CSTUB_(_TIE_xt_FP_SUB_S)(b, c)
+#define XT_SUB_SX2(b, c) \
+	CSTUB_(_TIE_xt_FP_SUB_SX2)(b, c)
+#define XT_NEG_S(b) \
+	CSTUB_(_TIE_xt_FP_NEG_S)(b)
+#define XT_NEG_SX2(b) \
+	CSTUB_(_TIE_xt_FP_NEG_SX2)(b)
+#define XT_FLOAT_S(s, t) \
+	CSTUB_(_TIE_xt_FP_FLOAT_S)(s, t)
+#define XT_UFLOAT_S(s, t) \
+	CSTUB_(_TIE_xt_FP_UFLOAT_S)(s, t)
+#define XT_FLOAT_SX2(s, t) \
+	CSTUB_(_TIE_xt_FP_FLOAT_SX2)(s, t)
+#define XT_UFLOAT_SX2(s, t) \
+	CSTUB_(_TIE_xt_FP_UFLOAT_SX2)(s, t)
+#define XT_OEQ_S(s, t) \
+	CSTUB_(_TIE_xt_FP_OEQ_S)(s, t)
+#define XT_OLE_S(s, t) \
+	CSTUB_(_TIE_xt_FP_OLE_S)(s, t)
+#define XT_OLT_S(s, t) \
+	CSTUB_(_TIE_xt_FP_OLT_S)(s, t)
+#define XT_UEQ_S(s, t) \
+	CSTUB_(_TIE_xt_FP_UEQ_S)(s, t)
+#define XT_ULE_S(s, t) \
+	CSTUB_(_TIE_xt_FP_ULE_S)(s, t)
+#define XT_ULT_S(s, t) \
+	CSTUB_(_TIE_xt_FP_ULT_S)(s, t)
+#define XT_UN_S(s, t) \
+	CSTUB_(_TIE_xt_FP_UN_S)(s, t)
+#define XT_OEQ_SX2(s, t) \
+	CSTUB_(_TIE_xt_FP_OEQ_SX2)(s, t)
+#define XT_OLE_SX2(s, t) \
+	CSTUB_(_TIE_xt_FP_OLE_SX2)(s, t)
+#define XT_OLT_SX2(s, t) \
+	CSTUB_(_TIE_xt_FP_OLT_SX2)(s, t)
+#define XT_UEQ_SX2(s, t) \
+	CSTUB_(_TIE_xt_FP_UEQ_SX2)(s, t)
+#define XT_ULE_SX2(s, t) \
+	CSTUB_(_TIE_xt_FP_ULE_SX2)(s, t)
+#define XT_ULT_SX2(s, t) \
+	CSTUB_(_TIE_xt_FP_ULT_SX2)(s, t)
+#define XT_UN_SX2(s, t) \
+	CSTUB_(_TIE_xt_FP_UN_SX2)(s, t)
+#define XT_CONST_S(b) \
+	CSTUB_(_TIE_xt_FP_CONST_S)(b)
+#define XT_NEXP01_S(s) \
+	CSTUB_(_TIE_xt_FP_NEXP01_S)(s)
+#define XT_NEXP01_SX2(s) \
+	CSTUB_(_TIE_xt_FP_NEXP01_SX2)(s)
+#define XT_MKSADJ_S(s) \
+	CSTUB_(_TIE_xt_FP_MKSADJ_S)(s)
+#define XT_MKSADJ_SX2(s) \
+	CSTUB_(_TIE_xt_FP_MKSADJ_SX2)(s)
+#define XT_MKDADJ_S(r, s) \
+	CSTUB_(_TIE_xt_FP_MKDADJ_S)(&r, s)
+#define XT_MKDADJ_SX2(r, s) \
+	CSTUB_(_TIE_xt_FP_MKDADJ_SX2)(&r, s)
+#define XT_DIV0_S(s) \
+	CSTUB_(_TIE_xt_FP_DIV0_S)(s)
+#define XT_DIV0_SX2(s) \
+	CSTUB_(_TIE_xt_FP_DIV0_SX2)(s)
+#define XT_SQRT0_S(s) \
+	CSTUB_(_TIE_xt_FP_SQRT0_S)(s)
+#define XT_SQRT0_SX2(s) \
+	CSTUB_(_TIE_xt_FP_SQRT0_SX2)(s)
+#define XT_RECIP0_S(s) \
+	CSTUB_(_TIE_xt_FP_RECIP0_S)(s)
+#define XT_RECIP0_SX2(s) \
+	CSTUB_(_TIE_xt_FP_RECIP0_SX2)(s)
+#define XT_RECIP_S(s) \
+	CSTUB_(_TIE_xt_FP_RECIP_S)(s)
+#define XT_RECIP_SX2(s) \
+	CSTUB_(_TIE_xt_FP_RECIP_SX2)(s)
+#define XT_RSQRT_S(s) \
+	CSTUB_(_TIE_xt_FP_RSQRT_S)(s)
+#define XT_RSQRT_SX2(s) \
+	CSTUB_(_TIE_xt_FP_RSQRT_SX2)(s)
+#define XT_FSQRT_S(s) \
+	CSTUB_(_TIE_xt_FP_FSQRT_S)(s)
+#define XT_FSQRT_SX2(s) \
+	CSTUB_(_TIE_xt_FP_FSQRT_SX2)(s)
+#define XT_DIV_S(vs, vr) \
+	CSTUB_(_TIE_xt_FP_DIV_S)(vs, vr)
+#define XT_DIV_SX2(vs, vr) \
+	CSTUB_(_TIE_xt_FP_DIV_SX2)(vs, vr)
+#define XT_SQRT_S(vs) \
+	CSTUB_(_TIE_xt_FP_SQRT_S)(vs)
+#define XT_SQRT_SX2(vs) \
+	CSTUB_(_TIE_xt_FP_SQRT_SX2)(vs)
+#define XT_RSQRT0_S(s) \
+	CSTUB_(_TIE_xt_FP_RSQRT0_S)(s)
+#define XT_RSQRT0_SX2(s) \
+	CSTUB_(_TIE_xt_FP_RSQRT0_SX2)(s)
+#define XT_DIVN_S(r, s, t) \
+	CSTUB_(_TIE_xt_FP_DIVN_S)(&r, s, t)
+#define XT_DIVN_SX2(r, s, t) \
+	CSTUB_(_TIE_xt_FP_DIVN_SX2)(&r, s, t)
+#define XT_ADDEXP_S(r, s) \
+	CSTUB_(_TIE_xt_FP_ADDEXP_S)(&r, s)
+#define XT_ADDEXP_SX2(r, s) \
+	CSTUB_(_TIE_xt_FP_ADDEXP_SX2)(&r, s)
+#define XT_ADDEXPM_S(r, s) \
+	CSTUB_(_TIE_xt_FP_ADDEXPM_S)(&r, s)
+#define XT_ADDEXPM_SX2(r, s) \
+	CSTUB_(_TIE_xt_FP_ADDEXPM_SX2)(&r, s)
+#define XT_MIN_S(b, c) \
+	CSTUB_(_TIE_xt_FP_MIN_S)(b, c)
+#define XT_MIN_SX2(b, c) \
+	CSTUB_(_TIE_xt_FP_MIN_SX2)(b, c)
+#define XT_RMIN_S(s) \
+	CSTUB_(_TIE_xt_FP_RMIN_S)(s)
+#define XT_MAX_S(b, c) \
+	CSTUB_(_TIE_xt_FP_MAX_S)(b, c)
+#define XT_MAX_SX2(b, c) \
+	CSTUB_(_TIE_xt_FP_MAX_SX2)(b, c)
+#define XT_RMAX_S(s) \
+	CSTUB_(_TIE_xt_FP_RMAX_S)(s)
+#define XT_MULMUX_S(b, c, d) \
+	CSTUB_(_TIE_xt_FP_MULMUX_S)(b, c, d)
+#define XT_MADDMUX_S(a, b, c, d) \
+	CSTUB_(_TIE_xt_FP_MADDMUX_S)(&a, b, c, d)
+#define XT_MULC_S(b, c) \
+	CSTUB_(_TIE_xt_FP_MULC_S)(b, c)
+#define XT_MADDC_S(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MADDC_S)(&a, b, c)
+#define XT_MSUBC_S(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MSUBC_S)(&a, b, c)
+#define XT_MULCCONJ_S(b, c) \
+	CSTUB_(_TIE_xt_FP_MULCCONJ_S)(b, c)
+#define XT_MADDCCONJ_S(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MADDCCONJ_S)(&a, b, c)
+#define XT_MSUBCCONJ_S(a, b, c) \
+	CSTUB_(_TIE_xt_FP_MSUBCCONJ_S)(&a, b, c)
+#define XT_CONJC_S(b) \
+	CSTUB_(_TIE_xt_FP_CONJC_S)(b)
+#define XT_AE_MOVXTFLOATX2_FROMINT32X2(i) \
+	CSTUB_(_TIE_xt_FP_AE_MOVXTFLOATX2_FROMINT32X2)(i)
+#define XT_AE_MOVINT32X2_FROMXTFLOATX2(i) \
+	CSTUB_(_TIE_xt_FP_AE_MOVINT32X2_FROMXTFLOATX2)(i)
+#define XT_AE_MOVXTFLOATX2_FROMF32X2(i) \
+	CSTUB_(_TIE_xt_FP_AE_MOVXTFLOATX2_FROMF32X2)(i)
+#define XT_AE_MOVF32X2_FROMXTFLOATX2(i) \
+	CSTUB_(_TIE_xt_FP_AE_MOVF32X2_FROMXTFLOATX2)(i)
+#define XT_xtfloatx2_EQ_xtfloatx2(d0, d1) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_EQ_xtfloatx2)(d0, d1)
+#define XT_xtfloatx2_LT_xtfloatx2(d0, d1) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_LT_xtfloatx2)(d0, d1)
+#define XT_xtfloatx2_LE_xtfloatx2(d0, d1) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_LE_xtfloatx2)(d0, d1)
+#define XT_xtfloatx2_GT_xtfloatx2(d0, d1) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_GT_xtfloatx2)(d0, d1)
+#define XT_xtfloatx2_GE_xtfloatx2(d0, d1) \
+	CSTUB_(_TIE_xt_FP_xtfloatx2_GE_xtfloatx2)(d0, d1)
+#define AE_ZALIGN64() \
+	CSTUB_(_TIE_xt_hifi2_AE_ZALIGN64)()
+#define AE_LALIGN64_I(a, i64) \
+	CSTUB_(_TIE_xt_hifi2_AE_LALIGN64_I)(a, i64)
+#define AE_SALIGN64_I(su, a, i64) \
+	CSTUB_(_TIE_xt_hifi2_AE_SALIGN64_I)(su, a, i64)
+#define AE_MOVALIGN(v) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVALIGN)(v)
+#define AE_ADDBRBA32(ab, ai) \
+	CSTUB_(_TIE_xt_hifi2_AE_ADDBRBA32)(ab, ai)
+#define AE_MOVB2(bhl2) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVB2)(bhl2)
+#define AE_MOVB4(bhl4) \
+	CSTUB_(_TIE_xt_hifi2_AE_MOVB4)(bhl4)
+#define AE_CALCRNG3() \
+	CSTUB_(_TIE_xt_hifi2_AE_CALCRNG3)()
+#define AE_SHA32(ai) \
+	CSTUB_(_TIE_xt_hifi2_AE_SHA32)(ai)
+#define AE_VLDSHT(ar_t) \
+	CSTUB_(_TIE_xt_hifi2_AE_VLDSHT)(ar_t)
+#define XT_AE_MOVFCRFSRV(v) \
+	CSTUB_(_TIE_xt_FP_AE_MOVFCRFSRV)(v)
+#define XT_AE_MOVVFCRFSR() \
+	CSTUB_(_TIE_xt_FP_AE_MOVVFCRFSR)()
+#define XT_NOP_N() \
+	CSTUB_(_TIE_xt_density_NOP_N)()
+#define XT_NOP() \
+	CSTUB_(_TIE_xt_core_NOP)()
+#define XT_ANDB(bs, bt) \
+	CSTUB_(_TIE_xt_booleans_ANDB)(bs, bt)
+#define XT_ANDBC(bs, bt) \
+	CSTUB_(_TIE_xt_booleans_ANDBC)(bs, bt)
+#define XT_ORB(bs, bt) \
+	CSTUB_(_TIE_xt_booleans_ORB)(bs, bt)
+#define XT_ORBC(bs, bt) \
+	CSTUB_(_TIE_xt_booleans_ORBC)(bs, bt)
+#define XT_XORB(bs, bt) \
+	CSTUB_(_TIE_xt_booleans_XORB)(bs, bt)
+#define XT_ALL4(bs4) \
+	CSTUB_(_TIE_xt_booleans_ALL4)(bs4)
+#define XT_ANY4(bs4) \
+	CSTUB_(_TIE_xt_booleans_ANY4)(bs4)
+#define XT_ALL8(bs8) \
+	CSTUB_(_TIE_xt_booleans_ALL8)(bs8)
+#define XT_ANY8(bs8) \
+	CSTUB_(_TIE_xt_booleans_ANY8)(bs8)
+#define XT_MOVF(arr, ars, bt) \
+	CSTUB_(_TIE_xt_booleans_MOVF)(&arr, ars, bt)
+#define XT_MOVT(arr, ars, bt) \
+	CSTUB_(_TIE_xt_booleans_MOVT)(&arr, ars, bt)
+#define AE_SEXT16(ars) \
+	CSTUB_(_TIE_xt_hifi2_AE_SEXT16)(ars)
+#define AE_LP8X2F2_IU(pr, ars, ae_lsimm16_IU) \
+	CSTUB_(_TIE_ld8_AE_LP8X2F2_IU)(&pr, (const void **)&(ars), ae_lsimm16_IU)
+#define AE_LP8X2F2_I(ars, ae_lsimm16_I) \
+	CSTUB_(_TIE_ld8_AE_LP8X2F2_I)(ars, ae_lsimm16_I)
+#define AE_LP8X2F_IU(pr, ars, ae_lsimm16_IU) \
+	CSTUB_(_TIE_ld8_AE_LP8X2F_IU)(&pr, (const void **)&(ars), ae_lsimm16_IU)
+#define AE_LP8X2F_I(ars, ae_lsimm16_IU) \
+	CSTUB_(_TIE_ld8_AE_LP8X2F_I)(ars, ae_lsimm16_IU)
+#define XT_RSR_PRID() \
+	CSTUB_(_TIE_xt_core_RSR_PRID)()
+
+#define XT_RSR_SAR() \
+	CSTUB_(_TIE_xt_core_RSR_SAR)()
+
+#define XT_WSR_SAR(t) \
+	CSTUB_(_TIE_xt_core_WSR_SAR)(t)
+
+#define XT_XSR_SAR(t) \
+	CSTUB_(_TIE_xt_core_XSR_SAR)((unsigned *)&t)
+
+#define XT_QUOU(a, b) CSTUB_(QUOU)(a, b)
+
+#define XT_QUOS(a, b) CSTUB_(QUOS)(a, b)
+
+#define XT_REMU(a, b) CSTUB_(REMU)(a, b)
+
+#define XT_REMS(a, b) CSTUB_(REMS)(a, b)
+
+#endif /* __cplusplus */
 
 /* User register read/write functions */
 #define RTHREADPTR RUR_THREADPTR
